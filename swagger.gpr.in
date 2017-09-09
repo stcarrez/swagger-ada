@@ -1,0 +1,26 @@
+with "@UTIL_DIR@config";
+with "@UTIL_DIR@util";
+
+library project swagger is
+
+   Version := "@SWAGGER_VERSION@";
+   Library_Dir := "@SWAGGER_LIBDIR@";
+   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "static");
+
+   for Library_Name use "swagger";
+   for Library_Kind use Library_Type;
+   for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
+
+   for Source_Dirs use ("src");
+   for Library_Dir use "lib/" & Project'Library_Kind;
+   for Object_Dir use "obj/swagger/" & Project'Library_Kind;
+
+   package Builder renames Config.Builder;
+   package Compiler renames Config.Compiler;
+   package Ide      renames Config.Ide;
+
+   package Binder is
+       for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
+   end Binder;
+
+end swagger;
