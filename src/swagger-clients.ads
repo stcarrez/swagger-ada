@@ -72,6 +72,12 @@ package Swagger.Clients is
    procedure Set_Accept (Client : in out Client_Type;
                          List   : in Content_Type_Array);
 
+   --  Initialize the request body to prepare for the serialization of data using
+   --  a supported and configured content type.
+   procedure Initialize (Client  : in out Client_Type;
+                         Request : in out Request_Type;
+                         Types   : in Content_Type_Array);
+
 private
 
    type URI_Type is tagged record
