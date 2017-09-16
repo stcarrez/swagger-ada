@@ -79,4 +79,13 @@ package body Swagger.Clients is
       null;
    end Set_Accept;
 
+   --  Initialize the request body to prepare for the serialization of data using
+   --  a supported and configured content type.
+   procedure Initialize (Client  : in out Client_Type;
+                         Request : in out Request_Type;
+                         Types   : in Content_Type_Array) is
+   begin
+      null;
+   end Initialize;
+
 end Swagger.Clients;
