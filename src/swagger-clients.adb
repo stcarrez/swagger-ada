@@ -71,4 +71,12 @@ package body Swagger.Clients is
       null;
    end Call;
 
+   --  Set the Accept header according to what the operation supports and what is
+   --  selected by the client.
+   procedure Set_Accept (Client : in out Client_Type;
+                         List   : in Content_Type_Array) is
+   begin
+      null;
+   end Set_Accept;
+
 end Swagger.Clients;
