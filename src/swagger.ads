@@ -39,4 +39,7 @@ package Swagger is
 
    package UString_Vectors renames Util.Strings.Vectors;
 
+   --  Convert the long value into a string.
+   function To_String (Value : in Long) return String;
+
 end Swagger;
