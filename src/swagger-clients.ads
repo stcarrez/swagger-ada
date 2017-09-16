@@ -24,6 +24,12 @@ package Swagger.Clients is
 
    type Operation_Type is (GET, POST, PUT, DELETE);
 
+   --  The possible content types that are supported by the Swagger Ada client library.
+   type Content_Type is (APPLICATION_JSON, APPLICATION_XML, APPLICATION_FORM);
+
+   --  A list of content types for the Set_Accept and Initialize operations.
+   type Content_Type_Array is array (Positive range <>) of Content_Type;
+
    type URI_Type is tagged private;
 
    --  Set the path to use for the URI.
@@ -60,6 +66,11 @@ package Swagger.Clients is
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class);
+
+   --  Set the Accept header according to what the operation supports and what is
+   --  selected by the client.
+   procedure Set_Accept (Client : in out Client_Type;
+                         List   : in Content_Type_Array);
 
 private
 
