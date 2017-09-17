@@ -31,4 +31,35 @@ package body Swagger is
       end if;
    end To_String;
 
+   function Has_Element (Pos : in Value_Cursor) return Boolean is
+   begin
+      return False;
+   end Has_Element;
+
+   function Element_Value (List : in Value_Array_Type;
+                           Pos  : in Value_Cursor) return Value_Type is
+   begin
+      return Util.Beans.Objects.Null_Object;
+   end Element_Value;
+
+   function Iterate (List : in Value_Array_Type) return Value_Iterator.Forward_Iterator'Class is
+      Res : Iterator;
+   begin
+      return Res;
+   end Iterate;
+
+   overriding
+   function First (Iter : in Iterator) return Value_Cursor is
+      Res : Value_Cursor;
+   begin
+      return Res;
+   end First;
+
+   overriding
+   function Next (Object : in Iterator; Position : in Value_Cursor) return Value_Cursor is
+      Res : Value_Cursor;
+   begin
+      return Res;
+   end Next;
+
 end Swagger;
