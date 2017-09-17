@@ -17,6 +17,11 @@
 -----------------------------------------------------------------------
 package body Swagger.Clients is
 
+   function Stream (Req : in Request_Type) return Stream_Accessor is
+   begin
+      return Stream_Accessor '(Stream => null, N => 0);
+   end Stream;
+
    --  Set the path to use for the URI.
    procedure Set_Path (URI  : in out URI_Type;
                        Path : in String) is
@@ -56,10 +61,18 @@ package body Swagger.Clients is
       null;
    end Add_Param;
 
+   --  Add a query parameter.
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in UString_Vectors.Vector) is
+   begin
+      null;
+   end Add_Param;
+
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
-                   Request   : in Request_Type) is
+                   Request   : in Request_Type'Class) is
    begin
       null;
    end Call;
@@ -82,7 +95,7 @@ package body Swagger.Clients is
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
-                         Request : in out Request_Type;
+                         Request : in out Request_Type'Class;
                          Types   : in Content_Type_Array) is
    begin
       null;
