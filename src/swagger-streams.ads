@@ -67,5 +67,12 @@ package Swagger.Streams is
                           Name  : in String;
                           Value : out Ada.Calendar.Time);
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out UString_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Integer_Map);
 
 end Swagger.Streams;
