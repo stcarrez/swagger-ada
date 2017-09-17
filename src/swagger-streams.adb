@@ -44,6 +44,14 @@ package body Swagger.Streams is
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
+                          Value : out Boolean) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
                           Value : out Integer) is
    begin
       null;
@@ -61,6 +69,30 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out UString) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Value_Type) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Value_Array_Type) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Ada.Calendar.Time) is
    begin
       null;
    end Deserialize;
