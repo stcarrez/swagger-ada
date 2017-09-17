@@ -52,6 +52,14 @@ package body Swagger.Streams is
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
+                          Value : out Long) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
                           Value : out UString) is
    begin
       null;
