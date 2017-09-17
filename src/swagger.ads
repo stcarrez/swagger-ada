@@ -18,6 +18,7 @@
 with Ada.Strings.Unbounded;
 with Ada.Calendar;
 with Ada.Strings.Hash;
+with Ada.Iterator_Interfaces;
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
 with Util.Strings.Vectors;
@@ -52,5 +53,44 @@ package Swagger is
                                                 Equivalent_Keys => "=");
 
    subtype Integer_Map is Integer_Maps.Map;
+
+   type Value_Array_Type is tagged private
+     with
+       Constant_Indexing => Element_Value,
+       Default_Iterator => Iterate,
+       Iterator_Element => Value_Type;
+
+   type Value_Cursor is private;
+
+   function Has_Element (Pos : in Value_Cursor) return Boolean;
+
+   package Value_Iterator is
+     new Ada.Iterator_Interfaces (Cursor       => Value_Cursor,
+                                  Has_Element  => Has_Element);
+
+   function Element_Value (List : in Value_Array_Type;
+                           Pos  : in Value_Cursor) return Value_Type;
+
+   function Iterate (List : in Value_Array_Type) return Value_Iterator.Forward_Iterator'Class;
+
+private
+
+   type Value_Array_Type is tagged record
+      A : Natural;
+   end record;
+
+   type Value_Cursor is record
+      Pos : Natural;
+   end record;
+
+   type Iterator is new Value_Iterator.Forward_Iterator with record
+      N : Natural;
+   end record;
+
+   overriding
+   function First (Iter : in Iterator) return Value_Cursor;
+
+   overriding
+   function Next (Object : in Iterator; Position : in Value_Cursor) return Value_Cursor;
 
 end Swagger;
