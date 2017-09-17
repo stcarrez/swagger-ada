@@ -17,6 +17,8 @@
 -----------------------------------------------------------------------
 with Ada.Strings.Unbounded;
 with Ada.Calendar;
+with Ada.Strings.Hash;
+with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
 with Util.Strings.Vectors;
 package Swagger is
@@ -41,5 +43,13 @@ package Swagger is
 
    --  Convert the long value into a string.
    function To_String (Value : in Long) return String;
+
+   package Integer_Maps is
+     new Ada.Containers.Indefinite_Hashed_Maps (Key_Type        => String,
+                                                Element_Type    => Integer,
+                                                Hash            => Ada.Strings.Hash,
+                                                Equivalent_Keys => "=");
+
+   subtype Integer_Map is Integer_Maps.Map;
 
 end Swagger;
