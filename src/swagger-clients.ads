@@ -83,6 +83,12 @@ package Swagger.Clients is
                    URI       : in URI_Type'Class;
                    Reply     : out Value_Type);
 
+   procedure Call (Client    : in out Client_Type;
+                   Operation : in Operation_Type;
+                   URI       : in URI_Type'Class;
+                   Request   : in Request_Type'Class;
+                   Reply     : out Value_Type);
+
    --  Set the Accept header according to what the operation supports and what is
    --  selected by the client.
    procedure Set_Accept (Client : in out Client_Type;
