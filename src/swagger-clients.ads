@@ -16,11 +16,17 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Http.Clients;
+with Swagger.Streams;
 package Swagger.Clients is
 
-   type Request_Type is record
+   type Request_Type is tagged record
       S : Natural := 0;
    end record;
+
+   type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is private
+   with Implicit_Dereference => Stream;
+
+   function Stream (Req : in Request_Type) return Stream_Accessor;
 
    type Operation_Type is (GET, POST, PUT, DELETE);
 
@@ -56,12 +62,17 @@ package Swagger.Clients is
                         Name  : in String;
                         Value : in UString);
 
+   --  Add a query parameter.
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in UString_Vectors.Vector);
+
    type Client_Type is new Util.Http.Clients.Client with null record;
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
-                   Request   : in Request_Type);
+                   Request   : in Request_Type'Class);
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
@@ -75,10 +86,14 @@ package Swagger.Clients is
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
-                         Request : in out Request_Type;
+                         Request : in out Request_Type'Class;
                          Types   : in Content_Type_Array);
 
 private
+
+   type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is record
+      N : Natural := 0;
+   end record;
 
    type URI_Type is tagged record
       URI : UString;
