@@ -38,6 +38,7 @@ package Swagger is
    subtype Number is Natural;
 
    subtype Object is Util.Beans.Objects.Object;
+   subtype Value_Type is Util.Beans.Objects.Object;
 
    package UString_Vectors renames Util.Strings.Vectors;
 
