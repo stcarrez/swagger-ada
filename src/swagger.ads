@@ -26,6 +26,12 @@ package Swagger is
 
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
 
+   function To_String (S : in UString) return String
+     renames Ada.Strings.Unbounded.To_String;
+
+   function TO_UString (S : in String) return UString
+     renames Ada.Strings.Unbounded.To_Unbounded_String;
+
    subtype Date is Ada.Calendar.Time;
 
    subtype Datetime is Ada.Calendar.Time;
