@@ -97,4 +97,18 @@ package body Swagger.Streams is
       null;
    end Deserialize;
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out UString_Vectors.Vector) is
+   begin
+      null;
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Integer_Map) is
+   begin
+      null;
+   end Deserialize;
+
 end Swagger.Streams;
