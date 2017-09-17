@@ -92,6 +92,15 @@ package body Swagger.Clients is
       null;
    end Call;
 
+   procedure Call (Client    : in out Client_Type;
+                   Operation : in Operation_Type;
+                   URI       : in URI_Type'Class;
+                   Request   : in Request_Type'Class;
+                   Reply     : out Value_Type) is
+   begin
+      null;
+   end Call;
+
    --  Set the Accept header according to what the operation supports and what is
    --  selected by the client.
    procedure Set_Accept (Client : in out Client_Type;
