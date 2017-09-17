@@ -41,4 +41,20 @@ package body Swagger.Streams is
       Stream.Write_Long_Entity (Name, Value);
    end Serialize;
 
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Integer) is
+   begin
+      null;
+   end Deserialize;
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out UString) is
+   begin
+      null;
+   end Deserialize;
+
 end Swagger.Streams;
