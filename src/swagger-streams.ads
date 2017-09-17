@@ -32,4 +32,14 @@ package Swagger.Streams is
                         Name   : in String;
                         Value  : in Swagger.Long);
 
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Integer);
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out UString);
+
 end Swagger.Streams;
