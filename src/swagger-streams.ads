@@ -20,6 +20,8 @@ package Swagger.Streams is
 
    subtype Output_Stream is Util.Serialize.IO.Output_Stream;
 
+   type Output_Stream_Access is access all Output_Stream'Class;
+
    --  Serialize a list of strings in the stream.
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
