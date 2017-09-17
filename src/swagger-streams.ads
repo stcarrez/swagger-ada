@@ -35,6 +35,11 @@ package Swagger.Streams is
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
+                          Value : out Boolean);
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
                           Value : out Integer);
 
    --  Extract an integer value stored under the given name.
@@ -46,5 +51,21 @@ package Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out UString);
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Value_Type);
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Value_Array_Type);
+
+   --  Extract an integer value stored under the given name.
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Ada.Calendar.Time);
+
 
 end Swagger.Streams;
