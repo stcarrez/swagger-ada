@@ -22,11 +22,13 @@ package body Swagger.Clients is
       return Stream_Accessor '(Stream => null, N => 0);
    end Stream;
 
+   --  ------------------------------
    --  Set the path to use for the URI.
+   --  ------------------------------
    procedure Set_Path (URI  : in out URI_Type;
                        Path : in String) is
    begin
-      null;
+      URI.URI := To_UString (Path);
    end Set_Path;
 
    --  Set the path parameter.
