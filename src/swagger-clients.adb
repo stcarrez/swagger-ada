@@ -94,6 +94,15 @@ package body Swagger.Clients is
       end if;
    end To_String;
 
+   --  ------------------------------
+   --  Set the server base URI to connect to.
+   --  ------------------------------
+   procedure Set_Server (Client : in out Client_Type;
+                         Server : in String) is
+   begin
+      Client.Server := To_UString (Server);
+   end Set_Server;
+
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
@@ -115,7 +124,12 @@ package body Swagger.Clients is
                    Reply     : out Value_Type) is
       Response : Util.Http.Clients.Response;
    begin
-      Client.Get (To_String (URI), Response);
+      Client.Get (To_String (Client.Server) & To_String (URI), Response);
+      if Response.Get_Status /= Util.Http.SC_OK then
+         return;
+      end if;
+      --  Todo check Response.Get_Header ("Content-Type")
+      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
