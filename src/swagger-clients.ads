@@ -70,7 +70,11 @@ package Swagger.Clients is
    --  Convert the URI into a string.
    function To_String (URI : in URI_Type) return String;
 
-   type Client_Type is new Util.Http.Clients.Client with null record;
+   type Client_Type is new Util.Http.Clients.Client with private;
+
+   --  Set the server base URI to connect to.
+   procedure Set_Server (Client : in out Client_Type;
+                         Server : in String);
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
@@ -104,6 +108,10 @@ package Swagger.Clients is
                          Types   : in Content_Type_Array);
 
 private
+
+   type Client_Type is new Util.Http.Clients.Client with record
+      Server : UString;
+   end record;
 
    type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is record
       N : Natural := 0;
