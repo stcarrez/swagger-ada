@@ -70,7 +70,9 @@ package body Swagger.Streams is
                           Name  : in String;
                           Value : out UString) is
    begin
-      null;
+      if Name = "" then
+         Value := Util.Beans.Objects.To_Unbounded_String (From);
+      end if;
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
