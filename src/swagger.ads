@@ -29,7 +29,7 @@ package Swagger is
    function To_String (S : in UString) return String
      renames Ada.Strings.Unbounded.To_String;
 
-   function TO_UString (S : in String) return UString
+   function To_UString (S : in String) return UString
      renames Ada.Strings.Unbounded.To_Unbounded_String;
 
    subtype Date is Ada.Calendar.Time;
