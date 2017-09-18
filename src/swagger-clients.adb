@@ -17,6 +17,8 @@
 -----------------------------------------------------------------------
 package body Swagger.Clients is
 
+   use Ada.Strings.Unbounded;
+
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
       return Stream_Accessor '(Stream => null, N => 0);
@@ -47,20 +49,29 @@ package body Swagger.Clients is
       null;
    end Set_Path_Param;
 
+   --  ------------------------------
    --  Add a query parameter.
+   --  ------------------------------
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
                         Value : in String) is
    begin
-      null;
+      if Length (URI.Query) > 0 then
+         Append (URI.Query, "&");
+      end if;
+      Append (URI.Query, Name);
+      Append (URI.Query, "=");
+      Append (URI.Query, Value);
    end Add_Param;
 
+   --  ------------------------------
    --  Add a query parameter.
+   --  ------------------------------
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
                         Value : in UString) is
    begin
-      null;
+      Add_Param (URI, Name, To_String (Value));
    end Add_Param;
 
    --  Add a query parameter.
@@ -70,6 +81,18 @@ package body Swagger.Clients is
    begin
       null;
    end Add_Param;
+
+   --  ------------------------------
+   --  Convert the URI into a string.
+   --  ------------------------------
+   function To_String (URI : in URI_Type) return String is
+   begin
+      if Length (URI.Query) > 0 then
+         return To_String (URI.URI) & "?" & To_String (URI.Query);
+      else
+         return To_String (URI.URI);
+      end if;
+   end To_String;
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
@@ -90,8 +113,9 @@ package body Swagger.Clients is
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
                    Reply     : out Value_Type) is
+      Response : Util.Http.Clients.Response;
    begin
-      null;
+      Client.Get (To_String (URI), Response);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
