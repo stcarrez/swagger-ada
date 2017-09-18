@@ -67,6 +67,9 @@ package Swagger.Clients is
                         Name  : in String;
                         Value : in UString_Vectors.Vector);
 
+   --  Convert the URI into a string.
+   function To_String (URI : in URI_Type) return String;
+
    type Client_Type is new Util.Http.Clients.Client with null record;
 
    procedure Call (Client    : in out Client_Type;
@@ -107,7 +110,8 @@ private
    end record;
 
    type URI_Type is tagged record
-      URI : UString;
+      URI   : UString;
+      Query : UString;
    end record;
 
 end Swagger.Clients;
