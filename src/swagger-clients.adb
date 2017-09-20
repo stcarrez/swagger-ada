@@ -15,6 +15,8 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
+with Ada.Text_IO;
+with Util.Strings;
 package body Swagger.Clients is
 
    use Ada.Strings.Unbounded;
@@ -33,20 +35,40 @@ package body Swagger.Clients is
       URI.URI := To_UString (Path);
    end Set_Path;
 
+   --  ------------------------------
    --  Set the path parameter.
+   --  ------------------------------
    procedure Set_Path_Param (URI   : in out URI_Type;
                              Name  : in String;
                              Value : in String) is
+      Path  : constant String := To_String (URI.URI);
+      Pos   : Natural;
+      First : Natural := Path'First;
    begin
-      null;
+      loop
+         Pos := Util.Strings.Index (Path, '{', First);
+         exit when Pos = 0;
+         if Path (Pos + 1 .. Pos + 1 + Name'Length - 1) = Name
+           and then Path (Pos + 1 + Name'Length) = '}'
+         then
+            URI.URI := To_UString (Path (Path'First .. Pos - 1));
+            Append (URI.URI, Value);
+            Append (URI.URI, Path (Pos + 1 + Name'Length + 1 .. Path'Last));
+            return;
+         end if;
+         Pos := Util.Strings.Index (Path, '}', Pos + 1);
+         exit when Pos = 0;
+      end loop;
    end Set_Path_Param;
 
+   --  ------------------------------
    --  Set the path parameter.
+   --  ------------------------------
    procedure Set_Path_Param (URI   : in out URI_Type;
                              Name  : in String;
                              Value : in UString) is
    begin
-      null;
+      URI.Set_Path_Param (Name, To_String (Value));
    end Set_Path_Param;
 
    --  ------------------------------
@@ -129,6 +151,7 @@ package body Swagger.Clients is
          return;
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
+      Ada.Text_IO.Put_Line (Response.Get_Body);
       Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
    end Call;
 
