@@ -41,46 +41,82 @@ package body Swagger.Streams is
       Stream.Write_Long_Entity (Name, Value);
    end Serialize;
 
-   --  Extract an integer value stored under the given name.
+   --  ------------------------------
+   --  Extract a boolean value stored under the given name.
+   --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Boolean) is
+      Item : Swagger.Value_Type;
    begin
-      null;
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value := Util.Beans.Objects.To_Boolean (Item);
    end Deserialize;
 
+   --  ------------------------------
    --  Extract an integer value stored under the given name.
+   --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Integer) is
+      Item : Swagger.Value_Type;
    begin
-      null;
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value := Util.Beans.Objects.To_Integer (Item);
    end Deserialize;
 
+   --  ------------------------------
    --  Extract an integer value stored under the given name.
+   --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Long) is
+      Item : Swagger.Value_Type;
    begin
-      null;
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value := Util.Beans.Objects.To_Long_Long_Integer (Item);
    end Deserialize;
 
-   --  Extract an integer value stored under the given name.
+   --  ------------------------------
+   --  Extract a string value stored under the given name.
+   --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out UString) is
+      Item : Swagger.Value_Type;
    begin
       if Name = "" then
-         Value := Util.Beans.Objects.To_Unbounded_String (From);
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
       end if;
+      Value := Util.Beans.Objects.To_Unbounded_String (Item);
    end Deserialize;
 
-   --  Extract an integer value stored under the given name.
+   --  ------------------------------
+   --  Extract a value stored under the given name.
+   --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Value_Type) is
    begin
-      null;
+      if Name'Length = 0 then
+         Value := From;
+      else
+         Value := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
