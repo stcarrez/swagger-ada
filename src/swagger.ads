@@ -82,15 +82,17 @@ package Swagger is
 private
 
    type Value_Array_Type is tagged record
-      A : Natural;
+      A : Util.Beans.Objects.Object;
    end record;
 
    type Value_Cursor is record
-      Pos : Natural;
+      List : Util.Beans.Objects.Object;
+      Pos  : Natural := 0;
    end record;
 
    type Iterator is new Value_Iterator.Forward_Iterator with record
-      N : Natural;
+      List : Util.Beans.Objects.Object;
+      Pos  : Natural := 0;
    end record;
 
    overriding
