@@ -123,8 +123,18 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Value_Array_Type) is
+      List : Util.Beans.Objects.Object;
    begin
-      null;
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      if Util.Beans.Objects.Is_Array (List) then
+         Value.A := List;
+      else
+         Value.A := Util.Beans.Objects.Null_Object;
+      end if;
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
