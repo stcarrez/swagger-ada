@@ -15,6 +15,7 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
+with Util.Beans.Objects.Maps;
 package body Swagger.Streams is
 
    --  ------------------------------
@@ -148,15 +149,40 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out UString_Vectors.Vector) is
+      use Util.Beans.Objects;
+      List : Util.Beans.Objects.Object;
    begin
-      null;
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      if Is_Array (List) then
+         for I in 1 .. Get_Count (List) loop
+            Value.Append (To_String (Get_Value (List, I)));
+         end loop;
+      end if;
    end Deserialize;
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Integer_Map) is
+      List : Util.Beans.Objects.Object;
+
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object) is
+      begin
+         Value.Include (Name, Util.Beans.Objects.To_Integer (Item));
+      end Process;
    begin
-      null;
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
 
 end Swagger.Streams;
