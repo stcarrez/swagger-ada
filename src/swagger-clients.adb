@@ -16,6 +16,8 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Ada.Text_IO;
+with Util.Beans.Objects.Readers;
+with Util.Serialize.IO.JSON;
 with Util.Strings;
 package body Swagger.Clients is
 
@@ -100,8 +102,13 @@ package body Swagger.Clients is
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
                         Value : in UString_Vectors.Vector) is
+
    begin
-      null;
+      if Value.Is_Empty then
+         Add_Param (URI, Name, "");
+      else  --  if Value.Length = 1 then
+         Add_Param (URI, Name, Value.Element (1));
+      end if;
    end Add_Param;
 
    --  ------------------------------
@@ -145,14 +152,18 @@ package body Swagger.Clients is
                    URI       : in URI_Type'Class;
                    Reply     : out Value_Type) is
       Response : Util.Http.Clients.Response;
+      Parser   : Util.Serialize.IO.JSON.Parser;
+      Mapper   : Util.Beans.Objects.Readers.Reader;
    begin
       Client.Get (To_String (Client.Server) & To_String (URI), Response);
       if Response.Get_Status /= Util.Http.SC_OK then
          return;
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
+      Parser.Parse_String (Response.Get_Body, Mapper);
       Ada.Text_IO.Put_Line (Response.Get_Body);
-      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
+      --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
+      Reply := Mapper.Get_Root;
    end Call;
 
    procedure Call (Client    : in out Client_Type;
