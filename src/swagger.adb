@@ -33,18 +33,20 @@ package body Swagger is
 
    function Has_Element (Pos : in Value_Cursor) return Boolean is
    begin
-      return False;
+      return Pos.Pos > 0 and Pos.Pos <= Util.Beans.Objects.Get_Count (Pos.List);
    end Has_Element;
 
    function Element_Value (List : in Value_Array_Type;
                            Pos  : in Value_Cursor) return Value_Type is
    begin
-      return Util.Beans.Objects.Null_Object;
+      return Util.Beans.Objects.Get_Value (List.A, Pos.Pos);
    end Element_Value;
 
    function Iterate (List : in Value_Array_Type) return Value_Iterator.Forward_Iterator'Class is
       Res : Iterator;
    begin
+      Res.List := List.A;
+      Res.Pos  := 1;
       return Res;
    end Iterate;
 
@@ -52,6 +54,8 @@ package body Swagger is
    function First (Iter : in Iterator) return Value_Cursor is
       Res : Value_Cursor;
    begin
+      Res.List := Iter.List;
+      Res.Pos  := Iter.Pos;
       return Res;
    end First;
 
@@ -59,6 +63,8 @@ package body Swagger is
    function Next (Object : in Iterator; Position : in Value_Cursor) return Value_Cursor is
       Res : Value_Cursor;
    begin
+      Res.List := Object.List;
+      Res.Pos  := Position.Pos + 1;
       return Res;
    end Next;
 
