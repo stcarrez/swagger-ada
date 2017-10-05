@@ -188,8 +188,39 @@ package body Swagger.Clients is
                    URI       : in URI_Type'Class;
                    Request   : in Request_Type'Class;
                    Reply     : out Value_Type) is
+      Response : Util.Http.Clients.Response;
+      Parser   : Util.Serialize.IO.JSON.Parser;
+      Mapper   : Util.Beans.Objects.Readers.Reader;
+      Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
-      null;
+      Request.Data.End_Document;
+      declare
+         Data     : constant String := Util.Streams.Texts.To_String (Request.Buffer);
+      begin
+      Ada.Text_IO.Put_Line (Data);
+      case Operation is
+         when GET =>
+            Client.Get (Path, Response);
+
+         when POST =>
+            Client.Post (Path, Data, Response);
+
+         when PUT =>
+            Client.Put (Path, Data, Response);
+
+         when others =>
+            raise Program_Error;
+
+         end case;
+      end;
+      if Response.Get_Status /= Util.Http.SC_OK then
+         return;
+      end if;
+      --  Todo check Response.Get_Header ("Content-Type")
+      Parser.Parse_String (Response.Get_Body, Mapper);
+      Ada.Text_IO.Put_Line (Response.Get_Body);
+      --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
+      Reply := Mapper.Get_Root;
    end Call;
 
    --  ------------------------------
@@ -238,6 +269,7 @@ package body Swagger.Clients is
             Request.Data := Json;
             Request.Buffer.Initialize (Size => 1000000);
             Json.Initialize (Request.Buffer'Unchecked_Access);
+            Request.Data.Start_Document;
 
          when APPLICATION_XML =>
             Client.Set_Header ("Content-Type", "application/xml");
