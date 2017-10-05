@@ -16,12 +16,12 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Http.Clients;
+private with Util.Streams.Texts;
 with Swagger.Streams;
+with Util.Serialize.IO;
 package Swagger.Clients is
 
-   type Request_Type is tagged record
-      S : Natural := 0;
-   end record;
+   type Request_Type is tagged limited private;
 
    type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is private
    with Implicit_Dereference => Stream;
@@ -108,6 +108,11 @@ package Swagger.Clients is
                          Types   : in Content_Type_Array);
 
 private
+
+   type Request_Type is tagged limited record
+      Buffer : aliased Util.Streams.Texts.Print_Stream;
+      Data   : access Util.Serialize.IO.Output_Stream'Class;
+   end record;
 
    type Client_Type is new Util.Http.Clients.Client with record
       Server : UString;
