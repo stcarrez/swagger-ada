@@ -25,7 +25,7 @@ package body Swagger.Clients is
 
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
-      return Stream_Accessor '(Stream => null, N => 0);
+      return Stream_Accessor '(Stream => Req.Data.all'Access, N => 0);
    end Stream;
 
    --  ------------------------------
@@ -206,7 +206,7 @@ package body Swagger.Clients is
          end if;
          case Content_Type is
             when APPLICATION_XML =>
-               Append (Header, "application/xml");
+               null;  --  Append (Header, "application/xml");
 
             when APPLICATION_JSON =>
                Append (Header, "application/json");
@@ -219,12 +219,30 @@ package body Swagger.Clients is
       Client.Set_Header ("Accept", To_String (Header));
    end Set_Accept;
 
+   --  ------------------------------
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
+   --  ------------------------------
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
                          Types   : in Content_Type_Array) is
+      Json : access Util.Serialize.IO.JSON.Output_Stream'Class;
    begin
+      case Types (Types'First) is
+         when APPLICATION_FORM =>
+            Client.Set_Header ("Content-Type", "application/x-www-form-urlencoded");
+
+         when APPLICATION_JSON =>
+            Client.Set_Header ("Content-Type", "application/json");
+            Json := new Util.Serialize.IO.JSON.Output_Stream;
+            Request.Data := Json;
+            Request.Buffer.Initialize (Size => 1000000);
+            Json.Initialize (Request.Buffer'Unchecked_Access);
+
+         when APPLICATION_XML =>
+            Client.Set_Header ("Content-Type", "application/xml");
+
+      end case;
       null;
    end Initialize;
 
