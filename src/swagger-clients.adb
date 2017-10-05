@@ -136,8 +136,9 @@ package body Swagger.Clients is
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
                    Request   : in Request_Type'Class) is
+      No_Reply : Value_Type;
    begin
-      null;
+      Client.Call (Operation, URI, Request, No_Reply);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
@@ -156,8 +157,22 @@ package body Swagger.Clients is
       Response : Util.Http.Clients.Response;
       Parser   : Util.Serialize.IO.JSON.Parser;
       Mapper   : Util.Beans.Objects.Readers.Reader;
+      Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
-      Client.Get (To_String (Client.Server) & To_String (URI), Response);
+      case Operation is
+         when GET =>
+            Client.Get (Path, Response);
+
+         when POST =>
+            Client.Post (Path, "", Response);
+
+         when PUT =>
+            Client.Put (Path, "", Response);
+
+         when others =>
+            raise Program_Error;
+
+      end case;
       if Response.Get_Status /= Util.Http.SC_OK then
          return;
       end if;
@@ -177,12 +192,31 @@ package body Swagger.Clients is
       null;
    end Call;
 
+   --  ------------------------------
    --  Set the Accept header according to what the operation supports and what is
    --  selected by the client.
+   --  ------------------------------
    procedure Set_Accept (Client : in out Client_Type;
                          List   : in Content_Type_Array) is
+      Header : UString;
    begin
-      null;
+      for Content_Type of List loop
+         if Length (Header) > 0 then
+            Append (Header, ", ");
+         end if;
+         case Content_Type is
+            when APPLICATION_XML =>
+               Append (Header, "application/xml");
+
+            when APPLICATION_JSON =>
+               Append (Header, "application/json");
+
+            when APPLICATION_FORM =>
+               Append (Header, "application/x-www-form-urlencoded");
+
+         end case;
+      end loop;
+      Client.Set_Header ("Accept", To_String (Header));
    end Set_Accept;
 
    --  Initialize the request body to prepare for the serialization of data using
