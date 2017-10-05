@@ -143,8 +143,10 @@ package body Swagger.Clients is
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class) is
+      Empty    : Request_Type;
+      No_Reply : Value_Type;
    begin
-      null;
+      Client.Call (Operation, URI, Empty, No_Reply);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
