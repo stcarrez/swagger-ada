@@ -132,6 +132,12 @@ package body Swagger.Clients is
       Client.Server := To_UString (Server);
    end Set_Server;
 
+   procedure Set_Server (Client : in out Client_Type;
+                         Server : in UString) is
+   begin
+      Client.Server := Server;
+   end Set_Server;
+
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
@@ -197,8 +203,8 @@ package body Swagger.Clients is
       declare
          Data     : constant String := Util.Streams.Texts.To_String (Request.Buffer);
       begin
-      Ada.Text_IO.Put_Line (Data);
-      case Operation is
+         Ada.Text_IO.Put_Line (Data);
+         case Operation is
          when GET =>
             Client.Get (Path, Response);
 
