@@ -75,6 +75,8 @@ package Swagger.Clients is
    --  Set the server base URI to connect to.
    procedure Set_Server (Client : in out Client_Type;
                          Server : in String);
+   procedure Set_Server (Client : in out Client_Type;
+                         Server : in UString);
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
