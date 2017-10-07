@@ -1,0 +1,34 @@
+with "@UTIL_DIR@config";
+with "@UTIL_DIR@util";
+with "@UTIL_DIR@util_unit";
+with "swagger";
+
+project Swagger_Tests is
+
+   for Languages use ("Ada");
+
+   Mains := ("swagger_harness.adb");
+
+   for Source_Dirs use ("regtests");
+
+   for Main use Mains;
+
+   for Object_Dir use "./" & Config'Object_Dir & "/obj";
+   for Exec_Dir use "./" & Config'Exec_Dir & "/bin";
+
+   package binder is
+      case Config.Mode is
+         when "debug" =>
+            for Default_Switches ("Ada") use ("-E", "-W8");
+
+         when others =>
+            for Default_Switches ("Ada") use ("-E", "-W8");
+
+      end case;
+   end binder;
+
+   package Builder renames Config.Builder;
+   package Compiler renames Config.Compiler;
+   package Linker renames Config.Linker;
+
+end Swagger_Tests;
