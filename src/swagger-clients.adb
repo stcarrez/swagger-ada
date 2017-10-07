@@ -150,10 +150,9 @@ package body Swagger.Clients is
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class) is
-      Empty    : Request_Type;
       No_Reply : Value_Type;
    begin
-      Client.Call (Operation, URI, Empty, No_Reply);
+      Client.Call (Operation, URI, No_Reply);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
@@ -174,6 +173,9 @@ package body Swagger.Clients is
 
          when PUT =>
             Client.Put (Path, "", Response);
+
+         when DELETE =>
+            Client.Delete (Path, Response);
 
          when others =>
             raise Program_Error;
