@@ -55,5 +55,5 @@ AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[util],
 AC_SUBST(UTIL_DIR)
 
 AC_OUTPUT(
-Makefile swagger.gpr
+Makefile swagger.gpr swagger_tests.gpr
 )
