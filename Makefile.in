@@ -88,6 +88,11 @@ analyze:
 # Clean, then build executables for all mains defined by the project.
 rebuild: clean build
 
+# Build and run the unit tests
+test:	build
+	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
+	bin/swagger_harness -xml swagger-aunit.xml
+
 dist:
 	git archive -o $(DIST_FILE) --prefix=$(distdir)/ HEAD
 
@@ -98,8 +103,8 @@ install_shared:
 	$(MAKE) SWAGGER_LIBRARY_TYPE=relocatable install_lib
 
 install_lib:
-	$(GPRINSTALL) -p -f --prefix= $(MAKE_ARGS) \
+	$(GPRINSTALL) -p -f --prefix=$(prefix) $(MAKE_ARGS) \
 		--build-name=$(SWAGGER_LIBRARY_TYPE) $(GPRPATH)
 
 uninstall:
-	-$(GPRINSTALL) -q -f --prefix= $(MAKE_ARGS) --uninstall $(GPRPATH)
+	-$(GPRINSTALL) -q -f --prefix=$(prefix) $(MAKE_ARGS) --uninstall $(GPRPATH)
