@@ -16,6 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Maps;
+with Util.Dates.ISO8601;
 package body Swagger.Streams is
 
    --  ------------------------------
@@ -142,8 +143,18 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Ada.Calendar.Time) is
+      Time : Swagger.Value_Type;
    begin
-      null;
+      if Name'Length = 0 then
+         Time := From;
+      else
+         Time := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      declare
+         T : constant String := Util.Beans.Objects.To_String (Time);
+      begin
+         Value := Util.Dates.ISO8601.Value (T);
+      end;
    end Deserialize;
 
    procedure Deserialize (From  : in Swagger.Value_Type;
