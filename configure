@@ -584,6 +584,7 @@ PACKAGE_URL=
 ac_unique_file="src/swagger.ads"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+ASF_DIR
 UTIL_DIR
 BUILDS_SHARED
 NR_CPUS
@@ -669,6 +670,7 @@ ac_user_opts='
 enable_option_checking
 enable_shared
 with_ada_util
+with_ada_asf
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1296,6 +1298,7 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-ada-util=x       Path for Ada Utility Library
+  --with-ada-asf=x        Path for Ada Server Faces Library
 
 Some influential environment variables:
   CC          C compiler command
@@ -3429,6 +3432,108 @@ $as_echo "no" >&6; }
   This project was not found in ../util nor in ../ada-util-*.
   The component is available at git@github.com:stcarrez/ada-util.git.
   Please, download and configure Ada Utility Library.
+  The current configuration was using:
+    ${GNATMAKE}
+    ADA_PROJECT_PATH=$ADA_PROJECT_PATH
+" "$LINENO" 5
+    fi
+  fi
+
+
+
+##########################################
+# Ada Server Faces library
+##########################################
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Server Faces Library" >&5
+$as_echo_n "checking Ada Server Faces Library... " >&6; }
+
+# Check whether --with-ada-asf was given.
+if test "${with_ada_asf+set}" = set; then :
+  withval=$with_ada_asf;
+      gnat_project_name_asf=${withval}/
+      if test -d "${withval}"; then
+	    gnat_project_name_asf=${withval}/asf
+	  fi
+
+else
+
+      gnat_project_name_asf=asf
+
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_asf}" >&5
+$as_echo "trying ${gnat_project_name_asf}" >&6; }
+
+  rm -f conftest.gpr
+  # Search in the GNAT project path.
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_asf} project exists in gnatmake's search path" >&5
+$as_echo_n "checking whether ${gnat_project_name_asf} project exists in gnatmake's search path... " >&6; }
+  echo "with \"${gnat_project_name_asf}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+  if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+  then
+    gnat_project_asf=yes
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+  else
+    gnat_project_asf=no
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+    # Search in ../ada-asf-*/asf.gpr
+    files=`ls -r ../ada-asf/asf.gpr ../asf/asf.gpr ../ada-asf-*/asf.gpr 2>/dev/null`
+    for name in $files; do
+      dir=`dirname $name`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Ada Server Faces Library project in ${dir}" >&5
+$as_echo_n "checking for Ada Server Faces Library project in ${dir}... " >&6; }
+      echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+      if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+      then
+         gnat_project_asf=yes
+		 gnat_project_name_asf=${name}
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+         break
+      else
+         gnat_project_asf=no
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      fi
+    done
+  fi
+  rm -f conftest.gpr
+  if test x${gnat_project_asf} = xyes; then
+    gnat_project_with_asf="with \"${gnat_project_name_asf}\";";
+    gnat_project_dir_asf=`dirname ${gnat_project_name_asf}`
+    if test ${gnat_project_dir_asf} = . ; then
+       gnat_project_dir_asf=
+    else
+       gnat_project_dir_asf="${gnat_project_dir_asf}/"
+    fi
+
+    ASF_DIR=${gnat_project_dir_asf}
+
+  else
+    gnat_project_dir_asf=
+    gnat_project_name_asf=
+    if test x"Building swagger requires the Ada Server Faces Library." != x; then
+      as_fn_error $? "Building swagger requires the Ada Server Faces Library.
+  You should build and install the Ada Server Faces Library component.
+  It must be available and found by ${GNATMAKE}.
+  This project was not found in the ADA_PROJECT_PATH environment variable.
+  This project was not found in ../asf nor in ../ada-asf-*.
+  The component is available at git@github.com:stcarrez/ada-asf.git.
+  Please, download and configure Ada Server Faces Library.
   The current configuration was using:
     ${GNATMAKE}
     ADA_PROJECT_PATH=$ADA_PROJECT_PATH
