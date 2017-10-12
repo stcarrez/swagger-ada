@@ -44,4 +44,9 @@ package Swagger.Servers is
                                  Pos   : in Positive;
                                  Value : out Long);
 
+   --  Get a request parameter from the query string.
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out UString);
+
 end Swagger.Servers;
