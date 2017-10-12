@@ -54,6 +54,17 @@ AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[util],
   ])
 AC_SUBST(UTIL_DIR)
 
+##########################################
+# Ada Server Faces library
+##########################################
+AM_GNAT_FIND_PROJECT([ada-asf],[Ada Server Faces Library],[asf],
+  [git@github.com:stcarrez/ada-asf.git],
+  [Building swagger requires the Ada Server Faces Library.],
+  [
+    ASF_DIR=${gnat_project_dir_asf}
+  ])
+AC_SUBST(ASF_DIR)
+
 AC_OUTPUT(
 Makefile swagger.gpr swagger_tests.gpr
 )
