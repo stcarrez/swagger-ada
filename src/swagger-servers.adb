@@ -28,4 +28,15 @@ package body Swagger.Servers is
       Value := To_UString (Req.Get_Path_Parameter (Pos));
    end Get_Path_Parameter;
 
+   --  ------------------------------
+   --  Get a request parameter defined in the URI path.
+   --  ------------------------------
+   procedure Get_Path_Parameter (Req   : in Request'Class;
+                                 Pos   : in Positive;
+                                 Value : out Long) is
+      V : constant String := Req.Get_Path_Parameter (Pos);
+   begin
+      Value := Long'Value (V);
+   end Get_Path_Parameter;
+
 end Swagger.Servers;
