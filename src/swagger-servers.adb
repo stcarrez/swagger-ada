@@ -49,4 +49,12 @@ package body Swagger.Servers is
       Value := To_UString (Req.Get_Parameter (Name));
    end Get_Query_Parameter;
 
+   --  Get a request parameter from the query string.
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out UString_Vectors.Vector) is
+   begin
+      Value.Append (Req.Get_Parameter (Name));
+   end Get_Query_Parameter;
+
 end Swagger.Servers;
