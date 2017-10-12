@@ -40,7 +40,7 @@ package Swagger is
 
    subtype Long is Long_Long_Integer;
 
-   subtype Http_Content_Type is String;
+   subtype Http_Content_Type is UString;
 
    subtype Number is Natural;
 
