@@ -39,4 +39,9 @@ package Swagger.Servers is
                                  Pos   : in Positive;
                                  Value : out UString);
 
+   --  Get a request parameter defined in the URI path.
+   procedure Get_Path_Parameter (Req   : in Request'Class;
+                                 Pos   : in Positive;
+                                 Value : out Long);
+
 end Swagger.Servers;
