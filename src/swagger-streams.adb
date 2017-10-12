@@ -43,6 +43,20 @@ package body Swagger.Streams is
       Stream.Write_Long_Entity (Name, Value);
    end Serialize;
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Swagger.UString) is
+   begin
+      Stream.Write_Entity (Name, Value);
+   end Serialize;
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Integer_Map) is
+   begin
+      null;
+   end Serialize;
+
    --  ------------------------------
    --  Extract a boolean value stored under the given name.
    --  ------------------------------
