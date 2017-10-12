@@ -39,4 +39,14 @@ package body Swagger.Servers is
       Value := Long'Value (V);
    end Get_Path_Parameter;
 
+   --  ------------------------------
+   --  Get a request parameter from the query string.
+   --  ------------------------------
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out UString) is
+   begin
+      Value := To_UString (Req.Get_Parameter (Name));
+   end Get_Query_Parameter;
+
 end Swagger.Servers;
