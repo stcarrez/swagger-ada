@@ -54,4 +54,8 @@ package Swagger.Servers is
                                   Name  : in String;
                                   Value : out UString_Vectors.Vector);
 
+   --  Read the request body and get a value object tree.
+   procedure Read (Req   : in Request'Class;
+                   Value : out Value_Type);
+
 end Swagger.Servers;
