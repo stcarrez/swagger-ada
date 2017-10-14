@@ -15,7 +15,8 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-
+with Util.Beans.Objects.Readers;
+with Util.Serialize.IO.JSON;
 package body Swagger.Servers is
 
    --  ------------------------------
@@ -56,5 +57,24 @@ package body Swagger.Servers is
    begin
       Value.Append (Req.Get_Parameter (Name));
    end Get_Query_Parameter;
+
+   --  ------------------------------
+   --  Read the request body and get a value object tree.
+   --  ------------------------------
+   procedure Read (Req   : in Request'Class;
+                   Value : out Value_Type) is
+      use type ASF.Streams.Input_Stream_Access;
+
+      Stream : ASF.Streams.Input_Stream_Access := Req.Get_Input_Stream;
+      Parser : Util.Serialize.IO.JSON.Parser;
+      Mapper : Util.Beans.Objects.Readers.Reader;
+   begin
+      if Stream = null then
+         Value := Util.Beans.Objects.Null_Object;
+      else
+         Parser.Parse (Stream.all, Mapper);
+         Value := Mapper.Get_Root;
+      end if;
+   end Read;
 
 end Swagger.Servers;
