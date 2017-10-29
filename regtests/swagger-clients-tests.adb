@@ -26,6 +26,8 @@ package body Swagger.Clients.Tests is
    begin
       Caller.Add_Test (Suite, "Test Swagger.Clients.Set_Path",
                        Test_Set_Path'Access);
+      Caller.Add_Test (Suite, "Test Swagger.Clients.Add_Param",
+                       Test_Add_Param'Access);
    end Add_Tests;
 
    --  ------------------------------
@@ -39,5 +41,17 @@ package body Swagger.Clients.Tests is
       Util.Tests.Assert_Equals (T, "/admin/admin", URI.To_String,
                                 "To_String on URI is invalid");
    end Test_Set_Path;
+
+   --  ------------------------------
+   --  Test Add_Param operations.
+   --  ------------------------------
+   procedure Test_Add_Param (T : in out Test) is
+      URI : URI_Type;
+   begin
+      URI.Set_Path ("/admin/list");
+      URI.Add_Param ("status", "active");
+      Util.Tests.Assert_Equals (T, "/admin/list?status=active", URI.To_String,
+                                "To_String on URI is invalid");
+   end Test_Add_Param;
 
 end Swagger.Clients.Tests;
