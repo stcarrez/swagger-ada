@@ -27,4 +27,7 @@ package Swagger.Clients.Tests is
    --  Test Set_Path operations.
    procedure Test_Set_Path (T : in out Test);
 
+   --  Test Add_Param operations.
+   procedure Test_Add_Param (T : in out Test);
+
 end Swagger.Clients.Tests;
