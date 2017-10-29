@@ -22,6 +22,22 @@ with Ada.Iterator_Interfaces;
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
 with Util.Strings.Vectors;
+
+--  == Swagger Introduction ==
+--  The Swagger Ada library provides a small runtime for use by the Swagger Codegen
+--  REST API generator.  The library provides operations that are used by the generated
+--  REST client and servers to:
+--
+--    * serialize and deserialize the data in JSON or XML,
+--    * make the client REST operation and retrieve the result,
+--    * let a server recieve a REST operation, handle it and return the result
+--
+--  The <tt>Swagger</tt> root package defines the global types that are used by
+--  the generator to represent values such as strings, integers, dates.
+--
+--  @include swagger-clients.ads
+--  @include swagger-servers.ads
+--  @include swagger-streams.ads
 package Swagger is
 
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
