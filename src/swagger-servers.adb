@@ -59,6 +59,49 @@ package body Swagger.Servers is
    end Get_Query_Parameter;
 
    --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Long) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Long'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Integer) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Integer'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out UString) is
+   begin
+      Value := To_UString (Req.Get_Parameter (Name));
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Boolean) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Boolean'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
    --  Read the request body and get a value object tree.
    --  ------------------------------
    procedure Read (Req   : in Request'Class;
