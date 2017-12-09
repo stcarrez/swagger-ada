@@ -120,4 +120,12 @@ package body Swagger.Servers is
       end if;
    end Read;
 
+   procedure Initialize (Context : in out Context_Type;
+                         Req     : in out Request'Class;
+                         Reply   : in out Response'Class) is
+   begin
+      Context.Req := Req'Unchecked_Access;
+      Context.Reply := Reply'Unchecked_Access;
+   end Initialize;
+
 end Swagger.Servers;
