@@ -34,6 +34,10 @@ package Swagger.Servers is
 
    subtype Output_Stream is ASF.Rest.Output_Stream;
 
+   subtype Method_Type is ASF.Rest.Method_Type;
+
+   subtype Descriptor_Access is ASF.Rest.Descriptor_Access;
+
    --  Get a request parameter defined in the URI path.
    procedure Get_Path_Parameter (Req   : in Request'Class;
                                  Pos   : in Positive;
@@ -77,5 +81,18 @@ package Swagger.Servers is
    --  Read the request body and get a value object tree.
    procedure Read (Req   : in Request'Class;
                    Value : out Value_Type);
+
+   type Context_Type is tagged limited private;
+
+   procedure Initialize (Context : in out Context_Type;
+                         Req     : in out Request'Class;
+                         Reply   : in out Response'Class);
+
+private
+
+   type Context_Type is tagged limited record
+      Req   : access Request'Class;
+      Reply : access Response'Class;
+   end record;
 
 end Swagger.Servers;
