@@ -54,6 +54,26 @@ package Swagger.Servers is
                                   Name  : in String;
                                   Value : out UString_Vectors.Vector);
 
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Long);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Integer);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out UString);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Boolean);
+
    --  Read the request body and get a value object tree.
    procedure Read (Req   : in Request'Class;
                    Value : out Value_Type);
