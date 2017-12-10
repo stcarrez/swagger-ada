@@ -1,32 +1,15 @@
 *~
 *.log
-<<<<<<< HEAD
-=======
-Makefile
->>>>>>> 5032e4d5c1bc812da94f46b218847a6225d01431
 config.status
 CHANGES
 *.cproject
 *.gb_project
 *.project
-*.log
-<<<<<<< HEAD
-=======
 ChangeLog
->>>>>>> 5032e4d5c1bc812da94f46b218847a6225d01431
 .settings
 configure.lineno
 Makefile
 swagger.gpr
-<<<<<<< HEAD
-tests.xml
-swagger-test.xml
-autom4te.cache
-*.txt
-lib/
-obj/
-							       
-=======
 swagger_tests.gpr
 swagger-tests.xml
 bin/
@@ -34,4 +17,3 @@ obj/
 lib/
 regtests/results
 swagger-aunit.xml
->>>>>>> 5032e4d5c1bc812da94f46b218847a6225d01431
