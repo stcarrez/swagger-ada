@@ -15,14 +15,7 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with Util.Http.Clients;
-private with Util.Streams.Texts;
-with Swagger.Streams;
-with Util.Serialize.IO;
 with ASF.Rest;
-with ASF.Requests;
-with ASF.Responses;
-with ASF.Streams;
 with ASF.Servlets;
 package Swagger.Servers is
 
@@ -35,6 +28,11 @@ package Swagger.Servers is
    subtype Output_Stream is ASF.Rest.Output_Stream;
 
    subtype Method_Type is ASF.Rest.Method_Type;
+
+   GET    : constant Method_Type := ASF.Rest.GET;
+   POST   : constant Method_Type := ASF.Rest.POST;
+   DELETE : constant Method_Type := ASF.Rest.DELETE;
+   PUT    : constant Method_Type := ASF.Rest.PUT;
 
    subtype Descriptor_Access is ASF.Rest.Descriptor_Access;
 
