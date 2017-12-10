@@ -19,6 +19,10 @@ with Util.Http.Clients;
 private with Util.Streams.Texts;
 with Swagger.Streams;
 with Util.Serialize.IO;
+
+--  == REST Client ==
+--  The <tt>Swagger.Clients</tt> package implements the support used by the code generator
+--  to make REST client operations.
 package Swagger.Clients is
 
    type Request_Type is tagged limited private;

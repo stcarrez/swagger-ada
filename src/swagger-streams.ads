@@ -16,6 +16,10 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Serialize.IO;
+
+--  == Streams ==
+--  The <tt>Swagger.Streams</tt> package provides operations to manage data streams
+--  in order to serialize and deserialize the data either in JSON or in XML.
 package Swagger.Streams is
 
    subtype Output_Stream is Util.Serialize.IO.Output_Stream;

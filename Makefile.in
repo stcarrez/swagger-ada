@@ -48,10 +48,10 @@ MAKE_ARGS=-XMODE=${MODE}
 
 ifeq (,yes)
 all:     static shared
-install: install_static install_shared
+install: uninstall install_static install_shared
 else
 all:     static
-install: install_static
+install: uninstall install_static
 endif
 
 static:
@@ -64,6 +64,7 @@ build:
 	$(GNATMAKE) -p -P "$(GPRPATH)" $(MAKE_ARGS)
 
 build-test:  build
+	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
 
 # Not intended for manual invocation.
 # Invoked if automatic builds are enabled.
@@ -89,8 +90,7 @@ analyze:
 rebuild: clean build
 
 # Build and run the unit tests
-test:	build
-	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
+test:	build-test
 	bin/swagger_harness -xml swagger-aunit.xml
 
 dist:

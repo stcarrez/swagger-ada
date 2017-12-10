@@ -19,9 +19,12 @@ with Ada.Text_IO;
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
 with Util.Strings;
+with Util.Log.Loggers;
 package body Swagger.Clients is
 
    use Ada.Strings.Unbounded;
+
+   Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Clients");
 
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
@@ -177,9 +180,6 @@ package body Swagger.Clients is
          when DELETE =>
             Client.Delete (Path, Response);
 
-         when others =>
-            raise Program_Error;
-
       end case;
       if Response.Get_Status /= Util.Http.SC_OK then
          return;
@@ -217,6 +217,7 @@ package body Swagger.Clients is
             Client.Put (Path, Data, Response);
 
          when others =>
+            Log.Error ("REST operation is not supported");
             raise Program_Error;
 
          end case;
@@ -283,7 +284,6 @@ package body Swagger.Clients is
             Client.Set_Header ("Content-Type", "application/xml");
 
       end case;
-      null;
    end Initialize;
 
 end Swagger.Clients;
