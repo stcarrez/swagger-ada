@@ -17,6 +17,7 @@
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
+with ASF.Streams;
 package body Swagger.Servers is
 
    --  ------------------------------
@@ -108,7 +109,7 @@ package body Swagger.Servers is
                    Value : out Value_Type) is
       use type ASF.Streams.Input_Stream_Access;
 
-      Stream : ASF.Streams.Input_Stream_Access := Req.Get_Input_Stream;
+      Stream : constant ASF.Streams.Input_Stream_Access := Req.Get_Input_Stream;
       Parser : Util.Serialize.IO.JSON.Parser;
       Mapper : Util.Beans.Objects.Readers.Reader;
    begin
