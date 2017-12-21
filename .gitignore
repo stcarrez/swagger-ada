@@ -1,5 +1,6 @@
 *~
 *.log
+autom4te.cache
 config.status
 CHANGES
 *.cproject
