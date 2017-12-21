@@ -86,6 +86,15 @@ package Swagger.Servers is
                          Req     : in out Request'Class;
                          Reply   : in out Response'Class);
 
+   procedure Register (Registry   : in out ASF.Servlets.Servlet_Registry'Class;
+                       Definition : in Descriptor_Access)
+     renames ASF.Rest.Register;
+
+   -- Set the response error code with a message to return.
+   procedure Set_Error (Context : in out Context_Type;
+                        Code    : in Natural;
+                        Message : in String);
+
 private
 
    type Context_Type is tagged limited record
