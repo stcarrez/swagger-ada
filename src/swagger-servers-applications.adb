@@ -27,10 +27,12 @@ package body Swagger.Servers.Applications is
                         Config : in Util.Properties.Manager'Class) is
       use Util.Properties.Basic;
 
-      Cfg : Util.Properties.Manager;
+      Cfg       : Util.Properties.Manager;
+      Dir       : constant String := Config.Get ("swagger.dir");
       UI_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
    begin
       Cfg.Copy (Config);
+      Cfg.Set ("view.dir", Dir);
       App.Set_Init_Parameters (Cfg);
 
       --  Register the servlets and filters
