@@ -129,4 +129,14 @@ package body Swagger.Servers is
       Context.Reply := Reply'Unchecked_Access;
    end Initialize;
 
+   --  ------------------------------
+   -- Set the response error code with a message to return.
+   --  ------------------------------
+   procedure Set_Error (Context : in out Context_Type;
+                        Code    : in Natural;
+                        Message : in String) is
+   begin
+      Context.Reply.Set_Status (Code);
+   end Set_Error;
+
 end Swagger.Servers;
