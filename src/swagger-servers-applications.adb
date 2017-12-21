@@ -15,7 +15,7 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-
+with Util.Properties.Basic;
 package body Swagger.Servers.Applications is
 
    --  ------------------------------
@@ -25,8 +25,13 @@ package body Swagger.Servers.Applications is
    not overriding
    procedure Configure (App    : in out Application_Type;
                         Config : in Util.Properties.Manager'Class) is
+      use Util.Properties.Basic;
+
+      Cfg : Util.Properties.Manager;
+      UI_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
    begin
-      App.Set_Init_Parameters (Config);
+      Cfg.Copy (Config);
+      App.Set_Init_Parameters (Cfg);
 
       --  Register the servlets and filters
       App.Add_Servlet (Name => "api", Server => App.Api'Unchecked_Access);
@@ -34,12 +39,14 @@ package body Swagger.Servers.Applications is
 
       --  Define servlet mappings
       App.Add_Mapping (Name => "api", Pattern => "/*");
-      App.Add_Mapping (Name => "files", Pattern => "/ui/*.html");
-      App.Add_Mapping (Name => "files", Pattern => "/ui/*.js");
-      App.Add_Mapping (Name => "files", Pattern => "/ui/*.png");
-      App.Add_Mapping (Name => "files", Pattern => "/ui/*.css");
       App.Add_Mapping (Name => "files", Pattern => "/swagger/*.json");
-      App.Add_Mapping (Name => "files", Pattern => "/ui/*.map");
+      if UI_Enable then
+         App.Add_Mapping (Name => "files", Pattern => "/ui/*.html");
+         App.Add_Mapping (Name => "files", Pattern => "/ui/*.js");
+         App.Add_Mapping (Name => "files", Pattern => "/ui/*.png");
+         App.Add_Mapping (Name => "files", Pattern => "/ui/*.css");
+         App.Add_Mapping (Name => "files", Pattern => "/ui/*.map");
+      end if;
    end Configure;
 
 end Swagger.Servers.Applications;
