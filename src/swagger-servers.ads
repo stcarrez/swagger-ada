@@ -17,6 +17,7 @@
 -----------------------------------------------------------------------
 with ASF.Rest;
 with ASF.Servlets;
+with Security.Permissions;
 package Swagger.Servers is
 
    subtype Application_Type is ASF.Servlets.Servlet_Registry;
@@ -94,6 +95,10 @@ package Swagger.Servers is
    procedure Set_Error (Context : in out Context_Type;
                         Code    : in Natural;
                         Message : in String);
+
+   --  Returns True if the client doing the request has the given permission.
+   function Has_Permission (Context    : in Context_Type;
+                            Permission : in Security.Permissions.Permission_Index) return Boolean;
 
 private
 
