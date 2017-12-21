@@ -139,4 +139,14 @@ package body Swagger.Servers is
       Context.Reply.Set_Status (Code);
    end Set_Error;
 
+   --  ------------------------------
+   --  Returns True if the client doing the request has the given permission.
+   --  ------------------------------
+   function Has_Permission (Context    : in Context_Type;
+                            Permission : in Security.Permissions.Permission_Index)
+                            return Boolean is
+   begin
+      return True;
+   end Has_Permission;
+
 end Swagger.Servers;
