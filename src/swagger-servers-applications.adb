@@ -27,9 +27,10 @@ package body Swagger.Servers.Applications is
                         Config : in Util.Properties.Manager'Class) is
       use Util.Properties.Basic;
 
-      Cfg       : Util.Properties.Manager;
-      Dir       : constant String := Config.Get ("swagger.dir");
-      UI_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
+      Cfg        : Util.Properties.Manager;
+      Dir        : constant String := Config.Get ("swagger.dir");
+      UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
+      Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable");
    begin
       Cfg.Copy (Config);
       Cfg.Set ("view.dir", Dir);
@@ -48,6 +49,14 @@ package body Swagger.Servers.Applications is
          App.Add_Mapping (Name => "files", Pattern => "/ui/*.png");
          App.Add_Mapping (Name => "files", Pattern => "/ui/*.css");
          App.Add_Mapping (Name => "files", Pattern => "/ui/*.map");
+      end if;
+      if Web_Enable then
+         App.Add_Mapping (Name => "files", Pattern => "*.html");
+         App.Add_Mapping (Name => "files", Pattern => "*.js");
+         App.Add_Mapping (Name => "files", Pattern => "*.png");
+         App.Add_Mapping (Name => "files", Pattern => "*.css");
+         App.Add_Mapping (Name => "files", Pattern => "*.map");
+         App.Add_Mapping (Name => "files", Pattern => "*.jpg");
       end if;
    end Configure;
 
