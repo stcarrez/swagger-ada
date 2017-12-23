@@ -59,6 +59,7 @@ package Swagger is
 
    subtype Long is Long_Long_Integer;
    subtype Nullable_Long is Util.Nullables.Nullable_Long;
+   subtype Nullable_Integer is Util.Nullables.Nullable_Integer;
 
    subtype Http_Content_Type is UString;
 
