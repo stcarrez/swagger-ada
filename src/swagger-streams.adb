@@ -128,6 +128,22 @@ package body Swagger.Streams is
       Value := Util.Beans.Objects.To_Unbounded_String (Item);
    end Deserialize;
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_UString) is
+      Item : Swagger.Value_Type;
+   begin
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value.Is_Null := Util.Beans.Objects.Is_Null (Item);
+      if not Value.Is_Null then
+         Value.Value := Util.Beans.Objects.To_Unbounded_String (Item);
+      end if;
+   end Deserialize;
+
    --  ------------------------------
    --  Extract a value stored under the given name.
    --  ------------------------------
