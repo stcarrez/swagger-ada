@@ -22,6 +22,7 @@ with Ada.Iterator_Interfaces;
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
 with Util.Strings.Vectors;
+with Util.Nullables;
 
 --  == Swagger Introduction ==
 --  The Swagger Ada library provides a small runtime for use by the Swagger Codegen
@@ -41,6 +42,7 @@ with Util.Strings.Vectors;
 package Swagger is
 
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
+   subtype Nullable_UString is Util.Nullables.Nullable_String;
 
    function To_String (S : in UString) return String
      renames Ada.Strings.Unbounded.To_String;
@@ -49,12 +51,14 @@ package Swagger is
      renames Ada.Strings.Unbounded.To_Unbounded_String;
 
    subtype Date is Ada.Calendar.Time;
+   subtype Nullable_Date is Util.Nullables.Nullable_Time;
 
    subtype Datetime is Ada.Calendar.Time;
 
    subtype Vector is Util.Beans.Objects.Vectors.Vector;
 
    subtype Long is Long_Long_Integer;
+   subtype Nullable_Long is Util.Nullables.Nullable_Long;
 
    subtype Http_Content_Type is UString;
 
