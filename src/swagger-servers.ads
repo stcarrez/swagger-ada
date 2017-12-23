@@ -51,6 +51,9 @@ package Swagger.Servers is
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
                                   Value : out UString);
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_UString);
 
    --  Get a request parameter from the query string.
    procedure Get_Query_Parameter (Req   : in Request'Class;
