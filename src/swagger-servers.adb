@@ -51,6 +51,15 @@ package body Swagger.Servers is
       Value := To_UString (Req.Get_Parameter (Name));
    end Get_Query_Parameter;
 
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_UString) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value.Value := To_UString (V);
+      Value.Is_Null := V'Length = 0;
+   end Get_Query_Parameter;
+
    --  Get a request parameter from the query string.
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
