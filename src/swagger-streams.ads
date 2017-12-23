@@ -42,6 +42,10 @@ package Swagger.Streams is
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
+                        Value  : in Swagger.Nullable_UString);
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
                         Value  : in Integer_Map);
 
    --  Extract an integer value stored under the given name.
