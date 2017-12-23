@@ -52,6 +52,13 @@ package body Swagger.Streams is
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
+                        Value  : in Swagger.Nullable_UString) is
+   begin
+      Stream.Write_Entity (Name, Value);
+   end Serialize;
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
                         Value  : in Integer_Map) is
    begin
       null;
