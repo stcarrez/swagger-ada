@@ -89,6 +89,10 @@ package Swagger.Streams is
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
+                          Value : out Nullable_Date);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
                           Value : out UString_Vectors.Vector);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
