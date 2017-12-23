@@ -196,6 +196,26 @@ package body Swagger.Streams is
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
+                          Value : out Nullable_Date) is
+      Time : Swagger.Value_Type;
+   begin
+      if Name'Length = 0 then
+         Time := From;
+      else
+         Time := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Is_Null := Util.Beans.Objects.Is_Null (Time);
+      if not Value.Is_Null then
+         declare
+            T : constant String := Util.Beans.Objects.To_String (Time);
+         begin
+            Value.Value := Util.Dates.ISO8601.Value (T);
+         end;
+      end if;
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
                           Value : out UString_Vectors.Vector) is
       use Util.Beans.Objects;
       List : Util.Beans.Objects.Object;
