@@ -75,6 +75,13 @@ package body Swagger.Streams is
       null;
    end Serialize;
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Nullable_Integer_Map) is
+   begin
+      null;
+   end Serialize;
+
    --  ------------------------------
    --  Extract a boolean value stored under the given name.
    --  ------------------------------
@@ -278,6 +285,31 @@ package body Swagger.Streams is
                          Item : in Util.Beans.Objects.Object) is
       begin
          Value.Include (Name, Util.Beans.Objects.To_Integer (Item));
+      end Process;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      Util.Beans.Objects.Maps.Iterate (List, Process'Access);
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_Integer_Map) is
+      List : Util.Beans.Objects.Object;
+
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object) is
+      begin
+         if Util.Beans.Objects.Is_Null (Item) then
+            Value.Include (Name, (Is_Null => True, Value => <>));
+         else
+            Value.Include (Name, (Is_Null => False,
+                                  Value => Util.Beans.Objects.To_Integer (Item)));
+         end if;
       end Process;
    begin
       if Name'Length = 0 then
