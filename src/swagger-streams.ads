@@ -61,6 +61,10 @@ package Swagger.Streams is
                           Name  : in String;
                           Value : out Boolean);
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_Boolean);
+
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
