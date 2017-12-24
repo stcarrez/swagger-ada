@@ -99,6 +99,26 @@ package body Swagger.Streams is
    end Deserialize;
 
    --  ------------------------------
+   --  Extract a boolean value stored under the given name.
+   --  ------------------------------
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_Boolean) is
+      Item : Swagger.Value_Type;
+   begin
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      if Util.Beans.Objects.Is_Null (Item) then
+         Value := (Is_Null => True, Value => <>);
+      else
+         Value := (Is_Null => False, Value => Util.Beans.Objects.To_Boolean (Item));
+      end if;
+   end Deserialize;
+
+   --  ------------------------------
    --  Extract an integer value stored under the given name.
    --  ------------------------------
    procedure Deserialize (From  : in Swagger.Value_Type;
