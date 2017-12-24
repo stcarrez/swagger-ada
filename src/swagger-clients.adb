@@ -91,6 +91,15 @@ package body Swagger.Clients is
       Append (URI.Query, Value);
    end Add_Param;
 
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_UString) is
+   begin
+      if not Value.Is_Null then
+         URI.Add_Param (Name, Value.Value);
+      end if;
+   end Add_Param;
+
    --  ------------------------------
    --  Add a query parameter.
    --  ------------------------------
