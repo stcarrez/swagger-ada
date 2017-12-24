@@ -31,6 +31,10 @@ package Swagger.Streams is
                         Name   : in String;
                         Value  : in Swagger.UString_Vectors.Vector);
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Swagger.Nullable_UString_Vectors.Vector);
+
    --  Serialize a long value.
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
@@ -94,6 +98,10 @@ package Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out UString_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_UString_Vectors.Vector);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
