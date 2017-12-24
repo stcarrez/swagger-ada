@@ -73,6 +73,9 @@ package Swagger.Clients is
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
                         Value : in UString_Vectors.Vector);
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_UString_Vectors.Vector);
 
    --  Convert the URI into a string.
    function To_String (URI : in URI_Type) return String;
