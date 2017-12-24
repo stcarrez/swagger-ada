@@ -52,6 +52,10 @@ package Swagger.Streams is
                         Name   : in String;
                         Value  : in Integer_Map);
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Nullable_Integer_Map);
+
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
@@ -106,5 +110,9 @@ package Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Integer_Map);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_Integer_Map);
 
 end Swagger.Streams;
