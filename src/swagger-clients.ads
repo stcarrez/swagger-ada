@@ -65,6 +65,9 @@ package Swagger.Clients is
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
                         Value : in UString);
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_UString);
 
    --  Add a query parameter.
    procedure Add_Param (URI   : in out URI_Type;
