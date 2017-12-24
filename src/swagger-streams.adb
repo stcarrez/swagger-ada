@@ -33,6 +33,17 @@ package body Swagger.Streams is
       Stream.End_Array (Name);
    end Serialize;
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Swagger.Nullable_UString_Vectors.Vector) is
+   begin
+      Stream.Start_Array (Name);
+      for S of Value loop
+         Stream.Write_Entity ("", S);
+      end loop;
+      Stream.End_Array (Name);
+   end Serialize;
+
    --  ------------------------------
    --  Serialize a long value.
    --  ------------------------------
@@ -229,6 +240,31 @@ package body Swagger.Streams is
       if Is_Array (List) then
          for I in 1 .. Get_Count (List) loop
             Value.Append (To_String (Get_Value (List, I)));
+         end loop;
+      end if;
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Nullable_UString_Vectors.Vector) is
+      use Util.Beans.Objects;
+      List  : Util.Beans.Objects.Object;
+      Item  : Util.Beans.Objects.Object;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      if Is_Array (List) then
+         for I in 1 .. Get_Count (List) loop
+            Item := Get_Value (List, I);
+            if Util.Beans.Objects.Is_Null (Item) then
+               Value.Append ((Is_Null => True, Value => <>));
+            else
+               Value.Append ((Is_Null => False, Value => To_Unbounded_String (Item)));
+            end if;
          end loop;
       end if;
    end Deserialize;
