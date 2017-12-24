@@ -19,6 +19,7 @@ with Ada.Strings.Unbounded;
 with Ada.Calendar;
 with Ada.Strings.Hash;
 with Ada.Iterator_Interfaces;
+with Ada.Containers.Vectors;
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
 with Util.Strings.Vectors;
@@ -62,6 +63,7 @@ package Swagger is
    subtype Nullable_Integer is Util.Nullables.Nullable_Integer;
 
    subtype Http_Content_Type is UString;
+   subtype File_Part_Type is UString;
 
    subtype Number is Natural;
 
@@ -69,6 +71,11 @@ package Swagger is
    subtype Value_Type is Util.Beans.Objects.Object;
 
    package UString_Vectors renames Util.Strings.Vectors;
+
+   package Nullable_UString_Vectors is
+     new Ada.Containers.Vectors (Index_Type   => Positive,
+                                 Element_Type => Nullable_UString,
+                                 "="          => Util.Nullables."=");
 
    --  Convert the long value into a string.
    function To_String (Value : in Long) return String;
@@ -80,6 +87,15 @@ package Swagger is
                                                 Equivalent_Keys => "=");
 
    subtype Integer_Map is Integer_Maps.Map;
+
+   use Util.Nullables;
+   package Nullable_Integer_Maps is
+     new Ada.Containers.Indefinite_Hashed_Maps (Key_Type        => String,
+                                                Element_Type    => Nullable_Integer,
+                                                Hash            => Ada.Strings.Hash,
+                                                Equivalent_Keys => "=");
+
+   subtype Nullable_Integer_Map is Nullable_Integer_Maps.Map;
 
    type Value_Array_Type is tagged private
      with
