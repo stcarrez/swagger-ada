@@ -123,6 +123,15 @@ package body Swagger.Clients is
       end if;
    end Add_Param;
 
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_UString_Vectors.Vector) is
+   begin
+      if not Value.Is_Empty then
+         Add_Param (URI, Name, Value.Element (1).Value);
+      end if;
+   end Add_Param;
+
    --  ------------------------------
    --  Convert the URI into a string.
    --  ------------------------------
