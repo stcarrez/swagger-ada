@@ -59,6 +59,9 @@ package Swagger.Servers is
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
                                   Value : out UString_Vectors.Vector);
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_UString_Vectors.Vector);
 
    --  Get a request parameter passed in the form.
    procedure Get_Parameter (Req   : in Request'Class;
