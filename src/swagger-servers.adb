@@ -100,6 +100,15 @@ package body Swagger.Servers is
       Value := To_UString (Req.Get_Parameter (Name));
    end Get_Parameter;
 
+   procedure Get_Parameter (Req   : in Request'Class;
+                            Name  : in String;
+                            Value : out Nullable_UString) is
+      Param : constant String := Req.Get_Parameter (Name);
+   begin
+      Value.Value := To_UString (Param);
+      Value.Is_Null := Param'Length = 0;
+   end Get_Parameter;
+
    --  ------------------------------
    --  Get a request parameter passed in the form.
    --  ------------------------------
