@@ -68,6 +68,16 @@ package body Swagger.Servers is
       Value.Append (Req.Get_Parameter (Name));
    end Get_Query_Parameter;
 
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_UString_Vectors.Vector) is
+      Param : constant String := Req.Get_Parameter (Name);
+   begin
+      if Param'Length > 0 then
+         Value.Append ((Is_Null => False, Value => To_UString (Param)));
+      end if;
+   end Get_Query_Parameter;
+
    --  ------------------------------
    --  Get a request parameter passed in the form.
    --  ------------------------------
