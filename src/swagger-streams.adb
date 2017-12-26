@@ -53,6 +53,16 @@ package body Swagger.Streams is
    begin
       Stream.Write_Long_Entity (Name, Value);
    end Serialize;
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Swagger.Nullable_Long) is
+   begin
+      if Value.Is_Null then
+         Stream.Write_Null_Entity (Name);
+      else
+         Stream.Write_Long_Entity (Name, Value.Value);
+      end if;
+   end Serialize;
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
