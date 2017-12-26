@@ -39,6 +39,9 @@ package Swagger.Streams is
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
                         Value  : in Swagger.Long);
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Swagger.Nullable_Long);
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
