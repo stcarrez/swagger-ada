@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-clients -- Rest client support
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -158,6 +158,16 @@ package body Swagger.Clients is
    begin
       Client.Server := Server;
    end Set_Server;
+
+   --  ------------------------------
+   --  Set the credendial instance that is responsible for populating the HTTP request
+   --  before sending the request.
+   --  ------------------------------
+   procedure Set_Credentials (Client     : in out Client_Type;
+                              Credential : access Swagger.Credentials.Credential_Type'Class) is
+   begin
+      Client.Credential := Credential;
+   end Set_Credentials;
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
