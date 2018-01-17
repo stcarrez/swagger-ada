@@ -55,15 +55,15 @@ AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[util],
 AC_SUBST(UTIL_DIR)
 
 ##########################################
-# Ada Server Faces library
+# Ada Servlet library
 ##########################################
-AM_GNAT_FIND_PROJECT([ada-asf],[Ada Server Faces Library],[asf],
-  [git@github.com:stcarrez/ada-asf.git],
-  [Building swagger requires the Ada Server Faces Library.],
+AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
+  [git@github.com:stcarrez/ada-servlet.git],
+  [Building swagger requires the Ada Servlet Library.],
   [
-    ASF_DIR=${gnat_project_dir_asf}
+    SERVLET_DIR=${gnat_project_dir_servlet}
   ])
-AC_SUBST(ASF_DIR)
+AC_SUBST(SERVLET_DIR)
 
 AC_OUTPUT(
 Makefile swagger.gpr swagger_tests.gpr
