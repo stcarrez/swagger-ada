@@ -1,7 +1,7 @@
 with "@UTIL_DIR@config";
 with "@UTIL_DIR@util";
 with "@UTIL_DIR@util_http";
-with "@ASF_DIR@asf";
+with "@SERVLET_DIR@servlet";
 
 library project swagger is
 
