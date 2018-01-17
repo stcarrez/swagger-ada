@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-operation -- Rest server operation
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 
-with ASF.Rest.Operation;
+with Servlet.Rest.Operation;
 package body Swagger.Servers.Operation is
 
    procedure Op (Req     : in out Swagger.Servers.Request'Class;
@@ -36,10 +36,10 @@ package body Swagger.Servers.Operation is
          Reply.Set_Status (500);
    end Op;
 
-   package API is new ASF.Rest.Operation (Handler    => Op'Access,
-                                          Method     => Method,
-                                          URI        => URI,
-                                          Permission => Permission);
+   package API is new Servlet.Rest.Operation (Handler    => Op'Access,
+                                              Method     => Method,
+                                              URI        => URI,
+                                              Permission => Permission);
 
    function Definition return Descriptor_Access is
    begin
