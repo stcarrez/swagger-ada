@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-aws -- AWS Rest server support
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,9 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with ASF.Server.Web;
+with Servlet.Server.Web;
 package Swagger.Servers.AWS is
 
-   subtype AWS_Container is ASF.Server.Web.AWS_Container;
+   subtype AWS_Container is Servlet.Server.Web.AWS_Container;
 
 end Swagger.Servers.AWS;
