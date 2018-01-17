@@ -584,7 +584,7 @@ PACKAGE_URL=
 ac_unique_file="src/swagger.ads"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-ASF_DIR
+SERVLET_DIR
 UTIL_DIR
 BUILDS_SHARED
 NR_CPUS
@@ -646,6 +646,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -670,7 +671,7 @@ ac_user_opts='
 enable_option_checking
 enable_shared
 with_ada_util
-with_ada_asf
+with_ada_servlet
 '
       ac_precious_vars='build_alias
 host_alias
@@ -718,6 +719,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE}'
@@ -970,6 +972,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1107,7 +1118,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1260,6 +1271,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1298,7 +1310,7 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-ada-util=x       Path for Ada Utility Library
-  --with-ada-asf=x        Path for Ada Server Faces Library
+  --with-ada-servlet=x    Path for Ada Servlet Library
 
 Some influential environment variables:
   CC          C compiler command
@@ -3442,34 +3454,34 @@ $as_echo "no" >&6; }
 
 
 ##########################################
-# Ada Server Faces library
+# Ada Servlet library
 ##########################################
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Server Faces Library" >&5
-$as_echo_n "checking Ada Server Faces Library... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Servlet Library" >&5
+$as_echo_n "checking Ada Servlet Library... " >&6; }
 
-# Check whether --with-ada-asf was given.
-if test "${with_ada_asf+set}" = set; then :
-  withval=$with_ada_asf;
-      gnat_project_name_asf=${withval}/
+# Check whether --with-ada-servlet was given.
+if test "${with_ada_servlet+set}" = set; then :
+  withval=$with_ada_servlet;
+      gnat_project_name_servlet=${withval}/
       if test -d "${withval}"; then
-	    gnat_project_name_asf=${withval}/asf
+	    gnat_project_name_servlet=${withval}/servlet
 	  fi
 
 else
 
-      gnat_project_name_asf=asf
+      gnat_project_name_servlet=servlet
 
 fi
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_asf}" >&5
-$as_echo "trying ${gnat_project_name_asf}" >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_servlet}" >&5
+$as_echo "trying ${gnat_project_name_servlet}" >&6; }
 
   rm -f conftest.gpr
   # Search in the GNAT project path.
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_asf} project exists in gnatmake's search path" >&5
-$as_echo_n "checking whether ${gnat_project_name_asf} project exists in gnatmake's search path... " >&6; }
-  echo "with \"${gnat_project_name_asf}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_servlet} project exists in gnatmake's search path" >&5
+$as_echo_n "checking whether ${gnat_project_name_servlet} project exists in gnatmake's search path... " >&6; }
+  echo "with \"${gnat_project_name_servlet}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
   if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
@@ -3477,20 +3489,20 @@ $as_echo_n "checking whether ${gnat_project_name_asf} project exists in gnatmake
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
   then
-    gnat_project_asf=yes
+    gnat_project_servlet=yes
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   else
-    gnat_project_asf=no
+    gnat_project_servlet=no
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
-    # Search in ../ada-asf-*/asf.gpr
-    files=`ls -r ../ada-asf/asf.gpr ../asf/asf.gpr ../ada-asf-*/asf.gpr 2>/dev/null`
+    # Search in ../ada-servlet-*/servlet.gpr
+    files=`ls -r ../ada-servlet/servlet.gpr ../servlet/servlet.gpr ../ada-servlet-*/servlet.gpr 2>/dev/null`
     for name in $files; do
       dir=`dirname $name`
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Ada Server Faces Library project in ${dir}" >&5
-$as_echo_n "checking for Ada Server Faces Library project in ${dir}... " >&6; }
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Ada Servlet Library project in ${dir}" >&5
+$as_echo_n "checking for Ada Servlet Library project in ${dir}... " >&6; }
       echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
       if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
@@ -3499,41 +3511,41 @@ $as_echo_n "checking for Ada Server Faces Library project in ${dir}... " >&6; }
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
       then
-         gnat_project_asf=yes
-		 gnat_project_name_asf=${name}
+         gnat_project_servlet=yes
+		 gnat_project_name_servlet=${name}
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
          break
       else
-         gnat_project_asf=no
+         gnat_project_servlet=no
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
       fi
     done
   fi
   rm -f conftest.gpr
-  if test x${gnat_project_asf} = xyes; then
-    gnat_project_with_asf="with \"${gnat_project_name_asf}\";";
-    gnat_project_dir_asf=`dirname ${gnat_project_name_asf}`
-    if test ${gnat_project_dir_asf} = . ; then
-       gnat_project_dir_asf=
+  if test x${gnat_project_servlet} = xyes; then
+    gnat_project_with_servlet="with \"${gnat_project_name_servlet}\";";
+    gnat_project_dir_servlet=`dirname ${gnat_project_name_servlet}`
+    if test ${gnat_project_dir_servlet} = . ; then
+       gnat_project_dir_servlet=
     else
-       gnat_project_dir_asf="${gnat_project_dir_asf}/"
+       gnat_project_dir_servlet="${gnat_project_dir_servlet}/"
     fi
 
-    ASF_DIR=${gnat_project_dir_asf}
+    SERVLET_DIR=${gnat_project_dir_servlet}
 
   else
-    gnat_project_dir_asf=
-    gnat_project_name_asf=
-    if test x"Building swagger requires the Ada Server Faces Library." != x; then
-      as_fn_error $? "Building swagger requires the Ada Server Faces Library.
-  You should build and install the Ada Server Faces Library component.
+    gnat_project_dir_servlet=
+    gnat_project_name_servlet=
+    if test x"Building swagger requires the Ada Servlet Library." != x; then
+      as_fn_error $? "Building swagger requires the Ada Servlet Library.
+  You should build and install the Ada Servlet Library component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
-  This project was not found in ../asf nor in ../ada-asf-*.
-  The component is available at git@github.com:stcarrez/ada-asf.git.
-  Please, download and configure Ada Server Faces Library.
+  This project was not found in ../servlet nor in ../ada-servlet-*.
+  The component is available at git@github.com:stcarrez/ada-servlet.git.
+  Please, download and configure Ada Servlet Library.
   The current configuration was using:
     ${GNATMAKE}
     ADA_PROJECT_PATH=$ADA_PROJECT_PATH
