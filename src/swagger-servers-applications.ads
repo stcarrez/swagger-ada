@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-applications -- REST application
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,8 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Properties;
-private with ASF.Servlets.Rest;
-private with ASF.Servlets.Files;
+private with Servlet.Core.Rest;
+private with Servlet.Core.Files;
 package Swagger.Servers.Applications is
 
    type Application_Type is limited new Swagger.Servers.Application_Type with private;
@@ -31,9 +31,9 @@ package Swagger.Servers.Applications is
 private
 
    type Application_Type is limited new Swagger.Servers.Application_Type with record
-      Api      : aliased ASF.Servlets.Rest.Rest_Servlet;
-      Files    : aliased ASF.Servlets.Files.File_Servlet;
-      Ui_Files : aliased ASF.Servlets.Files.File_Servlet;
+      Api      : aliased Servlet.Core.Rest.Rest_Servlet;
+      Files    : aliased Servlet.Core.Files.File_Servlet;
+      Ui_Files : aliased Servlet.Core.Files.File_Servlet;
    end record;
 
 end Swagger.Servers.Applications;
