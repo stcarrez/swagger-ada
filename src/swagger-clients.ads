@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-clients -- Rest client support
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,7 @@
 with Util.Http.Clients;
 private with Util.Streams.Texts;
 with Swagger.Streams;
+with Swagger.Credentials;
 with Util.Serialize.IO;
 
 --  == REST Client ==
@@ -88,6 +89,11 @@ package Swagger.Clients is
    procedure Set_Server (Client : in out Client_Type;
                          Server : in UString);
 
+   --  Set the credendial instance that is responsible for populating the HTTP request
+   --  before sending the request.
+   procedure Set_Credentials (Client     : in out Client_Type;
+                              Credential : access Swagger.Credentials.Credential_Type'Class);
+
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
@@ -127,7 +133,8 @@ private
    end record;
 
    type Client_Type is new Util.Http.Clients.Client with record
-      Server : UString;
+      Server     : UString;
+      Credential : access Swagger.Credentials.Credential_Type'Class;
    end record;
 
    type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is record
