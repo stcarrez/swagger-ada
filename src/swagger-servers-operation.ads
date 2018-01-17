@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-operation -- Rest server operation
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ generic
                            Reply   : in out Swagger.Servers.Response'Class;
                            Stream  : in out Swagger.Servers.Output_Stream'Class;
                            Context : in out Swagger.Servers.Context_Type);
-   Method     : Method_Type := ASF.Rest.GET;
+   Method     : Method_Type := Servlet.Rest.GET;
    URI        : String;
    Permission : Security.Permissions.Permission_Index := Security.Permissions.NONE;
 package Swagger.Servers.Operation is
