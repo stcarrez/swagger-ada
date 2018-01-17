@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server -- Rest server support
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,27 +15,27 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with ASF.Rest;
-with ASF.Servlets;
+with Servlet.Rest;
+with Servlet.Core;
 with Security.Permissions;
 package Swagger.Servers is
 
-   subtype Application_Type is ASF.Servlets.Servlet_Registry;
+   subtype Application_Type is Servlet.Core.Servlet_Registry;
 
-   subtype Request is ASF.Rest.Request;
+   subtype Request is Servlet.Rest.Request;
 
-   subtype Response is ASF.Rest.Response;
+   subtype Response is Servlet.Rest.Response;
 
-   subtype Output_Stream is ASF.Rest.Output_Stream;
+   subtype Output_Stream is Servlet.Rest.Output_Stream;
 
-   subtype Method_Type is ASF.Rest.Method_Type;
+   subtype Method_Type is Servlet.Rest.Method_Type;
 
-   GET    : constant Method_Type := ASF.Rest.GET;
-   POST   : constant Method_Type := ASF.Rest.POST;
-   DELETE : constant Method_Type := ASF.Rest.DELETE;
-   PUT    : constant Method_Type := ASF.Rest.PUT;
+   GET    : constant Method_Type := Servlet.Rest.GET;
+   POST   : constant Method_Type := Servlet.Rest.POST;
+   DELETE : constant Method_Type := Servlet.Rest.DELETE;
+   PUT    : constant Method_Type := Servlet.Rest.PUT;
 
-   subtype Descriptor_Access is ASF.Rest.Descriptor_Access;
+   subtype Descriptor_Access is Servlet.Rest.Descriptor_Access;
 
    --  Get a request parameter defined in the URI path.
    procedure Get_Path_Parameter (Req   : in Request'Class;
@@ -96,9 +96,9 @@ package Swagger.Servers is
                          Req     : in out Request'Class;
                          Reply   : in out Response'Class);
 
-   procedure Register (Registry   : in out ASF.Servlets.Servlet_Registry'Class;
+   procedure Register (Registry   : in out Servlet.Core.Servlet_Registry'Class;
                        Definition : in Descriptor_Access)
-     renames ASF.Rest.Register;
+     renames Servlet.Rest.Register;
 
    -- Set the response error code with a message to return.
    procedure Set_Error (Context : in out Context_Type;
