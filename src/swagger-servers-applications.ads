@@ -16,8 +16,11 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Properties;
+private with Security.OAuth.Servers;
 private with Servlet.Core.Rest;
 private with Servlet.Core.Files;
+private with Servlet.Security.OAuth;
+private with Security.OAuth.File_Registry;
 package Swagger.Servers.Applications is
 
    type Application_Type is limited new Swagger.Servers.Application_Type with private;
@@ -32,8 +35,12 @@ private
 
    type Application_Type is limited new Swagger.Servers.Application_Type with record
       Api      : aliased Servlet.Core.Rest.Rest_Servlet;
+      OAuth    : aliased Servlet.Security.OAuth.Token_Servlet;
       Files    : aliased Servlet.Core.Files.File_Servlet;
       Ui_Files : aliased Servlet.Core.Files.File_Servlet;
+      Auth     : aliased Security.OAuth.Servers.Auth_Manager;
+      Apps     : aliased Security.OAuth.File_Registry.File_Application_Manager;
+      Realm    : aliased Security.OAuth.File_Registry.File_Realm_Manager;
    end record;
 
 end Swagger.Servers.Applications;
