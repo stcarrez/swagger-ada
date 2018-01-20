@@ -31,18 +31,27 @@ package body Swagger.Servers.Applications is
       Dir        : constant String := Config.Get ("swagger.dir");
       UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
       Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable");
+      Key        : constant String := Config.Get ("swagger.key");
    begin
       Cfg.Copy (Config);
       Cfg.Set ("view.dir", Dir);
       App.Set_Init_Parameters (Cfg);
 
+      --  Configure the authorization manager.
+      App.Auth.Set_Application_Manager (App.Apps'Unchecked_Access);
+      App.Auth.Set_Realm_Manager (App.Realm'Unchecked_Access);
+      App.OAuth.Set_Auth_Manager (App.Auth'Unchecked_Access);
+      App.Auth.Set_Private_Key (Key);
+
       --  Register the servlets and filters
       App.Add_Servlet (Name => "api", Server => App.Api'Unchecked_Access);
       App.Add_Servlet (Name => "files", Server => App.Files'Unchecked_Access);
+      App.Add_Servlet (Name => "oauth", Server => App.OAuth'Unchecked_Access);
 
       --  Define servlet mappings
       App.Add_Mapping (Name => "api", Pattern => "/*");
       App.Add_Mapping (Name => "files", Pattern => "/swagger/*.json");
+      App.Add_Mapping (Name => "oauth", Pattern => "/oauth/token");
       if UI_Enable then
          App.Add_Mapping (Name => "files", Pattern => "/ui/*.html");
          App.Add_Mapping (Name => "files", Pattern => "/ui/*.js");
