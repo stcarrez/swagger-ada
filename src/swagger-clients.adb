@@ -195,6 +195,9 @@ package body Swagger.Clients is
       Mapper   : Util.Beans.Objects.Readers.Reader;
       Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
+      if Client.Credential /= null then
+         Client.Credential.Set_Credentials (Client);
+      end if;
       case Operation is
          when GET =>
             Client.Get (Path, Response);
