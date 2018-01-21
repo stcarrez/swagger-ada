@@ -20,6 +20,7 @@ private with Security.OAuth.Servers;
 private with Servlet.Core.Rest;
 private with Servlet.Core.Files;
 private with Servlet.Security.OAuth;
+private with Servlet.Security.Filters.OAuth;
 private with Security.OAuth.File_Registry;
 package Swagger.Servers.Applications is
 
@@ -36,6 +37,7 @@ private
    type Application_Type is limited new Swagger.Servers.Application_Type with record
       Api      : aliased Servlet.Core.Rest.Rest_Servlet;
       OAuth    : aliased Servlet.Security.OAuth.Token_Servlet;
+      Filter   : aliased Servlet.Security.Filters.OAuth.Auth_Filter;
       Files    : aliased Servlet.Core.Files.File_Servlet;
       Ui_Files : aliased Servlet.Core.Files.File_Servlet;
       Auth     : aliased Security.OAuth.Servers.Auth_Manager;
