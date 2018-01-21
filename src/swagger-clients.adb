@@ -20,6 +20,7 @@ with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
 with Util.Strings;
 with Util.Log.Loggers;
+with Swagger.Streams.Forms;
 package body Swagger.Clients is
 
    use Ada.Strings.Unbounded;
@@ -297,11 +298,17 @@ package body Swagger.Clients is
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
                          Types   : in Content_Type_Array) is
-      Json : access Util.Serialize.IO.JSON.Output_Stream'Class;
+      Json  : access Util.Serialize.IO.JSON.Output_Stream'Class;
+      Forms : access Swagger.Streams.Forms.Output_Stream'Class;
    begin
       case Types (Types'First) is
          when APPLICATION_FORM =>
             Client.Set_Header ("Content-Type", "application/x-www-form-urlencoded");
+            Request.Buffer.Initialize (Size => 1000000);
+            Forms := new Swagger.Streams.Forms.Output_Stream;
+            Request.Data := Forms;
+            Forms.Initialize (Request.Buffer'Unchecked_Access);
+            Request.Data.Start_Document;
 
          when APPLICATION_JSON =>
             Client.Set_Header ("Content-Type", "application/json");
