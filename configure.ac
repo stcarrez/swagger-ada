@@ -65,6 +65,17 @@ AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
   ])
 AC_SUBST(SERVLET_DIR)
 
+##########################################
+# Ada Security library
+##########################################
+AM_GNAT_FIND_PROJECT([ada-security],[Ada Security Library],[security],
+  [git@github.com:stcarrez/ada-security.git],
+  [Building Ada Servlet requires the Ada Security Library.],
+  [
+    SECURITY_DIR=${gnat_project_dir_security}
+  ])
+AC_SUBST(SECURITY_DIR)
+
 AC_OUTPUT(
-Makefile swagger.gpr swagger_tests.gpr
+Makefile swagger.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr
 )
