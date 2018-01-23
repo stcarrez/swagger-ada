@@ -292,6 +292,25 @@ package body Swagger.Clients is
    end Set_Accept;
 
    --  ------------------------------
+   --  Handle an error after an API call.  The default implementation raises an exception
+   --  if the HTTP status code is 400, 401 or 403.
+   --  ------------------------------
+   procedure Error (Client   : in out Client_Type;
+                    Status   : in Natural;
+                    Response : in Util.Http.Clients.Response'Class) is
+   begin
+      if Status = 404 then
+         raise Not_Found;
+      elsif Status = 401 then
+         raise Authorization_Error;
+      elsif Status = 403 then
+         raise Permission_Error;
+      elsif Status >= 400 then
+         raise Parameter_Error;
+      end if;
+   end Error;
+
+   --  ------------------------------
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    --  ------------------------------
