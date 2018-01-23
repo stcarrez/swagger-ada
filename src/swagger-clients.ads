@@ -153,6 +153,7 @@ private
    type Client_Type is new Util.Http.Clients.Client with record
       Server     : UString;
       Credential : access Swagger.Credentials.Credential_Type'Class;
+      Response   : Util.Http.Clients.Response;
    end record;
 
    type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is record
