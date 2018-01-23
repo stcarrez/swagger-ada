@@ -2,6 +2,7 @@ with "@UTIL_DIR@config";
 with "@UTIL_DIR@util";
 with "@UTIL_DIR@util_http";
 with "@SERVLET_DIR@servlet";
+with "@SECURITY_DIR@security";
 
 library project swagger is
 
