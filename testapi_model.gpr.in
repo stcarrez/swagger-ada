@@ -1,0 +1,28 @@
+with "@UTIL_DIR@config";
+with "@UTIL_DIR@util";
+with "@UTIL_DIR@util_unit";
+with "@UTIL_DIR@util_http";
+with "@SERVLET_DIR@/servlet";
+with "swagger";
+library project TestAPI_Model is
+
+   Version := "@SWAGGER_VERSION@";
+   Library_Dir := "@SWAGGER_LIBDIR@";
+   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "static");
+
+   for Library_Name use "testapi";
+   for Library_Kind use Library_Type;
+   for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
+   for Excluded_Source_Files use ("testapi-client.adb");
+
+   for Source_Dirs use ("regtests/client/src/model", "regtests/client/src");
+   for Object_Dir use "./" & Config'Exec_Dir & "/obj";
+   for Library_Dir use "lib/" & Project'Library_Kind;
+
+   package Builder renames Config.Builder;
+   package Compiler renames Config.Compiler;
+   package Binder is
+       for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
+   end Binder;
+
+end TestAPI_Model;
