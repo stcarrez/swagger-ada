@@ -26,6 +26,18 @@ with Util.Serialize.IO;
 --  to make REST client operations.
 package Swagger.Clients is
 
+   --  Exception raised when an API was not found.
+   Not_Found           : exception;
+
+   --  Exception raised when a parameter is invalid.
+   Parameter_Error     : exception;
+
+   --  Exception raised when the caller is not authorized.
+   Authorization_Error : exception;
+
+   --  Exception raised when the caller does not have the permission.
+   Permission_Error    : exception;
+
    type Request_Type is tagged limited private;
 
    type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is private
