@@ -17,6 +17,7 @@
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
+with Security;
 with Servlet.Streams;
 with Servlet.Responses;
 package body Swagger.Servers is
@@ -187,12 +188,29 @@ package body Swagger.Servers is
    end Set_Location;
 
    --  ------------------------------
+   --  Returns True if the API request is authenticated.
+   --  ------------------------------
+   function Is_Authenticated (Context : in Context_Type) return Boolean is
+      use type Security.Principal_Access;
+
+      User : constant Security.Principal_Access := Context.Req.Get_User_Principal;
+   begin
+      return User /= null;
+   end Is_Authenticated;
+
+   --  ------------------------------
    --  Returns True if the client doing the request has the given permission.
    --  ------------------------------
    function Has_Permission (Context    : in Context_Type;
                             Permission : in Security.Permissions.Permission_Index)
                             return Boolean is
+      use type Security.Principal_Access;
+
+      User : constant Security.Principal_Access := Context.Req.Get_User_Principal;
    begin
+      if User = null then
+         return False;
+      end if;
       return True;
    end Has_Permission;
 
