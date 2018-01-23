@@ -18,6 +18,7 @@
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
 with Servlet.Streams;
+with Servlet.Responses;
 package body Swagger.Servers is
 
    --  ------------------------------
@@ -166,6 +167,24 @@ package body Swagger.Servers is
    begin
       Context.Reply.Set_Status (Code);
    end Set_Error;
+
+   --  ------------------------------
+   --  Set the HTTP status in the response.
+   --  ------------------------------
+   procedure Set_Status (Context : in out Context_Type;
+                         Code    : in Natural) is
+   begin
+      Context.Reply.Set_Status (Code);
+   end Set_Status;
+
+   --  ------------------------------
+   --  Send a Location: header in the response.
+   --  ------------------------------
+   procedure Set_Location (Context : in out Context_Type;
+                           URL     : in String) is
+   begin
+      Context.Reply.Add_Header (Name  => "Location", Value => URL);
+   end Set_Location;
 
    --  ------------------------------
    --  Returns True if the client doing the request has the given permission.
