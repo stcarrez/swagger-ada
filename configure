@@ -584,6 +584,7 @@ PACKAGE_URL=
 ac_unique_file="src/swagger.ads"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+SECURITY_DIR
 SERVLET_DIR
 UTIL_DIR
 BUILDS_SHARED
@@ -672,6 +673,7 @@ enable_option_checking
 enable_shared
 with_ada_util
 with_ada_servlet
+with_ada_security
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1311,6 +1313,7 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-ada-util=x       Path for Ada Utility Library
   --with-ada-servlet=x    Path for Ada Servlet Library
+  --with-ada-security=x   Path for Ada Security Library
 
 Some influential environment variables:
   CC          C compiler command
@@ -3555,7 +3558,109 @@ $as_echo "no" >&6; }
 
 
 
-ac_config_files="$ac_config_files Makefile swagger.gpr swagger_tests.gpr"
+##########################################
+# Ada Security library
+##########################################
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Security Library" >&5
+$as_echo_n "checking Ada Security Library... " >&6; }
+
+# Check whether --with-ada-security was given.
+if test "${with_ada_security+set}" = set; then :
+  withval=$with_ada_security;
+      gnat_project_name_security=${withval}/
+      if test -d "${withval}"; then
+	    gnat_project_name_security=${withval}/security
+	  fi
+
+else
+
+      gnat_project_name_security=security
+
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_security}" >&5
+$as_echo "trying ${gnat_project_name_security}" >&6; }
+
+  rm -f conftest.gpr
+  # Search in the GNAT project path.
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_security} project exists in gnatmake's search path" >&5
+$as_echo_n "checking whether ${gnat_project_name_security} project exists in gnatmake's search path... " >&6; }
+  echo "with \"${gnat_project_name_security}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+  if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+  then
+    gnat_project_security=yes
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+  else
+    gnat_project_security=no
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+    # Search in ../ada-security-*/security.gpr
+    files=`ls -r ../ada-security/security.gpr ../security/security.gpr ../ada-security-*/security.gpr 2>/dev/null`
+    for name in $files; do
+      dir=`dirname $name`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Ada Security Library project in ${dir}" >&5
+$as_echo_n "checking for Ada Security Library project in ${dir}... " >&6; }
+      echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+      if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+      then
+         gnat_project_security=yes
+		 gnat_project_name_security=${name}
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+         break
+      else
+         gnat_project_security=no
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      fi
+    done
+  fi
+  rm -f conftest.gpr
+  if test x${gnat_project_security} = xyes; then
+    gnat_project_with_security="with \"${gnat_project_name_security}\";";
+    gnat_project_dir_security=`dirname ${gnat_project_name_security}`
+    if test ${gnat_project_dir_security} = . ; then
+       gnat_project_dir_security=
+    else
+       gnat_project_dir_security="${gnat_project_dir_security}/"
+    fi
+
+    SECURITY_DIR=${gnat_project_dir_security}
+
+  else
+    gnat_project_dir_security=
+    gnat_project_name_security=
+    if test x"Building Ada Servlet requires the Ada Security Library." != x; then
+      as_fn_error $? "Building Ada Servlet requires the Ada Security Library.
+  You should build and install the Ada Security Library component.
+  It must be available and found by ${GNATMAKE}.
+  This project was not found in the ADA_PROJECT_PATH environment variable.
+  This project was not found in ../security nor in ../ada-security-*.
+  The component is available at git@github.com:stcarrez/ada-security.git.
+  Please, download and configure Ada Security Library.
+  The current configuration was using:
+    ${GNATMAKE}
+    ADA_PROJECT_PATH=$ADA_PROJECT_PATH
+" "$LINENO" 5
+    fi
+  fi
+
+
+
+ac_config_files="$ac_config_files Makefile swagger.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4266,6 +4371,8 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "swagger.gpr") CONFIG_FILES="$CONFIG_FILES swagger.gpr" ;;
     "swagger_tests.gpr") CONFIG_FILES="$CONFIG_FILES swagger_tests.gpr" ;;
+    "testapi_server.gpr") CONFIG_FILES="$CONFIG_FILES testapi_server.gpr" ;;
+    "testapi_model.gpr") CONFIG_FILES="$CONFIG_FILES testapi_model.gpr" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
