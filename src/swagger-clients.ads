@@ -131,6 +131,12 @@ package Swagger.Clients is
    procedure Set_Accept (Client : in out Client_Type;
                          List   : in Content_Type_Array);
 
+   --  Handle an error after an API call.  The default implementation raises an exception
+   --  if the HTTP status code is 400, 401 or 403.
+   procedure Error (Client   : in out Client_Type;
+                    Status   : in Natural;
+                    Response : in Util.Http.Clients.Response'Class);
+
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
