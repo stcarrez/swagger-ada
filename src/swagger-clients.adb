@@ -191,7 +191,6 @@ package body Swagger.Clients is
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
                    Reply     : out Value_Type) is
-      Response : Util.Http.Clients.Response;
       Parser   : Util.Serialize.IO.JSON.Parser;
       Mapper   : Util.Beans.Objects.Readers.Reader;
       Path     : constant String := To_String (Client.Server) & To_String (URI);
@@ -199,26 +198,28 @@ package body Swagger.Clients is
       if Client.Credential /= null then
          Client.Credential.Set_Credentials (Client);
       end if;
+
       case Operation is
          when GET =>
-            Client.Get (Path, Response);
+            Client.Get (Path, Client.Response);
 
          when POST =>
-            Client.Post (Path, "", Response);
+            Client.Post (Path, "", Client.Response);
 
          when PUT =>
-            Client.Put (Path, "", Response);
+            Client.Put (Path, "", Client.Response);
 
          when DELETE =>
-            Client.Delete (Path, Response);
+            Client.Delete (Path, Client.Response);
 
       end case;
-      if Response.Get_Status /= Util.Http.SC_OK then
+      if Client.Response.Get_Status /= Util.Http.SC_OK then
+         Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
-      Parser.Parse_String (Response.Get_Body, Mapper);
-      Ada.Text_IO.Put_Line (Response.Get_Body);
+      Parser.Parse_String (Client.Response.Get_Body, Mapper);
+      Ada.Text_IO.Put_Line (Client.Response.Get_Body);
       --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
       Reply := Mapper.Get_Root;
    end Call;
@@ -228,7 +229,6 @@ package body Swagger.Clients is
                    URI       : in URI_Type'Class;
                    Request   : in Request_Type'Class;
                    Reply     : out Value_Type) is
-      Response : Util.Http.Clients.Response;
       Parser   : Util.Serialize.IO.JSON.Parser;
       Mapper   : Util.Beans.Objects.Readers.Reader;
       Path     : constant String := To_String (Client.Server) & To_String (URI);
@@ -240,13 +240,13 @@ package body Swagger.Clients is
          Ada.Text_IO.Put_Line (Data);
          case Operation is
          when GET =>
-            Client.Get (Path, Response);
+            Client.Get (Path, Client.Response);
 
          when POST =>
-            Client.Post (Path, Data, Response);
+            Client.Post (Path, Data, Client.Response);
 
          when PUT =>
-            Client.Put (Path, Data, Response);
+            Client.Put (Path, Data, Client.Response);
 
          when others =>
             Log.Error ("REST operation is not supported");
@@ -254,12 +254,13 @@ package body Swagger.Clients is
 
          end case;
       end;
-      if Response.Get_Status /= Util.Http.SC_OK then
+      if Client.Response.Get_Status /= Util.Http.SC_OK then
+         Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
-      Parser.Parse_String (Response.Get_Body, Mapper);
-      Ada.Text_IO.Put_Line (Response.Get_Body);
+      Parser.Parse_String (Client.Response.Get_Body, Mapper);
+      Ada.Text_IO.Put_Line (Client.Response.Get_Body);
       --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
       Reply := Mapper.Get_Root;
    end Call;
