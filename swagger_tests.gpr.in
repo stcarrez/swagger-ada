@@ -1,6 +1,7 @@
 with "@UTIL_DIR@config";
 with "@UTIL_DIR@util";
 with "@UTIL_DIR@util_unit";
+with "testapi_model";
 with "swagger";
 
 project Swagger_Tests is
@@ -9,7 +10,7 @@ project Swagger_Tests is
 
    Mains := ("swagger_harness.adb");
 
-   for Source_Dirs use ("regtests");
+   for Source_Dirs use ("regtests", "regtests/client/src/client");
 
    for Main use Mains;
 
