@@ -1,0 +1,247 @@
+swagger: '2.0'
+info:
+  description: API to validate
+  version: 1.0.0
+  title: REST API Validation
+  termsOfService: 'https://github.com/terms/'
+  contact:
+    email: Stephane.Carrez@gmail.com
+  license:
+    name: Apache Licence
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'tickets.io'
+basePath: /v1
+tags:
+  - name: tickets
+    description: Tickets operations
+schemes:
+  - https
+  - http
+paths:
+  /tickets:
+    get:
+      tags:
+        - tickets
+      summary: List the tickets
+      description: |
+        List the tickets created for the project.
+      operationId: do_list_tickets
+      produces:
+        - application/json
+      parameters:
+        - name: status
+          in: query
+          description: The ticket status
+          required: false
+          type: string
+          enum: [open onhold assigned closed rejected]
+        - name: owner
+          in: query
+          description: The owner
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Ticket'
+        '400':
+          description: Invalid status value
+      security:
+        - ticket_auth:
+            - 'read:ticket'
+    post:
+      tags:
+        - ticket
+      summary: Create a ticket
+      description: ''
+      operationId: do_create_ticket
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: owner
+          in: formData
+          description: Ticket owner
+          required: false
+          type: string
+        - name: status
+          in: formData
+          description: Ticket status
+          required: false
+          type: string
+          enum: [open assigned closed]
+        - name: title
+          in: formData
+          description: Ticket title
+          required: true
+          type: string
+        - name: description
+          in: formData
+          description: Ticket description
+          required: false
+          type: string
+      responses:
+        '201':
+          description: ticket created
+          headers:
+            Location:
+              description: The URL of the new ticket
+              type: string
+        '405':
+          description: Invalid input
+      security:
+        - ticket_auth:
+            - 'write:ticket'
+  '/tickets/{tid}':
+    get:
+      tags:
+        - tickets
+      summary: Get a ticket
+      description: Get a ticket
+      operationId: do_get_ticket
+      produces:
+        - application/json
+      parameters:
+        - name: tid
+          in: path
+          description: Ticket identifier
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Ticket'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ticket not found
+      security:
+        - ticket_auth:
+            - 'read:ticket'
+    put:
+      tags:
+        - ticket
+      summary: Update a ticket
+      description: ''
+      operationId: do_update_ticket
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: tid
+          in: path
+          description: Ticket identifier
+          required: true
+          type: integer
+          format: int64
+        - name: owner
+          in: formData
+          description: Ticket owner
+          required: false
+          type: string
+        - name: status
+          in: formData
+          description: Ticket status
+          required: false
+          type: string
+          enum:  [open onhold assigned closed rejected]
+        - name: title
+          in: formData
+          description: Ticket title
+          required: false
+          type: string
+        - name: description
+          in: formData
+          description: Ticket description
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Ticket'
+        '405':
+          description: Invalid input
+      security:
+        - ticket_auth:
+            - 'write:ticket'
+    delete:
+      tags:
+        - ticket
+      summary: Delete a ticket
+      description: ''
+      operationId: do_delete_ticket
+      parameters:
+        - name: tid
+          in: path
+          description: Ticket identifier
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No content.
+        '404':
+          description: Invalid ticket identifier.
+      security:
+        - ticket_auth:
+            - 'write:ticket'
+securityDefinitions:
+  ticket_auth:
+    type: oauth2
+    authorizationUrl: '/oauth/authorize'
+    flow: implicit
+    scopes:
+      'write:ticket': Update a ticket
+      'read:ticket': Read a ticket
+definitions:
+  Ticket:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      title:
+        type: string
+        description: Title of the ticket
+      description:
+        type: string
+        description: Description of the ticket
+      owner:
+        type: string
+        description: The ticket owner
+      create_date:
+        type: string
+        format: date-time
+        description: Ticket creation date
+      end_date:
+        type: string
+        format: date-time
+        description: Ticket deadline date
+      update_date:
+        type: string
+        format: date-time
+        description: Ticket last change date
+      status:
+        type: string
+        description: Ticket status
+        enum:  [open onhold assigned closed rejected]
+    required:
+      - id
+      - title
+      - create_date
+      - status
+      - description
+    title: Information about a ticket
+    xml:
+      name: Ticket
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
