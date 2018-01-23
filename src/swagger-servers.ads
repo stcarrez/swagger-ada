@@ -113,6 +113,9 @@ package Swagger.Servers is
    procedure Set_Location (Context : in out Context_Type;
                            URL     : in String);
 
+   --  Returns True if the API request is authenticated.
+   function Is_Authenticated (Context : in Context_Type) return Boolean;
+
    --  Returns True if the client doing the request has the given permission.
    function Has_Permission (Context    : in Context_Type;
                             Permission : in Security.Permissions.Permission_Index) return Boolean;
