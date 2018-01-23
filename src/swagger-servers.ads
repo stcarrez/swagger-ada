@@ -105,6 +105,14 @@ package Swagger.Servers is
                         Code    : in Natural;
                         Message : in String);
 
+   --  Set the HTTP status in the response.
+   procedure Set_Status (Context : in out Context_Type;
+                         Code    : in Natural);
+
+   --  Send a Location: header in the response.
+   procedure Set_Location (Context : in out Context_Type;
+                           URL     : in String);
+
    --  Returns True if the client doing the request has the given permission.
    function Has_Permission (Context    : in Context_Type;
                             Permission : in Security.Permissions.Permission_Index) return Boolean;
