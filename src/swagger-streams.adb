@@ -155,7 +155,7 @@ package body Swagger.Streams is
          Deserialize (From, Name, Item);
       end if;
       if Util.Beans.Objects.Is_Null (Item) then
-         Value := (Is_Null => True, Value => <>);
+         Value := (Is_Null => True, Value => 0);
       else
          Value := (Is_Null => False, Value => Util.Beans.Objects.To_Integer (Item));
       end if;
@@ -188,7 +188,7 @@ package body Swagger.Streams is
          Deserialize (From, Name, Item);
       end if;
       if Util.Beans.Objects.Is_Null (Item) then
-         Value := (Is_Null => True, Value => <>);
+         Value := (Is_Null => True, Value => 0);
       else
          Value := (Is_Null => False, Value => Util.Beans.Objects.To_Long_Long_Integer (Item));
       end if;
