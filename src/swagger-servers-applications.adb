@@ -32,18 +32,14 @@ package body Swagger.Servers.Applications is
       UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
       Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable");
       Key        : constant String := Config.Get ("swagger.key");
-      Client_Id  : constant String := Config.Get ("swagger.client_id");
-      Secret     : constant String := Config.Get ("swagger.client_secret");
       Serv_App  : Security.OAuth.Servers.Application;
    begin
       Cfg.Copy (Config);
       Cfg.Set ("view.dir", Dir);
       App.Set_Init_Parameters (Cfg);
 
-      App.Realm.Add_User ("admin", "admin");
-      Serv_App.Set_Application_Identifier (Client_Id);
-      Serv_App.Set_Application_Secret (Secret);
-      App.Apps.Add_Application (Serv_App);
+      App.Realm.Load (Config, Config.Get ("swagger.users", "users"));
+      App.Apps.Load (Config, Config.Get ("swagger.apps", "apps"));
       App.Filter.Set_Auth_Manager (App.Auth'Unchecked_Access);
 
       --  Configure the authorization manager.
