@@ -234,6 +234,9 @@ package body Swagger.Clients is
       Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
       Request.Data.End_Document;
+      if Client.Credential /= null then
+         Client.Credential.Set_Credentials (Client);
+      end if;
       declare
          Data     : constant String := Util.Streams.Texts.To_String (Request.Buffer);
       begin
