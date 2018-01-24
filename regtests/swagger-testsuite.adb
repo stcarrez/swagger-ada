@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-testsuite - Swagger Test suite
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Swagger.Clients.Tests;
+with Swagger.Tests;
 package body Swagger.Testsuite is
 
    Tests : aliased Util.Tests.Test_Suite;
@@ -24,6 +25,7 @@ package body Swagger.Testsuite is
       Ret : constant Util.Tests.Access_Test_Suite := Tests'Access;
    begin
       Swagger.Clients.Tests.Add_Tests (Ret);
+      Swagger.Tests.Add_Tests (Ret);
       return Ret;
    end Suite;
 
