@@ -59,11 +59,13 @@ static:
 
 shared:
 	$(MAKE) SWAGGER_LIBRARY_TYPE=relocatable build-test
+
 # Build executables for all mains defined by the project.
 build:
 	$(GNATMAKE) -p -P "$(GPRPATH)" $(MAKE_ARGS)
 
 build-test:  build
+	$(GNATMAKE) -p -Ptestapi_server $(MAKE_ARGS)
 	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
 
 # Not intended for manual invocation.
@@ -99,7 +101,7 @@ rebuild: clean build
 
 # Build and run the unit tests
 test:	build-test
-	bin/swagger_harness -xml swagger-aunit.xml
+	bin/swagger_harness -config tests.properties -xml swagger-aunit.xml
 
 dist:
 	git archive -o $(DIST_FILE) --prefix=$(distdir)/ HEAD
