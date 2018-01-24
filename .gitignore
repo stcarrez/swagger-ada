@@ -12,6 +12,8 @@ configure.lineno
 Makefile
 swagger.gpr
 swagger_tests.gpr
+testapi_server.gpr
+testapi_model.gpr
 swagger-tests.xml
 bin/
 obj/
