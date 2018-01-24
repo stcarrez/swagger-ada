@@ -18,9 +18,11 @@
 
 with Swagger.Testsuite;
 with Util.Tests;
+with Util.Http.Clients.Curl;
 
 procedure Swagger_Harness is
    procedure Harness is new Util.Tests.Harness (Swagger.Testsuite.Suite);
 begin
+   Util.Http.Clients.Curl.Register;
    Harness ("swagger-tests.xml");
 end Swagger_Harness;
