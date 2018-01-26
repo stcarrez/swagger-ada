@@ -101,7 +101,11 @@ rebuild: clean build
 
 # Build and run the unit tests
 test:	build-test
-	bin/swagger_harness -config tests.properties -xml swagger-aunit.xml
+	bin/testapi-server & \
+        SERVER_PID=$$!; \
+        sleep 1; \
+	bin/swagger_harness -config tests.properties -xml swagger-aunit.xml ;\
+        kill $$SERVER_PID
 
 dist:
 	git archive -o $(DIST_FILE) --prefix=$(distdir)/ HEAD
