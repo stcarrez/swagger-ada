@@ -315,6 +315,14 @@ package body Swagger.Clients is
    end Error;
 
    --  ------------------------------
+   --  Get the HTTP response code status.
+   --  ------------------------------
+   function Get_Status (Client : in Client_Type) return Natural is
+   begin
+      return Client.Response.Get_Status;
+   end Get_Status;
+
+   --  ------------------------------
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    --  ------------------------------
