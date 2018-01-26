@@ -17,10 +17,13 @@
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
+with Util.Serialize.IO.Form;
 with Security;
 with Servlet.Streams;
 with Servlet.Responses;
 package body Swagger.Servers is
+
+   use type Servlet.Streams.Input_Stream_Access;
 
    --  ------------------------------
    --  Get a request parameter defined in the URI path.
@@ -81,63 +84,10 @@ package body Swagger.Servers is
    end Get_Query_Parameter;
 
    --  ------------------------------
-   --  Get a request parameter passed in the form.
-   --  ------------------------------
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Long) is
-      V : constant String := Req.Get_Parameter (Name);
-   begin
-      Value := Long'Value (V);
-   end Get_Parameter;
-
-   --  ------------------------------
-   --  Get a request parameter passed in the form.
-   --  ------------------------------
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Integer) is
-      V : constant String := Req.Get_Parameter (Name);
-   begin
-      Value := Integer'Value (V);
-   end Get_Parameter;
-
-   --  ------------------------------
-   --  Get a request parameter passed in the form.
-   --  ------------------------------
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out UString) is
-   begin
-      Value := To_UString (Req.Get_Parameter (Name));
-   end Get_Parameter;
-
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Nullable_UString) is
-      Param : constant String := Req.Get_Parameter (Name);
-   begin
-      Value.Value := To_UString (Param);
-      Value.Is_Null := Param'Length = 0;
-   end Get_Parameter;
-
-   --  ------------------------------
-   --  Get a request parameter passed in the form.
-   --  ------------------------------
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Boolean) is
-      V : constant String := Req.Get_Parameter (Name);
-   begin
-      Value := Boolean'Value (V);
-   end Get_Parameter;
-
-   --  ------------------------------
    --  Read the request body and get a value object tree.
    --  ------------------------------
    procedure Read (Req   : in Request'Class;
                    Value : out Value_Type) is
-      use type Servlet.Streams.Input_Stream_Access;
 
       Stream : constant Servlet.Streams.Input_Stream_Access := Req.Get_Input_Stream;
       Parser : Util.Serialize.IO.JSON.Parser;
@@ -151,16 +101,110 @@ package body Swagger.Servers is
       end if;
    end Read;
 
+   procedure Read (Context : in out Context_Type) is
+      Stream : constant Servlet.Streams.Input_Stream_Access := Context.Req.Get_Input_Stream;
+      Parser : Util.Serialize.IO.Form.Parser;
+      Mapper : Util.Beans.Objects.Readers.Reader;
+   begin
+      if Stream = null then
+         Context.Params := Util.Beans.Objects.Null_Object;
+      else
+         Parser.Parse (Stream.all, Mapper);
+         Context.Params := Mapper.Get_Root;
+      end if;
+      Context.Use_Map := True;
+   end Read;
+
    procedure Initialize (Context : in out Context_Type;
                          Req     : in out Request'Class;
                          Reply   : in out Response'Class) is
    begin
       Context.Req := Req'Unchecked_Access;
       Context.Reply := Reply'Unchecked_Access;
+      if Req.Get_Method = "PUT"
+        and then Req.Get_Content_Type = "application/x-www-form-urlencoded"
+      then
+         Context.Read;
+      end if;
    end Initialize;
 
+   function Get_Parameter (Req : in out Context_Type;
+                           Name : in String) return String is
+   begin
+      if Req.Use_Map then
+         return Util.Beans.Objects.To_String (Util.Beans.Objects.Get_Value (Req.Params, Name));
+      else
+         return Req.Req.Get_Parameter (Name);
+      end if;
+   end Get_Parameter;
+
    --  ------------------------------
-   -- Set the response error code with a message to return.
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Long) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Long'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Integer) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Integer'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out UString) is
+   begin
+      Value := To_UString (Req.Get_Parameter (Name));
+   end Get_Parameter;
+
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Nullable_UString) is
+   begin
+      if Req.Use_Map then
+         declare
+            Item : constant Util.Beans.Objects.Object
+              := Util.Beans.Objects.Get_Value (Req.Params, Name);
+         begin
+            Value.Is_Null := Util.Beans.Objects.Is_Null (Item);
+            Value.Value := Util.Beans.Objects.To_Unbounded_String (Item);
+         end;
+      else
+         declare
+            Param : constant String := Req.Get_Parameter (Name);
+         begin
+            Value.Value := To_UString (Param);
+            Value.Is_Null := Param'Length = 0;
+         end;
+      end if;
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Get a request parameter passed in the form.
+   --  ------------------------------
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Boolean) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value := Boolean'Value (V);
+   end Get_Parameter;
+
+   --  ------------------------------
+   --  Set the response error code with a message to return.
    --  ------------------------------
    procedure Set_Error (Context : in out Context_Type;
                         Code    : in Natural;
