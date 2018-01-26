@@ -69,7 +69,7 @@ the **null** instruction by real code.
 
 ## API Documentation
 
-All URIs are relative to *http://https://tickets.io/v1*
+All URIs are relative to *https://tickets.io/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -85,12 +85,6 @@ Method | HTTP request | Description
 
 
 ## Authorization
-
-## apiKey
-
-- **Type**: API key
-- **API key parameter name**: X-API-KEY
-- **Location**: HTTP header
 
 ## ticketAuth
 

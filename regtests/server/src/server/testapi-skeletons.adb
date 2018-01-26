@@ -39,10 +39,10 @@ package body TestAPI.Skeletons is
             Context.Set_Error (403, "Permission denied");
             return;
          end if;
-         Swagger.Servers.Get_Parameter (Req, "owner", Owner);
-         Swagger.Servers.Get_Parameter (Req, "status", Status);
-         Swagger.Servers.Get_Parameter (Req, "title", Title);
-         Swagger.Servers.Get_Parameter (Req, "description", Description);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
          Impl.Do_Create_Ticket
             (Title,
              Owner,
@@ -107,10 +107,10 @@ package body TestAPI.Skeletons is
             return;
          end if;
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
-         Swagger.Servers.Get_Parameter (Req, "owner", Owner);
-         Swagger.Servers.Get_Parameter (Req, "status", Status);
-         Swagger.Servers.Get_Parameter (Req, "title", Title);
-         Swagger.Servers.Get_Parameter (Req, "description", Description);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
          Impl.Do_Update_Ticket
             (Tid,
              Owner,
@@ -220,10 +220,10 @@ package body TestAPI.Skeletons is
             Context.Set_Error (403, "Permission denied");
             return;
          end if;
-         Swagger.Servers.Get_Parameter (Req, "owner", Owner);
-         Swagger.Servers.Get_Parameter (Req, "status", Status);
-         Swagger.Servers.Get_Parameter (Req, "title", Title);
-         Swagger.Servers.Get_Parameter (Req, "description", Description);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
          Server.Do_Create_Ticket
             (Title,
              Owner,
@@ -286,10 +286,10 @@ package body TestAPI.Skeletons is
             return;
          end if;
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
-         Swagger.Servers.Get_Parameter (Req, "owner", Owner);
-         Swagger.Servers.Get_Parameter (Req, "status", Status);
-         Swagger.Servers.Get_Parameter (Req, "title", Title);
-         Swagger.Servers.Get_Parameter (Req, "description", Description);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
          Server.Do_Update_Ticket
             (Tid,
              Owner,

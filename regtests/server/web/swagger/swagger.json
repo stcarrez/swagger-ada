@@ -10,7 +10,7 @@
     },
     "license" : {
       "name" : "Apache Licence",
-      "url" : "http://www.apache.org/licenses/"
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
   "host" : "SWAGGER_HOST",
@@ -19,7 +19,7 @@
     "name" : "tickets",
     "description" : "Tickets operations"
   } ],
-  "schemes" : [ "http" ],
+  "schemes" : [ "https", "http" ],
   "paths" : {
     "/tickets" : {
       "get" : {
@@ -34,7 +34,7 @@
           "description" : "The ticket status",
           "required" : false,
           "type" : "string",
-          "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
+          "enum" : [ "open onhold assigned closed rejected" ],
           "x-is-model-type" : false
         }, {
           "name" : "owner",
@@ -178,7 +178,7 @@
           "description" : "Ticket status",
           "required" : false,
           "type" : "string",
-          "enum" : [ "open", "assigned", "closed" ],
+          "enum" : [ "open assigned closed" ],
           "x-is-model-type" : false
         }, {
           "name" : "title",
@@ -328,7 +328,7 @@
           "description" : "Ticket status",
           "required" : false,
           "type" : "string",
-          "enum" : [ "free", "busy", "offline" ],
+          "enum" : [ "open onhold assigned closed rejected" ],
           "x-is-model-type" : false
         }, {
           "name" : "title",
@@ -449,11 +449,6 @@
         "write:ticket" : "Update a ticket",
         "read:ticket" : "Read a ticket"
       }
-    },
-    "api_key" : {
-      "type" : "apiKey",
-      "name" : "X-API-KEY",
-      "in" : "header"
     }
   },
   "definitions" : {
@@ -502,7 +497,7 @@
         "status" : {
           "type" : "string",
           "description" : "Ticket status",
-          "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
+          "enum" : [ "open onhold assigned closed rejected" ],
           "x-is-model-type" : false
         }
       },
@@ -515,7 +510,7 @@
         "title" : "title",
         "create_date" : "2000-01-23T04:56:07.000+00:00",
         "update_date" : "2000-01-23T04:56:07.000+00:00",
-        "status" : "open"
+        "status" : "open onhold assigned closed rejected"
       },
       "xml" : {
         "name" : "Ticket"
