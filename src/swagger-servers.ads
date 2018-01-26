@@ -18,7 +18,6 @@
 with Servlet.Rest;
 with Servlet.Core;
 with Security.Permissions;
-private with Util.Strings.Maps;
 package Swagger.Servers is
 
    subtype Application_Type is Servlet.Core.Servlet_Registry;
@@ -101,7 +100,7 @@ package Swagger.Servers is
                             Name  : in String;
                             Value : out Boolean);
 
-   -- Set the response error code with a message to return.
+   --  Set the response error code with a message to return.
    procedure Set_Error (Context : in out Context_Type;
                         Code    : in Natural;
                         Message : in String);
