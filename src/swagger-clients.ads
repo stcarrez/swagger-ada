@@ -137,6 +137,9 @@ package Swagger.Clients is
                     Status   : in Natural;
                     Response : in Util.Http.Clients.Response'Class);
 
+   --  Get the HTTP response code status.
+   function Get_Status (Client : in Client_Type) return Natural;
+
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
