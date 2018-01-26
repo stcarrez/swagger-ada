@@ -18,6 +18,7 @@
 with Servlet.Rest;
 with Servlet.Core;
 with Security.Permissions;
+private with Util.Strings.Maps;
 package Swagger.Servers is
 
    subtype Application_Type is Servlet.Core.Servlet_Registry;
@@ -63,29 +64,6 @@ package Swagger.Servers is
                                   Name  : in String;
                                   Value : out Nullable_UString_Vectors.Vector);
 
-   --  Get a request parameter passed in the form.
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Long);
-
-   --  Get a request parameter passed in the form.
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Integer);
-
-   --  Get a request parameter passed in the form.
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out UString);
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Nullable_UString);
-
-   --  Get a request parameter passed in the form.
-   procedure Get_Parameter (Req   : in Request'Class;
-                            Name  : in String;
-                            Value : out Boolean);
-
    --  Read the request body and get a value object tree.
    procedure Read (Req   : in Request'Class;
                    Value : out Value_Type);
@@ -99,6 +77,29 @@ package Swagger.Servers is
    procedure Register (Registry   : in out Servlet.Core.Servlet_Registry'Class;
                        Definition : in Descriptor_Access)
      renames Servlet.Rest.Register;
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Long);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Integer);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out UString);
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Nullable_UString);
+
+   --  Get a request parameter passed in the form.
+   procedure Get_Parameter (Req   : in out Context_Type;
+                            Name  : in String;
+                            Value : out Boolean);
 
    -- Set the response error code with a message to return.
    procedure Set_Error (Context : in out Context_Type;
@@ -122,9 +123,15 @@ package Swagger.Servers is
 
 private
 
+   function Get_Parameter (Req : in out Context_Type;
+                           Name : in String) return String;
+   procedure Read (Context : in out Context_Type);
+
    type Context_Type is tagged limited record
-      Req   : access Request'Class;
-      Reply : access Response'Class;
+      Req     : access Request'Class;
+      Reply   : access Response'Class;
+      Params  : Util.Beans.Objects.Object;
+      Use_Map : Boolean := False;
    end record;
 
 end Swagger.Servers;
