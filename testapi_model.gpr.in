@@ -2,7 +2,6 @@ with "@UTIL_DIR@config";
 with "@UTIL_DIR@util";
 with "@UTIL_DIR@util_unit";
 with "@UTIL_DIR@util_http";
-with "@SERVLET_DIR@/servlet";
 with "swagger";
 library project TestAPI_Model is
 
