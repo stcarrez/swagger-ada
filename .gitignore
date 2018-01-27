@@ -1,5 +1,6 @@
 *~
 *.log
+*.map
 autom4te.cache
 config.status
 CHANGES
