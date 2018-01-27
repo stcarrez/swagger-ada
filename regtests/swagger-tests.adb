@@ -26,7 +26,7 @@ package body Swagger.Tests is
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Tests");
 
-   package Caller is new Util.Test_Caller (Test, "Swagger.Clients");
+   package Caller is new Util.Test_Caller (Test, "Swagger.Tests");
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite) is
    begin
