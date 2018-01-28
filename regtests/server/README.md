@@ -69,7 +69,7 @@ the **null** instruction by real code.
 
 ## API Documentation
 
-All URIs are relative to *https://tickets.io/v1*
+All URIs are relative to *https://localhost:8082/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
