@@ -46,7 +46,7 @@ package body Swagger.Tests is
                         Client : in out TestAPI.Clients.Client_Type) is
    begin
       Client.Set_Server (To_String (T.Server));
-      Client.Set_Server ("http://localhost:8080/v1");
+      Client.Set_Server (Util.Tests.Get_Parameter ("testapi.url"));
    end Configure;
 
    procedure Authenticate (T    : in out Test;
