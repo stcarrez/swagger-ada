@@ -1,0 +1,29 @@
+with "@UTIL_DIR@config";
+with "@UTIL_DIR@util";
+with "@UTIL_DIR@util_http";
+with "@SERVLET_DIR@servlet";
+with "@SECURITY_DIR@security";
+with "swagger";
+library project swagger_server is
+
+   Version := "@SWAGGER_VERSION@";
+   Library_Dir := "@SWAGGER_LIBDIR@";
+   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "static");
+
+   for Library_Name use "swagger_server";
+   for Library_Kind use Library_Type;
+   for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
+
+   for Source_Dirs use ("src/server");
+   for Library_Dir use "lib/" & Project'Library_Kind;
+   for Object_Dir use "obj/swagger_server/" & Project'Library_Kind;
+
+   package Builder renames Config.Builder;
+   package Compiler renames Config.Compiler;
+   package Ide      renames Config.Ide;
+
+   package Binder is
+       for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
+   end Binder;
+
+end swagger_server;
