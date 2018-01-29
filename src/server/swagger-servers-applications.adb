@@ -16,6 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Properties.Basic;
+with Swagger.Servers.Config;
 package body Swagger.Servers.Applications is
 
    --  ------------------------------
@@ -29,13 +30,13 @@ package body Swagger.Servers.Applications is
 
       Cfg        : Util.Properties.Manager;
       Dir        : constant String := Config.Get ("swagger.dir");
-      UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable");
-      Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable");
+      UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable", True);
+      Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable", True);
       Key        : constant String := Config.Get ("swagger.key");
       Serv_App  : Security.OAuth.Servers.Application;
    begin
       Cfg.Copy (Config);
-      Cfg.Set ("view.dir", Dir);
+      Cfg.Set ("view.dir", Dir & ";" & Swagger.Servers.Config.WEB_DIR);
       App.Set_Init_Parameters (Cfg);
 
       App.Realm.Load (Config, Config.Get ("swagger.users", "users"));
