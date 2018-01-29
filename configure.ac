@@ -55,6 +55,24 @@ AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[util],
 AC_SUBST(UTIL_DIR)
 
 ##########################################
+# Check for Swagger Server support
+##########################################
+AC_MSG_CHECKING([server support])
+ac_enable_server=yes
+AC_ARG_ENABLE(server,
+[  --enable-server         Enable the support for Swagger Server (enabled)],
+[case "${enableval}" in
+  no|none)  ac_enable_server=no ;;
+  *)        ac_enable_server=yes ;;
+esac])dnl
+
+AC_MSG_RESULT(${ac_enable_server})
+SWAGGER_HAVE_SERVER=$ac_enable_server
+AC_SUBST(SWAGGER_HAVE_SERVER)
+
+if test T${ac_enable_server} = Tyes; then
+
+##########################################
 # Ada Servlet library
 ##########################################
 AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
@@ -64,6 +82,8 @@ AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
     SERVLET_DIR=${gnat_project_dir_servlet}
   ])
 AC_SUBST(SERVLET_DIR)
+
+fi
 
 ##########################################
 # Ada Security library
@@ -77,5 +97,5 @@ AM_GNAT_FIND_PROJECT([ada-security],[Ada Security Library],[security],
 AC_SUBST(SECURITY_DIR)
 
 AC_OUTPUT(
-Makefile swagger.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr
+Makefile swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr
 )
