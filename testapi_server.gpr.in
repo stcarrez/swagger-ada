@@ -5,6 +5,7 @@ with "@UTIL_DIR@util_http";
 with "@SERVLET_DIR@servlet";
 with "@SECURITY_DIR@security";
 with "swagger";
+with "swagger_server";
 with "testapi_model";
 project TestAPI_Server is
 
