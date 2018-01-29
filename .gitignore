@@ -12,6 +12,7 @@ ChangeLog
 configure.lineno
 Makefile
 swagger.gpr
+swagger_server.gpr
 swagger_tests.gpr
 testapi_server.gpr
 testapi_model.gpr
@@ -21,3 +22,4 @@ obj/
 lib/
 regtests/results
 swagger-aunit.xml
+src/server/swagger-servers-config.ads
