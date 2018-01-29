@@ -13,6 +13,7 @@ CP=cp
 LN=ln -s
 
 GPRPATH:=${NAME}.gpr
+SERVER_GPRPATH:=${NAME}_server.gpr
 
 BUILDS_SHARED=@BUILDS_SHARED@
 
@@ -21,6 +22,8 @@ version=@SWAGGER_VERSION@
 distdir=swagger-@SWAGGER_VERSION@
 
 DIST_FILE=swagger-@SWAGGER_VERSION@.tar.gz
+
+HAVE_SERVER=@SWAGGER_HAVE_SERVER@
 
 ifeq (,Windows_NT)
 LIBEXT=dll
@@ -37,6 +40,7 @@ top_srcdir = @top_srcdir@
 VPATH = @srcdir@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+sharedir= ${prefix}/share
 top_builddir = .
 
 PROCESSORS=@NR_CPUS@
@@ -48,10 +52,10 @@ MAKE_ARGS=-XMODE=${MODE}
 
 ifeq (,yes)
 all:     static shared
-install: uninstall install_static install_shared
+install: uninstall install_static install_shared install_web
 else
 all:     static
-install: uninstall install_static
+install: uninstall install_static install_web
 endif
 
 static:
@@ -61,12 +65,28 @@ shared:
 	$(MAKE) SWAGGER_LIBRARY_TYPE=relocatable build-test
 
 # Build executables for all mains defined by the project.
-build:
+build: setup
 	$(GNATMAKE) -p -P "$(GPRPATH)" $(MAKE_ARGS)
+ifeq (${HAVE_SERVER},yes)
+	$(GNATMAKE) -p -P $(SERVER_GPRPATH) $(MAKE_ARGS)
+endif
 
 build-test:  build
+ifeq (${HAVE_SERVER},yes)
 	$(GNATMAKE) -p -Ptestapi_server $(MAKE_ARGS)
+endif
 	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
+
+ifeq (${HAVE_SERVER},yes)
+setup: src/server/swagger-servers-config.ads
+
+src/server/swagger-servers-config.ads: Makefile src/server/swagger-servers-config.gpb
+	gnatprep -DWEB_DIR=\"${sharedir}/swagger-ada/web\" \
+		src/server/swagger-servers-config.gpb $@
+else
+setup:
+endif
+
 
 # Not intended for manual invocation.
 # Invoked if automatic builds are enabled.
@@ -101,11 +121,15 @@ rebuild: clean build
 
 # Build and run the unit tests
 test:	build-test
+ifeq (${HAVE_SERVER},yes)
 	bin/testapi-server & \
         SERVER_PID=$$!; \
         sleep 1; \
 	bin/swagger_harness -config tests.properties -xml swagger-aunit.xml ;\
         kill $$SERVER_PID
+else
+	bin/swagger_harness -config tests-client.properties -xml swagger-aunit.xml
+endif
 
 dist:
 	git archive -o $(DIST_FILE) --prefix=$(distdir)/ HEAD
@@ -119,6 +143,18 @@ install_shared:
 install_lib:
 	$(GPRINSTALL) -p -f --prefix=$(prefix) $(MAKE_ARGS) \
 		--build-name=$(SWAGGER_LIBRARY_TYPE) $(GPRPATH)
+ifeq (${HAVE_SERVER},yes)
+	$(GPRINSTALL) -p -f --prefix=$(prefix) $(MAKE_ARGS) \
+		--build-name=$(SWAGGER_LIBRARY_TYPE) $(SERVER_GPRPATH)
+endif
+
+install_web:
+	rm -rf ${sharedir}/swagger-ada
+	${MKDIR} -p ${sharedir}/swagger-ada
+	${CP} -rp web ${sharedir}/swagger-ada/web
 
 uninstall:
 	-$(GPRINSTALL) -q -f --prefix=$(prefix) $(MAKE_ARGS) --uninstall $(GPRPATH)
+ifeq (${HAVE_SERVER},yes)
+	-$(GPRINSTALL) -q -f --prefix=$(prefix) $(MAKE_ARGS) --uninstall $(SERVER_GPRPATH)
+endif
