@@ -25,7 +25,9 @@ package body Swagger.Testsuite is
       Ret : constant Util.Tests.Access_Test_Suite := Tests'Access;
    begin
       Swagger.Clients.Tests.Add_Tests (Ret);
-      Swagger.Tests.Add_Tests (Ret);
+      if Util.Tests.Get_Parameter ("testapi.url") /= "" then
+         Swagger.Tests.Add_Tests (Ret);
+      end if;
       return Ret;
    end Suite;
 
