@@ -117,10 +117,12 @@ package body Swagger.Servers is
 
    procedure Initialize (Context : in out Context_Type;
                          Req     : in out Request'Class;
-                         Reply   : in out Response'Class) is
+                         Reply   : in out Response'Class;
+                         Stream  : in out Output_Stream'Class) is
    begin
       Context.Req := Req'Unchecked_Access;
       Context.Reply := Reply'Unchecked_Access;
+      Context.Stream := Stream'Unchecked_Access;
       if Req.Get_Method = "PUT"
         and then Req.Get_Content_Type = "application/x-www-form-urlencoded"
       then
@@ -211,6 +213,12 @@ package body Swagger.Servers is
                         Message : in String) is
    begin
       Context.Reply.Set_Status (Code);
+      Context.Stream.Start_Document;
+      Context.Stream.Start_Entity ("");
+      Context.Stream.Write_Attribute ("code", Code);
+      Context.Stream.Write_Attribute ("message", Message);
+      Context.Stream.End_Entity ("");
+      Context.Stream.End_Document;
    end Set_Error;
 
    --  ------------------------------
@@ -221,6 +229,14 @@ package body Swagger.Servers is
    begin
       Context.Reply.Set_Status (Code);
    end Set_Status;
+
+   --  ------------------------------
+   --  Get the HTTP status that will be sent in the response.
+   --  ------------------------------
+   function Get_Status (Context : in Context_Type) return Natural is
+   begin
+      return Context.Reply.Get_Status;
+   end Get_Status;
 
    --  ------------------------------
    --  Send a Location: header in the response.
