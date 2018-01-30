@@ -71,7 +71,8 @@ package Swagger.Servers is
 
    procedure Initialize (Context : in out Context_Type;
                          Req     : in out Request'Class;
-                         Reply   : in out Response'Class);
+                         Reply   : in out Response'Class;
+                         Stream  : in out Output_Stream'Class);
 
    procedure Register (Registry   : in out Servlet.Core.Servlet_Registry'Class;
                        Definition : in Descriptor_Access)
@@ -113,6 +114,9 @@ package Swagger.Servers is
    procedure Set_Location (Context : in out Context_Type;
                            URL     : in String);
 
+   --  Get the HTTP status that will be sent in the response.
+   function Get_Status (Context : in Context_Type) return Natural;
+
    --  Returns True if the API request is authenticated.
    function Is_Authenticated (Context : in Context_Type) return Boolean;
 
@@ -129,6 +133,7 @@ private
    type Context_Type is tagged limited record
       Req     : access Request'Class;
       Reply   : access Response'Class;
+      Stream  : access Output_Stream'Class;
       Params  : Util.Beans.Objects.Object;
       Use_Map : Boolean := False;
    end record;
