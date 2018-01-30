@@ -28,7 +28,7 @@ package body Swagger.Servers.Operation is
                  Stream  : in out Swagger.Servers.Output_Stream'Class) is
       Ctx : Context_Type;
    begin
-      Ctx.Initialize (Req, Reply);
+      Ctx.Initialize (Req, Reply, Stream);
       Handler (Req, Reply, Stream, Ctx);
 
    exception
