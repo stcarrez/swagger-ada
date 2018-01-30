@@ -15,7 +15,6 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with Ada.Text_IO;
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
 with Util.Strings;
@@ -218,9 +217,10 @@ package body Swagger.Clients is
          return;
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
+      if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+         Log.Debug ("{0}", Client.Response.Get_Body);
+      end if;
       Parser.Parse_String (Client.Response.Get_Body, Mapper);
-      Ada.Text_IO.Put_Line (Client.Response.Get_Body);
-      --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
       Reply := Mapper.Get_Root;
    end Call;
 
@@ -240,15 +240,17 @@ package body Swagger.Clients is
       declare
          Data     : constant String := Util.Streams.Texts.To_String (Request.Buffer);
       begin
-         Ada.Text_IO.Put_Line (Data);
          case Operation is
          when GET =>
+            Log.Debug ("GET {0}", Path);
             Client.Get (Path, Client.Response);
 
          when POST =>
+            Log.Debug ("POST {0} {1}", Path, Data);
             Client.Post (Path, Data, Client.Response);
 
          when PUT =>
+            Log.Debug ("PUT {0} {1}", Path, Data);
             Client.Put (Path, Data, Client.Response);
 
          when others =>
@@ -263,8 +265,9 @@ package body Swagger.Clients is
       end if;
       --  Todo check Response.Get_Header ("Content-Type")
       Parser.Parse_String (Client.Response.Get_Body, Mapper);
-      Ada.Text_IO.Put_Line (Client.Response.Get_Body);
-      --      Reply := Util.Beans.Objects.To_Object (Response.Get_Body);
+      if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+         Log.Debug ("{0}", Client.Response.Get_Body);
+      end if;
       Reply := Mapper.Get_Root;
    end Call;
 
