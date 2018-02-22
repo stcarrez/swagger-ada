@@ -226,5 +226,6 @@ At this stage, you can access information from the 'Pet' instance:
 
 The Ada Swagger sources as well as a wiki documentation is provided on:
 
-   https://github.com/stcarrez/swagger-ada/wiki
+- https://github.com/stcarrez/swagger-ada/wiki
+- [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 
