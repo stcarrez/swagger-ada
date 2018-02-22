@@ -14,6 +14,29 @@ package body TestAPI.Skeletons is
    package body Skeleton is
 
 
+      package API_Orch_Store is
+         new Swagger.Servers.Operation (Handler => Orch_Store,
+                                        Method  => Swagger.Servers.POST,
+                                        URI     => "/orchestration");
+
+      --  
+      procedure Orch_Store
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Input   : Swagger.Value_Type;
+         Impl : Implementation_Type;
+         Service_Request_Form : ServiceRequestForm_Type;
+      begin
+         Swagger.Servers.Read (Req, Input);
+         
+         TestAPI.Models.Deserialize (Input, "serviceRequestForm", Service_Request_Form);
+         Impl.Orch_Store
+            (Service_Request_Form, Context);
+
+      end Orch_Store;
+
       package API_Do_Create_Ticket is
          new Swagger.Servers.Operation (Handler => Do_Create_Ticket,
                                         Method  => Swagger.Servers.POST,
@@ -117,9 +140,11 @@ package body TestAPI.Skeletons is
              Status,
              Title,
              Description, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_Update_Ticket;
 
       package API_Do_Get_Ticket is
@@ -148,9 +173,11 @@ package body TestAPI.Skeletons is
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
          Impl.Do_Get_Ticket
             (Tid, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_Get_Ticket;
 
       package API_Do_List_Tickets is
@@ -182,13 +209,16 @@ package body TestAPI.Skeletons is
          Impl.Do_List_Tickets
             (Status,
              Owner, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_List_Tickets;
 
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class) is
       begin
+         Swagger.Servers.Register (Server, API_Orch_Store.Definition);
          Swagger.Servers.Register (Server, API_Do_Create_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Delete_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Update_Ticket.Definition);
@@ -200,6 +230,28 @@ package body TestAPI.Skeletons is
 
    package body Shared_Instance is
 
+
+      --  
+      procedure Orch_Store
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Input   : Swagger.Value_Type;
+         Service_Request_Form : ServiceRequestForm_Type;
+      begin
+         Swagger.Servers.Read (Req, Input);
+         
+         TestAPI.Models.Deserialize (Input, "serviceRequestForm", Service_Request_Form);
+         Server.Orch_Store
+            (Service_Request_Form, Context);
+
+      end Orch_Store;
+
+      package API_Orch_Store is
+         new Swagger.Servers.Operation (Handler => Orch_Store,
+                                        Method  => Swagger.Servers.POST,
+                                        URI     => "/orchestration");
 
       --  Create a ticket
       procedure Do_Create_Ticket
@@ -296,9 +348,11 @@ package body TestAPI.Skeletons is
              Status,
              Title,
              Description, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_Update_Ticket;
 
       package API_Do_Update_Ticket is
@@ -326,9 +380,11 @@ package body TestAPI.Skeletons is
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
          Server.Do_Get_Ticket
             (Tid, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_Get_Ticket;
 
       package API_Do_Get_Ticket is
@@ -359,9 +415,11 @@ package body TestAPI.Skeletons is
          Server.Do_List_Tickets
             (Status,
              Owner, Result, Context);
-         Stream.Start_Document;
-         TestAPI.Models.Serialize (Stream, "", Result);
-         Stream.End_Document;
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
       end Do_List_Tickets;
 
       package API_Do_List_Tickets is
@@ -371,6 +429,7 @@ package body TestAPI.Skeletons is
 
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class) is
       begin
+         Swagger.Servers.Register (Server, API_Orch_Store.Definition);
          Swagger.Servers.Register (Server, API_Do_Create_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Delete_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Update_Ticket.Definition);
@@ -379,6 +438,16 @@ package body TestAPI.Skeletons is
       end Register;
 
       protected body Server is
+         --  
+         procedure Orch_Store
+            (Service_Request_Form : in ServiceRequestForm_Type;
+             Context : in out Swagger.Servers.Context_Type) is
+         begin
+            Impl.Orch_Store
+               (Service_Request_Form,
+                Context);
+         end Orch_Store;
+
          --  Create a ticket
          procedure Do_Create_Ticket
             (Title : in Swagger.UString;

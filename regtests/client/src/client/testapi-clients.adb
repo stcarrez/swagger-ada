@@ -10,6 +10,22 @@
 with Swagger.Streams;
 package body TestAPI.Clients is
 
+   --  
+   --  Query an orchestrated service instance
+   procedure Orch_Store
+      (Client : in out Client_Type;
+       Service_Request_Form : in TestAPI.Models.ServiceRequestForm_Type) is
+      URI   : Swagger.Clients.URI_Type;
+      Req   : Swagger.Clients.Request_Type;
+   begin
+
+      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
+      TestAPI.Models.Serialize (Req.Stream, "", Service_Request_Form);
+
+      URI.Set_Path ("/orchestration");
+      Client.Call (Swagger.Clients.POST, URI, Req);
+   end Orch_Store;
+
    --  Create a ticket
    procedure Do_Create_Ticket
       (Client : in out Client_Type;

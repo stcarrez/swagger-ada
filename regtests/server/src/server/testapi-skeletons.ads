@@ -22,6 +22,13 @@ package TestAPI.Skeletons is
 
 
 
+   --  
+   --  Query an orchestrated service instance
+   procedure Orch_Store
+      (Server : in out Server_Type;
+       Service_Request_Form : in ServiceRequestForm_Type;
+       Context : in out Swagger.Servers.Context_Type) is abstract;
+
    --  Create a ticket
    procedure Do_Create_Ticket
       (Server : in out Server_Type;
@@ -72,6 +79,14 @@ package TestAPI.Skeletons is
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class);
 
 
+      --  
+      procedure Orch_Store
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
       --  Create a ticket
       procedure Do_Create_Ticket
          (Req     : in out Swagger.Servers.Request'Class;
@@ -120,6 +135,14 @@ package TestAPI.Skeletons is
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class);
 
 
+      --  
+      procedure Orch_Store
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
       --  Create a ticket
       procedure Do_Create_Ticket
          (Req     : in out Swagger.Servers.Request'Class;
@@ -162,6 +185,11 @@ package TestAPI.Skeletons is
 
    private
       protected Server is
+
+         --  
+         procedure Orch_Store
+            (Service_Request_Form : in ServiceRequestForm_Type;
+             Context : in out Swagger.Servers.Context_Type);
 
          --  Create a ticket
          procedure Do_Create_Ticket
