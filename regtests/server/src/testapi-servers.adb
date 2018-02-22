@@ -126,4 +126,15 @@ package body TestAPI.Servers is
       Result := Server.Todos;
    end Do_List_Tickets;
 
+   --
+   --  Query an orchestrated service instance
+   overriding
+   procedure Orch_Store
+      (Server : in out Server_Type;
+       Service_Request_Form : in ServiceRequestForm_Type;
+       Context : in out Swagger.Servers.Context_Type) is
+   begin
+      null;
+   end Orch_Store;
+
 end TestAPI.Servers;
