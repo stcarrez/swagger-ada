@@ -438,6 +438,33 @@
         "x-has-uniq-consumes" : false,
         "x-has-notes" : false
       }
+    },
+    "/orchestration" : {
+      "post" : {
+        "description" : "Query an orchestrated service instance",
+        "operationId" : "orchStore",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "serviceRequestForm",
+          "description" : "Requests an orchestrated service instance",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/serviceRequestForm"
+          },
+          "x-is-model-type" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Response to a service orchestration request"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        },
+        "x-has-uniq-produces" : false,
+        "x-has-uniq-consumes" : false,
+        "x-has-notes" : true
+      }
     }
   },
   "securityDefinitions" : {
@@ -480,13 +507,13 @@
           "type" : "string",
           "format" : "date-time",
           "description" : "Ticket creation date",
-          "x-is-model-type" : true
+          "x-is-model-type" : false
         },
         "end_date" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Ticket deadline date",
-          "x-is-model-type" : true
+          "x-is-model-type" : false
         },
         "update_date" : {
           "type" : "string",
@@ -514,6 +541,28 @@
       },
       "xml" : {
         "name" : "Ticket"
+      }
+    },
+    "stringsMap" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "x-is-model-type" : false
+        }
+      }
+    },
+    "serviceRequestForm" : {
+      "type" : "object",
+      "properties" : {
+        "requestedQoS" : {
+          "$ref" : "#/definitions/stringsMap",
+          "x-is-model-type" : true
+        },
+        "commands" : {
+          "$ref" : "#/definitions/stringsMap",
+          "x-is-model-type" : true
+        }
       }
     }
   },

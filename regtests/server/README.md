@@ -73,6 +73,7 @@ All URIs are relative to *https://localhost:8082/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**Orch_Store**](DefaultApi.md#Orch_Store) | **POST** /orchestration | 
 [**Do_Create_Ticket**](TicketApi.md#Do_Create_Ticket) | **POST** /tickets | Create a ticket
 [**Do_Delete_Ticket**](TicketApi.md#Do_Delete_Ticket) | **DELETE** /tickets/{tid} | Delete a ticket
 [**Do_Update_Ticket**](TicketApi.md#Do_Update_Ticket) | **PUT** /tickets/{tid} | Update a ticket
@@ -81,6 +82,8 @@ Method | HTTP request | Description
 
 
 ## Models
+ - [TestAPI.Models.ServiceRequestForm_Type](ServiceRequestForm_Type.md)
+ - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
 
 

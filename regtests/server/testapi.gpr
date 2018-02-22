@@ -10,6 +10,8 @@ with "util";
 with "util_http";
 with "security";
 with "swagger";
+with "servlet";
+with "swagger_server";
 project TestAPI is
 
     Mains := ("testapi-server.adb");
