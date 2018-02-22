@@ -69,6 +69,14 @@ package TestAPI.Servers is
        Result  : out TestAPI.Models.Ticket_Type_Vectors.Vector;
        Context : in out Swagger.Servers.Context_Type);
 
+   --
+   --  Query an orchestrated service instance
+   overriding
+   procedure Orch_Store
+      (Server : in out Server_Type;
+       Service_Request_Form : in ServiceRequestForm_Type;
+       Context : in out Swagger.Servers.Context_Type);
+
    package Server_Impl is
       new TestAPI.Skeletons.Shared_Instance (Server_Type);
 
