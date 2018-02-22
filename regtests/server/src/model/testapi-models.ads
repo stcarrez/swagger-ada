@@ -49,4 +49,61 @@ package TestAPI.Models is
 
 
 
+
+   type StringsMap_Type is
+     record
+       Key : Swagger.Nullable_UString;
+     end record;
+
+   package StringsMap_Type_Vectors is
+      new Ada.Containers.Vectors (Index_Type   => Positive,
+                                  Element_Type => StringsMap_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in StringsMap_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in StringsMap_Type_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out StringsMap_Type);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out StringsMap_Type_Vectors.Vector);
+
+
+
+
+   type ServiceRequestForm_Type is
+     record
+       Requested_Qo_S : TestAPI.Models.StringsMap_Type;
+       Commands : TestAPI.Models.StringsMap_Type;
+     end record;
+
+   package ServiceRequestForm_Type_Vectors is
+      new Ada.Containers.Vectors (Index_Type   => Positive,
+                                  Element_Type => ServiceRequestForm_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in ServiceRequestForm_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in ServiceRequestForm_Type_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out ServiceRequestForm_Type);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out ServiceRequestForm_Type_Vectors.Vector);
+
+
+
 end TestAPI.Models;
