@@ -193,6 +193,27 @@ paths:
       security:
         - ticket_auth:
             - 'write:ticket'
+  /orchestration:
+    post:
+      description: Query an orchestrated service instance
+      operationId: orchStore
+      parameters:
+        - name: serviceRequestForm
+          in: body
+          description: Requests an orchestrated service instance
+          required: true
+          schema:
+            type: object
+            properties:
+              requestedQoS:
+                $ref: '#/definitions/stringsMap'
+              commands:
+                $ref: '#/definitions/stringsMap'
+      responses:
+        200:
+          description: Response to a service orchestration request
+        default:
+          description: Unexpected error
 securityDefinitions:
   ticket_auth:
     type: oauth2
@@ -242,6 +263,11 @@ definitions:
     title: Information about a ticket
     xml:
       name: Ticket
+  stringsMap:
+    type: "object"
+    properties:
+      key:
+        type: string
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
