@@ -23,3 +23,4 @@
 #!docs/README.md
 src/testapi-servers.ads
 src/testapi-servers.adb
+src/testapi-server.adb
