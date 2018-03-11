@@ -17,7 +17,6 @@ AM_GNAT_CHECK_GPRBUILD
 AM_GNAT_CHECK_INSTALL
 
 # checking for local tools
-AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_PROG_LN_S
@@ -42,6 +41,8 @@ AC_SUBST(NR_CPUS)
 # Check to enable/disable shared library
 ##########################################
 AM_SHARED_LIBRARY_SUPPORT
+AM_DISTRIB_SUPPORT
+AM_COVERAGE_SUPPORT
 
 ##########################################
 # Ada Util library
