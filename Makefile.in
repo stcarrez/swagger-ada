@@ -111,11 +111,11 @@ analyze:
 	$(GNATMAKE) -f  -gnatc -c -k  -P "$(GPRPATH)"
 
 generate:
-	java -jar swagger-codegen-cli.jar generate \
-           -l ada -i regtests/swagger.yaml -o regtests/client \
+	java -jar openapi-generator-cli.jar generate \
+           --generator-name ada -i regtests/swagger.yaml -o regtests/client \
            -DprojectName=TestAPI --model-package TestAPI
-	java -jar swagger-codegen-cli.jar generate \
-           -l ada-server -i regtests/swagger.yaml -o regtests/server \
+	java -jar openapi-generator-cli.jar generate \
+           --generator-name ada-server -i regtests/swagger.yaml -o regtests/server \
            -DprojectName=TestAPI --model-package TestAPI
 
 # Clean, then build executables for all mains defined by the project.
