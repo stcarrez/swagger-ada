@@ -5,11 +5,11 @@
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 ![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-awa/swagger-ada-1.0.0.svg)
 
-[Swagger Codegen](https://github.com/swagger-api/swagger-codegen) is a code generator that supports generation of
+[OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
 given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 
-The Ada client support has been integrated in [Swagger Codegen](https://github.com/swagger-api/swagger-codegen).
+The Ada client support has been integrated in [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator).
 
 The Swagger Ada library is a small support library for the Ada code generator
 provided by Swagger Codegen.  The library provides support to serialize the data,
@@ -40,7 +40,7 @@ For the installation, use the following command:
 
 The command to generate an Ada REST client is the following:
 ```
-  java -jar swagger-codegen-cli.jar generate -l ada -i my-api.yaml -o client \
+  java -jar openapi-generator-cli.jar generate --generator-name ada -i my-api.yaml -o client \
        -DprojectName=MyProject --model-package MyProject.MyModule
 ```
 where *my-api.yaml* is the OpenAPI specification file that describes your API,
