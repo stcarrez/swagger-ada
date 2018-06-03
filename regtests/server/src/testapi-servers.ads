@@ -74,7 +74,7 @@ package TestAPI.Servers is
    overriding
    procedure Orch_Store
       (Server : in out Server_Type;
-       Service_Request_Form : in ServiceRequestForm_Type;
+       Body2_Type : in Body_2_Type;
        Context : in out Swagger.Servers.Context_Type);
 
    package Server_Impl is
