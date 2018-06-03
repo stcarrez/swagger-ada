@@ -1,0 +1,393 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "REST API Validation",
+    "description" : "API to validate",
+    "termsOfService" : "https://github.com/terms/",
+    "contact" : {
+      "email" : "Stephane.Carrez@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache Licence",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "http://swagger.io"
+  },
+  "servers" : [ {
+    "url" : "https://localhost:8082/v1"
+  }, {
+    "url" : "http://localhost:8082/v1"
+  } ],
+  "tags" : [ {
+    "name" : "tickets",
+    "description" : "Tickets operations"
+  } ],
+  "paths" : {
+    "/tickets" : {
+      "get" : {
+        "tags" : [ "tickets" ],
+        "summary" : "List the tickets",
+        "description" : "List the tickets created for the project.\n",
+        "operationId" : "do_list_tickets",
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "description" : "The ticket status",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ]
+          }
+        }, {
+          "name" : "owner",
+          "in" : "query",
+          "description" : "The owner",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Ticket"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "read:ticket" ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "ticket" ],
+        "summary" : "Create a ticket",
+        "operationId" : "do_create_ticket",
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "ticket created",
+            "headers" : {
+              "Location" : {
+                "description" : "The URL of the new ticket",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "write:ticket" ]
+        } ]
+      }
+    },
+    "/tickets/{tid}" : {
+      "get" : {
+        "tags" : [ "tickets" ],
+        "summary" : "Get a ticket",
+        "description" : "Get a ticket",
+        "operationId" : "do_get_ticket",
+        "parameters" : [ {
+          "name" : "tid",
+          "in" : "path",
+          "description" : "Ticket identifier",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Ticket not found"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "read:ticket" ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "ticket" ],
+        "summary" : "Update a ticket",
+        "operationId" : "do_update_ticket",
+        "parameters" : [ {
+          "name" : "tid",
+          "in" : "path",
+          "description" : "Ticket identifier",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "write:ticket" ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "ticket" ],
+        "summary" : "Delete a ticket",
+        "operationId" : "do_delete_ticket",
+        "parameters" : [ {
+          "name" : "tid",
+          "in" : "path",
+          "description" : "Ticket identifier",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No content."
+          },
+          "404" : {
+            "description" : "Invalid ticket identifier."
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "write:ticket" ]
+        } ]
+      }
+    },
+    "/orchestration" : {
+      "post" : {
+        "description" : "Query an orchestrated service instance",
+        "operationId" : "orchStore",
+        "requestBody" : {
+          "description" : "Requests an orchestrated service instance",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Response to a service orchestration request"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Ticket" : {
+        "title" : "Information about a ticket",
+        "required" : [ "create_date", "description", "id", "status", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Title of the ticket"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Description of the ticket"
+          },
+          "owner" : {
+            "type" : "string",
+            "description" : "The ticket owner"
+          },
+          "create_date" : {
+            "type" : "string",
+            "description" : "Ticket creation date",
+            "format" : "date-time"
+          },
+          "end_date" : {
+            "type" : "string",
+            "description" : "Ticket deadline date",
+            "format" : "date-time"
+          },
+          "update_date" : {
+            "type" : "string",
+            "description" : "Ticket last change date",
+            "format" : "date-time"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Ticket status",
+            "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ]
+          }
+        },
+        "example" : {
+          "owner" : "owner",
+          "end_date" : "2000-01-23T04:56:07.000+00:00",
+          "description" : "description",
+          "id" : 0,
+          "title" : "title",
+          "create_date" : "2000-01-23T04:56:07.000+00:00",
+          "update_date" : "2000-01-23T04:56:07.000+00:00",
+          "status" : "open"
+        },
+        "xml" : {
+          "name" : "Ticket"
+        }
+      },
+      "stringsMap" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body" : {
+        "required" : [ "title" ],
+        "type" : "object",
+        "properties" : {
+          "owner" : {
+            "type" : "string",
+            "description" : "Ticket owner"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Ticket status",
+            "enum" : [ "open", "assigned", "closed" ]
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Ticket title"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Ticket description"
+          }
+        }
+      },
+      "body_1" : {
+        "type" : "object",
+        "properties" : {
+          "owner" : {
+            "type" : "string",
+            "description" : "Ticket owner"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Ticket status",
+            "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ]
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Ticket title"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Ticket description"
+          }
+        }
+      },
+      "body_2" : {
+        "type" : "object",
+        "properties" : {
+          "requestedQoS" : {
+            "$ref" : "#/components/schemas/stringsMap"
+          },
+          "commands" : {
+            "$ref" : "#/components/schemas/stringsMap"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "ticket_auth" : {
+        "type" : "oauth2",
+        "flows" : {
+          "implicit" : {
+            "authorizationUrl" : "/oauth/authorize",
+            "scopes" : {
+              "write:ticket" : "Update a ticket",
+              "read:ticket" : "Read a ticket"
+            }
+          }
+        }
+      }
+    }
+  }
+}
