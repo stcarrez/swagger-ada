@@ -12,10 +12,6 @@ GNATMAKE=@GNATMAKE@
 GNATCLEAN=gnatclean
 GPRINSTALL=@GPRINSTALL@
 INSTALL=@INSTALL@
-LN_S=@LN_S@
-MKDIR=mkdir
-CP=cp
-LN=ln -s
 
 GPRPATH:=${NAME}.gpr
 SERVER_GPRPATH:=${NAME}_server.gpr
@@ -27,6 +23,11 @@ version=@SWAGGER_VERSION@
 distdir=swagger-@SWAGGER_VERSION@
 
 DIST_FILE=swagger-@SWAGGER_VERSION@.tar.gz
+
+LN_S=@LN_S@
+MKDIR=mkdir
+CP=cp
+LN=ln -s
 
 HAVE_SERVER=@SWAGGER_HAVE_SERVER@
 
@@ -59,11 +60,10 @@ MAKE_ARGS += -XSECURITY_BUILD=relocatable -XSECURITY_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XSERVLET_CORE_BUILD=relocatable -XSERVLET_CORE_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XSERVLET_UNIT_BUILD=relocatable -XSERVLET_UNIT_LIBRARY_TYPE=relocatable
 endif
-MAKE_ARGS=-XMODE=${MODE}
 
 ifeq (${BUILDS_SHARED},yes)
 all:     static shared
-install: uninstall install_static install_shared install_web
+install: uninstall install_shared install_static install_web
 else
 all:     static
 install: uninstall install_static install_web
@@ -104,15 +104,19 @@ endif
 # Analyzes only on those sources that have changed.
 # Does not build executables.
 autobuild:
-	$(GNATMAKE) -gnatc -c -k  -P "$(GPRPATH)"
+	$(GNATMAKE) $(MAKE_ARGS) -gnatc -c -k  -P "$(GPRPATH)"
 
 # Clean the root project of all build products.
-clean:
+clean:	clean_test
 	-rm -rf lib obj bin
+
+# Clean the files produced by the unit tests
+clean_test:
+	rm -rf regtests/result/*
 
 # Clean root project and all imported projects too.
 clean_tree:
-	$(GNATCLEAN) -P "$(GPRPATH)" -r
+	$(GNATCLEAN) -q -P "$(GPRPATH)" -r
 
 # Check *all* sources for errors, even those not changed.
 # Does not build executables.
