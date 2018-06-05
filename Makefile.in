@@ -1,3 +1,8 @@
+## The type of library we want to build. Possible values:
+##	 relocatable
+##	 static
+SWAGGER_LIBRARY_TYPE=static
+
 NAME=swagger
 
 # You may edit this makefile as long as you keep these original 
