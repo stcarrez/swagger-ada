@@ -30,7 +30,7 @@ DIST_FILE=swagger-@SWAGGER_VERSION@.tar.gz
 
 HAVE_SERVER=@SWAGGER_HAVE_SERVER@
 
-ifeq (,Windows_NT)
+ifeq (${OS},Windows_NT)
 LIBEXT=dll
 LIBVER=dll
 else
@@ -61,7 +61,7 @@ MAKE_ARGS += -XSERVLET_UNIT_BUILD=relocatable -XSERVLET_UNIT_LIBRARY_TYPE=reloca
 endif
 MAKE_ARGS=-XMODE=${MODE}
 
-ifeq (,yes)
+ifeq (${BUILDS_SHARED},yes)
 all:     static shared
 install: uninstall install_static install_shared install_web
 else
