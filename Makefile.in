@@ -58,7 +58,9 @@ MAKE_ARGS += -XUTIL_BUILD=relocatable -XUTIL_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XEL_BUILD=relocatable -XEL_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XSECURITY_BUILD=relocatable -XSECURITY_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XSERVLET_CORE_BUILD=relocatable -XSERVLET_CORE_LIBRARY_TYPE=relocatable
+MAKE_ARGS += -XSERVLET_BUILD=relocatable -XSERVLET_LIBRARY_TYPE=relocatable
 MAKE_ARGS += -XSERVLET_UNIT_BUILD=relocatable -XSERVLET_UNIT_LIBRARY_TYPE=relocatable
+MAKE_ARGS += -XXMLADA_BUILD=relocatable -XAWS_BUILD=relocatable
 endif
 
 ifeq (${BUILDS_SHARED},yes)
