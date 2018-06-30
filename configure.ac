@@ -12,14 +12,6 @@ SWAGGER_MAJOR_VERSION=0
 SWAGGER_MINOR_VERSION=1
 SWAGGER_MICRO_VERSION=0
 SWAGGER_VERSION=$SWAGGER_MAJOR_VERSION.$SWAGGER_MINOR_VERSION.$SWAGGER_MICRO_VERSION
-AM_GNAT_CHECK_GPRBUILD
-
-AM_GNAT_CHECK_INSTALL
-
-# checking for local tools
-AC_PROG_MAKE_SET
-AC_PROG_INSTALL
-AC_PROG_LN_S
 
 # Set the version number of the project
 AC_SUBST(SWAGGER_VERSION)
@@ -32,17 +24,10 @@ AC_SUBST(EXEC_PREFIX)
 SWAGGER_LIBDIR="lib"
 AC_SUBST(SWAGGER_LIBDIR)
 
-AC_MSG_CHECKING([number of processors])
-NR_CPUS=`getconf _NPROCESSORS_CONF 2>/dev/null || getconf NPROCESSORS_CONF 2>/dev/null || echo 1`
-AC_MSG_RESULT($NR_CPUS)
-AC_SUBST(NR_CPUS)
-
 ##########################################
 # Check to enable/disable shared library
 ##########################################
-AM_SHARED_LIBRARY_SUPPORT
-AM_DISTRIB_SUPPORT
-AM_COVERAGE_SUPPORT
+AM_GNAT_LIBRARY_PROJECT(swagger)
 
 ##########################################
 # Ada Util library
@@ -76,11 +61,11 @@ if test T${ac_enable_server} = Tyes; then
 ##########################################
 # Ada Servlet library
 ##########################################
-AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
+AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet_core],
   [git@github.com:stcarrez/ada-servlet.git],
   [Building swagger requires the Ada Servlet Library.],
   [
-    SERVLET_DIR=${gnat_project_dir_servlet}
+    SERVLET_DIR=${gnat_project_dir_servlet_core}
   ])
 AC_SUBST(SERVLET_DIR)
 
