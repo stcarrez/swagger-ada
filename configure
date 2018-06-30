@@ -588,31 +588,31 @@ SECURITY_DIR
 SERVLET_DIR
 SWAGGER_HAVE_SERVER
 UTIL_DIR
+ADA_PRJ_BASE
+ADA_ALI_BASE
+ADA_LIB_BASE
+ADA_INC_BASE
+GPRINSTALL
+NR_CPUS
 BUILDS_COVERAGE
 MODE
 BUILDS_DISTRIB
 BUILDS_SHARED
-NR_CPUS
+LN_S
+INSTALL_DATA
+INSTALL_SCRIPT
+INSTALL_PROGRAM
+SET_MAKE
+GNATCLEAN
+GPRCLEAN
+GNATMAKE
+GPRBUILD
 SWAGGER_LIBDIR
 EXEC_PREFIX
 SWAGGER_MICRO_VERSION
 SWAGGER_MINOR_VERSION
 SWAGGER_MAJOR_VERSION
 SWAGGER_VERSION
-LN_S
-INSTALL_DATA
-INSTALL_SCRIPT
-INSTALL_PROGRAM
-SET_MAKE
-ADA_PRJ_BASE
-ADA_ALI_BASE
-ADA_LIB_BASE
-ADA_INC_BASE
-GPRINSTALL
-GNATCLEAN
-GPRCLEAN
-GNATMAKE
-GPRBUILD
 target_os
 target_vendor
 target_cpu
@@ -1889,6 +1889,116 @@ SWAGGER_MINOR_VERSION=1
 SWAGGER_MICRO_VERSION=0
 SWAGGER_VERSION=$SWAGGER_MAJOR_VERSION.$SWAGGER_MINOR_VERSION.$SWAGGER_MICRO_VERSION
 
+# Set the version number of the project
+
+
+
+
+
+EXEC_PREFIX="$prefix"
+
+SWAGGER_LIBDIR="lib"
+
+
+##########################################
+# Check to enable/disable shared library
+##########################################
+# Find a good install program.  We prefer a C program (faster),
+# so one script is as good as another.  But avoid the broken or
+# incompatible versions:
+# SysV /etc/install, /usr/sbin/install
+# SunOS /usr/etc/install
+# IRIX /sbin/install
+# AIX /bin/install
+# AmigaOS /C/install, which installs bootblocks on floppy discs
+# AIX 4 /usr/bin/installbsd, which doesn't work without a -g flag
+# AFS /usr/afsws/bin/install, which mishandles nonexistent args
+# SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
+# OS/2's system install, which has a completely different semantic
+# ./install, which can be erroneously created by make from ./install.sh.
+# Reject install programs that cannot install multiple files.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for a BSD-compatible install" >&5
+$as_echo_n "checking for a BSD-compatible install... " >&6; }
+if test -z "$INSTALL"; then
+if ${ac_cv_path_install+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    # Account for people who put trailing slashes in PATH elements.
+case $as_dir/ in #((
+  ./ | .// | /[cC]/* | \
+  /etc/* | /usr/sbin/* | /usr/etc/* | /sbin/* | /usr/afsws/bin/* | \
+  ?:[\\/]os2[\\/]install[\\/]* | ?:[\\/]OS2[\\/]INSTALL[\\/]* | \
+  /usr/ucb/* ) ;;
+  *)
+    # OSF1 and SCO ODT 3.0 have their own names for install.
+    # Don't use installbsd from OSF since it installs stuff as root
+    # by default.
+    for ac_prog in ginstall scoinst install; do
+      for ac_exec_ext in '' $ac_executable_extensions; do
+	if as_fn_executable_p "$as_dir/$ac_prog$ac_exec_ext"; then
+	  if test $ac_prog = install &&
+	    grep dspmsg "$as_dir/$ac_prog$ac_exec_ext" >/dev/null 2>&1; then
+	    # AIX install.  It has an incompatible calling convention.
+	    :
+	  elif test $ac_prog = install &&
+	    grep pwplus "$as_dir/$ac_prog$ac_exec_ext" >/dev/null 2>&1; then
+	    # program-specific install script used by HP pwplus--don't use.
+	    :
+	  else
+	    rm -rf conftest.one conftest.two conftest.dir
+	    echo one > conftest.one
+	    echo two > conftest.two
+	    mkdir conftest.dir
+	    if "$as_dir/$ac_prog$ac_exec_ext" -c conftest.one conftest.two "`pwd`/conftest.dir" &&
+	      test -s conftest.one && test -s conftest.two &&
+	      test -s conftest.dir/conftest.one &&
+	      test -s conftest.dir/conftest.two
+	    then
+	      ac_cv_path_install="$as_dir/$ac_prog$ac_exec_ext -c"
+	      break 3
+	    fi
+	  fi
+	fi
+      done
+    done
+    ;;
+esac
+
+  done
+IFS=$as_save_IFS
+
+rm -rf conftest.one conftest.two conftest.dir
+
+fi
+  if test "${ac_cv_path_install+set}" = set; then
+    INSTALL=$ac_cv_path_install
+  else
+    # As a last resort, use the slow shell script.  Don't cache a
+    # value for INSTALL within a source directory, because that will
+    # break other packages using the cache if that directory is
+    # removed, or if the value is a relative name.
+    INSTALL=$ac_install_sh
+  fi
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $INSTALL" >&5
+$as_echo "$INSTALL" >&6; }
+
+# Use test -z because SunOS4 sh mishandles braces in ${var-val}.
+# It thinks the first close brace ends the variable substitution.
+test -z "$INSTALL_PROGRAM" && INSTALL_PROGRAM='${INSTALL}'
+
+test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL}'
+
+test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
+
+
+  # checking for local tools
+
   for ac_prog in gprbuild
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -2072,6 +2182,276 @@ test -n "$GNATCLEAN" || GNATCLEAN=""""
   fi
 
 
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${MAKE-make} sets \$(MAKE)" >&5
+$as_echo_n "checking whether ${MAKE-make} sets \$(MAKE)... " >&6; }
+set x ${MAKE-make}
+ac_make=`$as_echo "$2" | sed 's/+/p/g; s/[^a-zA-Z0-9_]/_/g'`
+if eval \${ac_cv_prog_make_${ac_make}_set+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat >conftest.make <<\_ACEOF
+SHELL = /bin/sh
+all:
+	@echo '@@@%%%=$(MAKE)=@@@%%%'
+_ACEOF
+# GNU make sometimes prints "make[1]: Entering ...", which would confuse us.
+case `${MAKE-make} -f conftest.make 2>/dev/null` in
+  *@@@%%%=?*=@@@%%%*)
+    eval ac_cv_prog_make_${ac_make}_set=yes;;
+  *)
+    eval ac_cv_prog_make_${ac_make}_set=no;;
+esac
+rm -f conftest.make
+fi
+if eval test \$ac_cv_prog_make_${ac_make}_set = yes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+  SET_MAKE=
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+  SET_MAKE="MAKE=${MAKE-make}"
+fi
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ln -s works" >&5
+$as_echo_n "checking whether ln -s works... " >&6; }
+LN_S=$as_ln_s
+if test "$LN_S" = "ln -s"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using $LN_S" >&5
+$as_echo "no, using $LN_S" >&6; }
+fi
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking shared library support" >&5
+$as_echo_n "checking shared library support... " >&6; }
+  ac_enable_shared=no
+  # Check whether --enable-shared was given.
+if test "${enable_shared+set}" = set; then :
+  enableval=$enable_shared; case "${enableval}" in
+      no|none)  ac_enable_shared=no ;;
+      *)        ac_enable_shared=yes ;;
+    esac
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_shared}" >&5
+$as_echo "${ac_enable_shared}" >&6; }
+  BUILDS_SHARED=$ac_enable_shared
+
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking distribution build" >&5
+$as_echo_n "checking distribution build... " >&6; }
+  ac_enable_distrib=yes
+  ac_build_mode=distrib
+  # Check whether --enable-distrib was given.
+if test "${enable_distrib+set}" = set; then :
+  enableval=$enable_distrib; case "${enableval}" in
+      no|none)  ac_enable_distrib=no
+                ac_build_mode=debug
+                ;;
+      *)        ac_enable_distrib=yes
+                ac_build_mode=distrib
+                ;;
+    esac
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_distrib}" >&5
+$as_echo "${ac_enable_distrib}" >&6; }
+  BUILDS_DISTRIB=$ac_enable_distrib
+
+
+  MODE=$ac_build_mode
+
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking coverage support" >&5
+$as_echo_n "checking coverage support... " >&6; }
+  ac_enable_coverage=no
+  # Check whether --enable-coverage was given.
+if test "${enable_coverage+set}" = set; then :
+  enableval=$enable_coverage; case "${enableval}" in
+      no|none)  ac_enable_coverage=no ;;
+      *)        ac_enable_coverage=yes ;;
+    esac
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_coverage}" >&5
+$as_echo "${ac_enable_coverage}" >&6; }
+  BUILDS_COVERAGE=$ac_enable_coverage
+
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking number of processors" >&5
+$as_echo_n "checking number of processors... " >&6; }
+  NR_CPUS=`getconf _NPROCESSORS_CONF 2>/dev/null || getconf NPROCESSORS_CONF 2>/dev/null || echo 1`
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $NR_CPUS" >&5
+$as_echo "$NR_CPUS" >&6; }
+
+
+
+  for ac_prog in gprinstall
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_GPRINSTALL+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$GPRINSTALL"; then
+  ac_cv_prog_GPRINSTALL="$GPRINSTALL" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_GPRINSTALL="$ac_prog"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+GPRINSTALL=$ac_cv_prog_GPRINSTALL
+if test -n "$GPRINSTALL"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $GPRINSTALL" >&5
+$as_echo "$GPRINSTALL" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+  test -n "$GPRINSTALL" && break
+done
+test -n "$GPRINSTALL" || GPRINSTALL=""""
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether util_config project exists" >&5
+$as_echo_n "checking whether util_config project exists... " >&6; }
+  echo "with \"util_config\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+  if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+  then
+    gnat_project_util_config=yes
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes, using util_config" >&5
+$as_echo "yes, using util_config" >&6; }
+    gnat_project_with_util_config="with \"util_config\";";
+  else
+    gnat_project_util_config=no
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+  fi
+  rm -f conftest.gpr
+
+
+  # Search in the GNAT project path.
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for util_config.gpr installation" >&5
+$as_echo_n "checking for util_config.gpr installation... " >&6; }
+  # echo "D:${gnat_project_with_util_config}"
+  echo "${gnat_project_with_util_config} project t is for Source_Dirs use (); end t;" > t.gpr
+  # cat t.gpr
+  gnat_util_config_path=`$GNATMAKE -vP1 -Pt 2>&1 | awk '/Parsing.*util_config.gpr/ {print $2}' | sed -e 's,",,g'`
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${gnat_util_config_path}" >&5
+$as_echo "${gnat_util_config_path}" >&6; }
+
+  gnat_inc_dir=
+  gnat_ali_dir=
+  gnat_prj_dir=
+  gnat_lib_dir=
+  if test x${gnat_util_config_path} != x; then
+    if test -f ${gnat_util_config_path}; then
+      gnat_inc_dir=`awk '/Includedir/ {print $3}' ${gnat_util_config_path} | sed -e 's,",,g' -e 's,;,,'`
+      gnat_lib_dir=`awk '/Libdir/ {print $3}' ${gnat_util_config_path} | sed -e 's,",,g' -e 's,;,,'`
+      gnat_ali_dir=`awk '/Alidir/ {print $3}' ${gnat_util_config_path} | sed -e 's,",,g' -e 's,;,,'`
+      gnat_prj_dir=`dirname ${gnat_util_config_path}`
+    fi
+  fi
+  if test x${gnat_prj_dir} != x; then
+
+  gnat_prefix=
+  for dir in ${gnat_inc_dir} ${gnat_ali_dir} ${gnat_lib_dir} ${gnat_prj_dir}; do
+    dir=`echo $dir | sed -e 's,\\\\,/,g'`
+    # If we have a valid path, try to identify the common path prefix.
+    if test x$gnat_prefix = x; then
+      gnat_prefix=$dir
+    else
+	  # echo "Dir=$dir"
+	  gnat_old_ifs=$IFS
+	  path=
+	  IFS='/\'
+	  for c in $dir; do
+	    if test x"$path" = x"/" || test x"$path" = x ; then
+		  case $c in
+		    c:|C:|d:|D:|e:|E:)
+			  try="$c"
+			  ;;
+		    *)
+			  try="/$c"
+			  ;;
+		  esac
+		else
+          try="$path/$c"
+		fi
+		# echo "gnat_prefix=$gnat_prefix try=$try path=$path c=$c"
+		case $gnat_prefix in
+		  $try*)
+			;;
+		  *)
+			break
+			;;
+		esac
+		  path=$try
+	  done
+	  IFS=$gnat_old_ifs
+	  gnat_prefix=$path
+    fi
+  done
+  ADA_INC_BASE=`echo ${gnat_inc_dir} | sed -e 's,\\\\,/,g' | sed -e s,^$gnat_prefix/,,`
+  ADA_ALI_BASE=`echo ${gnat_ali_dir} | sed -e 's,\\\\,/,g' | sed -e s,^$gnat_prefix/,,`
+  ADA_LIB_BASE=`echo ${gnat_lib_dir} | sed -e 's,\\\\,/,g' | sed -e s,^$gnat_prefix/,,`
+  ADA_PRJ_BASE=`echo ${gnat_prj_dir} | sed -e 's,\\\\,/,g' | sed -e s,^$gnat_prefix/,,`
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking installation of Ada source files" >&5
+$as_echo_n "checking installation of Ada source files... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: <prefix>/${ADA_INC_BASE}" >&5
+$as_echo "<prefix>/${ADA_INC_BASE}" >&6; }
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking installation of Ada ALI files" >&5
+$as_echo_n "checking installation of Ada ALI files... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: <prefix>/${ADA_ALI_BASE}" >&5
+$as_echo "<prefix>/${ADA_ALI_BASE}" >&6; }
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking installation of library files" >&5
+$as_echo_n "checking installation of library files... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: <prefix>/${ADA_LIB_BASE}" >&5
+$as_echo "<prefix>/${ADA_LIB_BASE}" >&6; }
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking installation of GNAT project files" >&5
+$as_echo_n "checking installation of GNAT project files... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: <prefix>/${ADA_PRJ_BASE}" >&5
+$as_echo "<prefix>/${ADA_PRJ_BASE}" >&6; }
+
+
+
+
+
+
+  else
 
   #
   gnat_prefix=
@@ -2336,223 +2716,14 @@ $as_echo "<prefix>/${ADA_PRJ_BASE}" >&6; }
 
 
 
-
-# checking for local tools
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${MAKE-make} sets \$(MAKE)" >&5
-$as_echo_n "checking whether ${MAKE-make} sets \$(MAKE)... " >&6; }
-set x ${MAKE-make}
-ac_make=`$as_echo "$2" | sed 's/+/p/g; s/[^a-zA-Z0-9_]/_/g'`
-if eval \${ac_cv_prog_make_${ac_make}_set+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat >conftest.make <<\_ACEOF
-SHELL = /bin/sh
-all:
-	@echo '@@@%%%=$(MAKE)=@@@%%%'
-_ACEOF
-# GNU make sometimes prints "make[1]: Entering ...", which would confuse us.
-case `${MAKE-make} -f conftest.make 2>/dev/null` in
-  *@@@%%%=?*=@@@%%%*)
-    eval ac_cv_prog_make_${ac_make}_set=yes;;
-  *)
-    eval ac_cv_prog_make_${ac_make}_set=no;;
-esac
-rm -f conftest.make
-fi
-if eval test \$ac_cv_prog_make_${ac_make}_set = yes; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  SET_MAKE=
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-  SET_MAKE="MAKE=${MAKE-make}"
-fi
-
-# Find a good install program.  We prefer a C program (faster),
-# so one script is as good as another.  But avoid the broken or
-# incompatible versions:
-# SysV /etc/install, /usr/sbin/install
-# SunOS /usr/etc/install
-# IRIX /sbin/install
-# AIX /bin/install
-# AmigaOS /C/install, which installs bootblocks on floppy discs
-# AIX 4 /usr/bin/installbsd, which doesn't work without a -g flag
-# AFS /usr/afsws/bin/install, which mishandles nonexistent args
-# SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
-# OS/2's system install, which has a completely different semantic
-# ./install, which can be erroneously created by make from ./install.sh.
-# Reject install programs that cannot install multiple files.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for a BSD-compatible install" >&5
-$as_echo_n "checking for a BSD-compatible install... " >&6; }
-if test -z "$INSTALL"; then
-if ${ac_cv_path_install+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    # Account for people who put trailing slashes in PATH elements.
-case $as_dir/ in #((
-  ./ | .// | /[cC]/* | \
-  /etc/* | /usr/sbin/* | /usr/etc/* | /sbin/* | /usr/afsws/bin/* | \
-  ?:[\\/]os2[\\/]install[\\/]* | ?:[\\/]OS2[\\/]INSTALL[\\/]* | \
-  /usr/ucb/* ) ;;
-  *)
-    # OSF1 and SCO ODT 3.0 have their own names for install.
-    # Don't use installbsd from OSF since it installs stuff as root
-    # by default.
-    for ac_prog in ginstall scoinst install; do
-      for ac_exec_ext in '' $ac_executable_extensions; do
-	if as_fn_executable_p "$as_dir/$ac_prog$ac_exec_ext"; then
-	  if test $ac_prog = install &&
-	    grep dspmsg "$as_dir/$ac_prog$ac_exec_ext" >/dev/null 2>&1; then
-	    # AIX install.  It has an incompatible calling convention.
-	    :
-	  elif test $ac_prog = install &&
-	    grep pwplus "$as_dir/$ac_prog$ac_exec_ext" >/dev/null 2>&1; then
-	    # program-specific install script used by HP pwplus--don't use.
-	    :
-	  else
-	    rm -rf conftest.one conftest.two conftest.dir
-	    echo one > conftest.one
-	    echo two > conftest.two
-	    mkdir conftest.dir
-	    if "$as_dir/$ac_prog$ac_exec_ext" -c conftest.one conftest.two "`pwd`/conftest.dir" &&
-	      test -s conftest.one && test -s conftest.two &&
-	      test -s conftest.dir/conftest.one &&
-	      test -s conftest.dir/conftest.two
-	    then
-	      ac_cv_path_install="$as_dir/$ac_prog$ac_exec_ext -c"
-	      break 3
-	    fi
-	  fi
-	fi
-      done
-    done
-    ;;
-esac
-
-  done
-IFS=$as_save_IFS
-
-rm -rf conftest.one conftest.two conftest.dir
-
-fi
-  if test "${ac_cv_path_install+set}" = set; then
-    INSTALL=$ac_cv_path_install
-  else
-    # As a last resort, use the slow shell script.  Don't cache a
-    # value for INSTALL within a source directory, because that will
-    # break other packages using the cache if that directory is
-    # removed, or if the value is a relative name.
-    INSTALL=$ac_install_sh
   fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $INSTALL" >&5
-$as_echo "$INSTALL" >&6; }
-
-# Use test -z because SunOS4 sh mishandles braces in ${var-val}.
-# It thinks the first close brace ends the variable substitution.
-test -z "$INSTALL_PROGRAM" && INSTALL_PROGRAM='${INSTALL}'
-
-test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL}'
-
-test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ln -s works" >&5
-$as_echo_n "checking whether ln -s works... " >&6; }
-LN_S=$as_ln_s
-if test "$LN_S" = "ln -s"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using $LN_S" >&5
-$as_echo "no, using $LN_S" >&6; }
-fi
 
 
-# Set the version number of the project
-
-
-
-
-
-EXEC_PREFIX="$prefix"
-
-SWAGGER_LIBDIR="lib"
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking number of processors" >&5
-$as_echo_n "checking number of processors... " >&6; }
-NR_CPUS=`getconf _NPROCESSORS_CONF 2>/dev/null || getconf NPROCESSORS_CONF 2>/dev/null || echo 1`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $NR_CPUS" >&5
-$as_echo "$NR_CPUS" >&6; }
-
-
-##########################################
-# Check to enable/disable shared library
-##########################################
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking shared library support" >&5
-$as_echo_n "checking shared library support... " >&6; }
-  ac_enable_shared=no
-  # Check whether --enable-shared was given.
-if test "${enable_shared+set}" = set; then :
-  enableval=$enable_shared; case "${enableval}" in
-      no|none)  ac_enable_shared=no ;;
-      *)        ac_enable_shared=yes ;;
-    esac
-fi
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_shared}" >&5
-$as_echo "${ac_enable_shared}" >&6; }
-  BUILDS_SHARED=$ac_enable_shared
-
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking distribution build" >&5
-$as_echo_n "checking distribution build... " >&6; }
-  ac_enable_distrib=yes
-  ac_build_mode=distrib
-  # Check whether --enable-distrib was given.
-if test "${enable_distrib+set}" = set; then :
-  enableval=$enable_distrib; case "${enableval}" in
-      no|none)  ac_enable_distrib=no
-                ac_build_mode=debug
-                ;;
-      *)        ac_enable_distrib=yes
-                ac_build_mode=distrib
-                ;;
-    esac
-fi
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_distrib}" >&5
-$as_echo "${ac_enable_distrib}" >&6; }
-  BUILDS_DISTRIB=$ac_enable_distrib
-
-
-  MODE=$ac_build_mode
-
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking coverage support" >&5
-$as_echo_n "checking coverage support... " >&6; }
-  ac_enable_coverage=no
-  # Check whether --enable-coverage was given.
-if test "${enable_coverage+set}" = set; then :
-  enableval=$enable_coverage; case "${enableval}" in
-      no|none)  ac_enable_coverage=no ;;
-      *)        ac_enable_coverage=yes ;;
-    esac
-fi
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_coverage}" >&5
-$as_echo "${ac_enable_coverage}" >&6; }
-  BUILDS_COVERAGE=$ac_enable_coverage
-
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking preparing for GNAT project swagger" >&5
+$as_echo_n "checking preparing for GNAT project swagger... " >&6; }
+  mkdir -p obj/swagger/static obj/swagger/relocatable lib/swagger/static lib/swagger/relocatable
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
+$as_echo "done" >&6; }
 
 
 ##########################################
@@ -2688,25 +2859,25 @@ $as_echo_n "checking Ada Servlet Library... " >&6; }
 # Check whether --with-ada-servlet was given.
 if test "${with_ada_servlet+set}" = set; then :
   withval=$with_ada_servlet;
-      gnat_project_name_servlet=${withval}/
+      gnat_project_name_servlet_core=${withval}/
       if test -d "${withval}"; then
-	    gnat_project_name_servlet=${withval}/servlet
+	    gnat_project_name_servlet_core=${withval}/servlet_core
 	  fi
 
 else
 
-      gnat_project_name_servlet=servlet
+      gnat_project_name_servlet_core=servlet_core
 
 fi
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_servlet}" >&5
-$as_echo "trying ${gnat_project_name_servlet}" >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: trying ${gnat_project_name_servlet_core}" >&5
+$as_echo "trying ${gnat_project_name_servlet_core}" >&6; }
 
   rm -f conftest.gpr
   # Search in the GNAT project path.
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_servlet} project exists in gnatmake's search path" >&5
-$as_echo_n "checking whether ${gnat_project_name_servlet} project exists in gnatmake's search path... " >&6; }
-  echo "with \"${gnat_project_name_servlet}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${gnat_project_name_servlet_core} project exists in gnatmake's search path" >&5
+$as_echo_n "checking whether ${gnat_project_name_servlet_core} project exists in gnatmake's search path... " >&6; }
+  echo "with \"${gnat_project_name_servlet_core}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
   if { ac_try='gnat ls -Pconftest.gpr system.ads > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
@@ -2714,16 +2885,16 @@ $as_echo_n "checking whether ${gnat_project_name_servlet} project exists in gnat
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
   then
-    gnat_project_servlet=yes
+    gnat_project_servlet_core=yes
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   else
-    gnat_project_servlet=no
+    gnat_project_servlet_core=no
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
-    # Search in ../ada-servlet-*/servlet.gpr
-    files=`ls -r ../ada-servlet/servlet.gpr ../servlet/servlet.gpr ../ada-servlet-*/servlet.gpr 2>/dev/null`
+    # Search in ../ada-servlet-*/servlet_core.gpr
+    files=`ls -r ../ada-servlet/servlet_core.gpr ../servlet_core/servlet_core.gpr ../ada-servlet-*/servlet_core.gpr 2>/dev/null`
     for name in $files; do
       dir=`dirname $name`
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Ada Servlet Library project in ${dir}" >&5
@@ -2736,39 +2907,39 @@ $as_echo_n "checking for Ada Servlet Library project in ${dir}... " >&6; }
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
       then
-         gnat_project_servlet=yes
-		 gnat_project_name_servlet=${name}
+         gnat_project_servlet_core=yes
+		 gnat_project_name_servlet_core=${name}
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
          break
       else
-         gnat_project_servlet=no
+         gnat_project_servlet_core=no
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
       fi
     done
   fi
   rm -f conftest.gpr
-  if test x${gnat_project_servlet} = xyes; then
-    gnat_project_with_servlet="with \"${gnat_project_name_servlet}\";";
-    gnat_project_dir_servlet=`dirname ${gnat_project_name_servlet}`
-    if test ${gnat_project_dir_servlet} = . ; then
-       gnat_project_dir_servlet=
+  if test x${gnat_project_servlet_core} = xyes; then
+    gnat_project_with_servlet_core="with \"${gnat_project_name_servlet_core}\";";
+    gnat_project_dir_servlet_core=`dirname ${gnat_project_name_servlet_core}`
+    if test ${gnat_project_dir_servlet_core} = . ; then
+       gnat_project_dir_servlet_core=
     else
-       gnat_project_dir_servlet="${gnat_project_dir_servlet}/"
+       gnat_project_dir_servlet_core="${gnat_project_dir_servlet_core}/"
     fi
 
-    SERVLET_DIR=${gnat_project_dir_servlet}
+    SERVLET_DIR=${gnat_project_dir_servlet_core}
 
   else
-    gnat_project_dir_servlet=
-    gnat_project_name_servlet=
+    gnat_project_dir_servlet_core=
+    gnat_project_name_servlet_core=
     if test x"Building swagger requires the Ada Servlet Library." != x; then
       as_fn_error $? "Building swagger requires the Ada Servlet Library.
   You should build and install the Ada Servlet Library component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
-  This project was not found in ../servlet nor in ../ada-servlet-*.
+  This project was not found in ../servlet_core nor in ../ada-servlet-*.
   The component is available at git@github.com:stcarrez/ada-servlet.git.
   Please, download and configure Ada Servlet Library.
   The current configuration was using:
