@@ -84,4 +84,6 @@ AC_SUBST(SECURITY_DIR)
 
 AC_OUTPUT(
 Makefile swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr
+distrib/swagger.gpr
+distrib/swagger_server.gpr
 )
