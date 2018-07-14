@@ -3055,7 +3055,7 @@ $as_echo "no" >&6; }
 
 
 
-ac_config_files="$ac_config_files Makefile swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr"
+ac_config_files="$ac_config_files Makefile swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr distrib/swagger.gpr distrib/swagger_server.gpr"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3769,6 +3769,8 @@ do
     "swagger_tests.gpr") CONFIG_FILES="$CONFIG_FILES swagger_tests.gpr" ;;
     "testapi_server.gpr") CONFIG_FILES="$CONFIG_FILES testapi_server.gpr" ;;
     "testapi_model.gpr") CONFIG_FILES="$CONFIG_FILES testapi_model.gpr" ;;
+    "distrib/swagger.gpr") CONFIG_FILES="$CONFIG_FILES distrib/swagger.gpr" ;;
+    "distrib/swagger_server.gpr") CONFIG_FILES="$CONFIG_FILES distrib/swagger_server.gpr" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
