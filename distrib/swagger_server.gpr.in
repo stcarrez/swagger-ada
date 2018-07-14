@@ -1,0 +1,18 @@
+with "util";
+with "util_config";
+with "util_http";
+with "servlet";
+with "security";
+with "swagger";
+
+project Swagger_server is
+   Version := "@SWAGGER_VERSION@";
+
+   for Library_Name use "ada_swagger_server";
+   for Library_Dir use Util_Config.Libdir;
+   for Library_Kind use "LIBRARY_TYPE";
+
+   for Source_Dirs use (Util_Config.Includedir & "/swagger_server");
+   for Library_ALI_Dir use Util_Config.Alidir & "/swagger_server/";
+   for Externally_Built use "true";
+end Swagger;
