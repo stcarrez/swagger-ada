@@ -10,7 +10,7 @@ library project swagger_server is
    Library_Dir := "@SWAGGER_LIBDIR@";
    Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "static");
 
-   for Library_Name use "swagger_server";
+   for Library_Name use "ada_swagger_server";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
 
