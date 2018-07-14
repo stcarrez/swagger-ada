@@ -20,9 +20,9 @@ BUILDS_SHARED=@BUILDS_SHARED@
 
 version=@SWAGGER_VERSION@
 
-distdir=swagger-@SWAGGER_VERSION@
+distdir=swagger-ada-@SWAGGER_VERSION@
 
-DIST_FILE=swagger-@SWAGGER_VERSION@.tar.gz
+DIST_FILE=swagger-ada-@SWAGGER_VERSION@.tar.gz
 
 LN_S=@LN_S@
 MKDIR=mkdir
