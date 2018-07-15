@@ -2,8 +2,9 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Ada-Swagger.svg)](http://jenkins.vacs.fr/job/Ada-Swagger/)
 [![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Ada-Swagger.svg)](http://jenkins.vacs.fr/job/Ada-Swagger/)
+[![Download](https://img.shields.io/badge/download-0.1.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.1.0.tar.gz)
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-awa/swagger-ada-1.0.0.svg)
+![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.1.0.svg)
 
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
