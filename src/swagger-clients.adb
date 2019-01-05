@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-clients -- Rest client support
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2019 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +48,7 @@ package body Swagger.Clients is
                              Value : in String) is
       Path  : constant String := To_String (URI.URI);
       Pos   : Natural;
-      First : Natural := Path'First;
+      First : constant Natural := Path'First;
    begin
       loop
          Pos := Util.Strings.Index (Path, '{', First);
@@ -305,6 +305,7 @@ package body Swagger.Clients is
    procedure Error (Client   : in out Client_Type;
                     Status   : in Natural;
                     Response : in Util.Http.Clients.Response'Class) is
+      pragma Unreferenced (Client, Response);
    begin
       if Status = 404 then
          raise Not_Found;
