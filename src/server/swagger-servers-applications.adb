@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-applications -- REST application
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2019 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,6 @@ package body Swagger.Servers.Applications is
       UI_Enable  : constant Boolean := Boolean_Property.Get (Config, "swagger.ui.enable", True);
       Web_Enable : constant Boolean := Boolean_Property.Get (Config, "swagger.web.enable", True);
       Key        : constant String := Config.Get ("swagger.key");
-      Serv_App  : Security.OAuth.Servers.Application;
    begin
       Cfg.Copy (Config);
       Cfg.Set ("view.dir", Dir & ";" & Swagger.Servers.Config.WEB_DIR);
