@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server-operation -- Rest server operation
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2019 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ package body Swagger.Servers.Operation is
 
    exception
       when others =>
-         Reply.Set_Status (500);
+         Ctx.Set_Error (500, "Internal server error");
    end Op;
 
    package API is new Servlet.Rest.Operation (Handler    => Op'Access,
