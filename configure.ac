@@ -4,9 +4,6 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(src/swagger.ads)
 
-AC_CANONICAL_SYSTEM
-dnl AM_MAINTAINER_MODE
-
 # Current release settings
 SWAGGER_MAJOR_VERSION=0
 SWAGGER_MINOR_VERSION=1
@@ -21,22 +18,17 @@ AC_SUBST(SWAGGER_MICRO_VERSION)
 
 EXEC_PREFIX="$prefix"
 AC_SUBST(EXEC_PREFIX)
-SWAGGER_LIBDIR="lib"
-AC_SUBST(SWAGGER_LIBDIR)
 
-##########################################
-# Check to enable/disable shared library
-##########################################
 AM_GNAT_LIBRARY_PROJECT(swagger)
 
 ##########################################
 # Ada Util library
 ##########################################
-AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[util],
+AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[utilada_base],
   [git@github.com:stcarrez/ada-util.git],
   [Building swagger requires the Ada Utility Library.],
   [
-    UTIL_DIR=${gnat_project_dir_util}
+    UTIL_DIR=${gnat_project_dir_utilada_base}
   ])
 AC_SUBST(UTIL_DIR)
 
@@ -61,11 +53,11 @@ if test T${ac_enable_server} = Tyes; then
 ##########################################
 # Ada Servlet library
 ##########################################
-AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet_core],
+AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servletada_core],
   [git@github.com:stcarrez/ada-servlet.git],
   [Building swagger requires the Ada Servlet Library.],
   [
-    SERVLET_DIR=${gnat_project_dir_servlet_core}
+    SERVLET_DIR=${gnat_project_dir_servletada_core}
   ])
 AC_SUBST(SERVLET_DIR)
 
@@ -83,7 +75,10 @@ AM_GNAT_FIND_PROJECT([ada-security],[Ada Security Library],[security],
 AC_SUBST(SECURITY_DIR)
 
 AC_OUTPUT(
-Makefile swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr
-distrib/swagger.gpr
-distrib/swagger_server.gpr
+Makefile.conf
+swagger.gpr
+swagger_server.gpr
+swagger_tests.gpr
+testapi_server.gpr
+testapi_model.gpr
 )
