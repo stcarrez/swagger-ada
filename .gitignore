@@ -10,7 +10,7 @@ CHANGES
 ChangeLog
 .settings
 configure.lineno
-Makefile
+Makefile.conf
 swagger.gpr
 swagger_server.gpr
 swagger_tests.gpr
