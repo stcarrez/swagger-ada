@@ -35,10 +35,6 @@ else
 setup::
 endif
 
-# Clean the files produced by the unit tests
-clean_test:
-	rm -rf regtests/result/*
-
 generate:
 	java -jar openapi-generator-cli.jar generate \
            --generator-name ada -i regtests/swagger.yaml -o regtests/client \
@@ -59,18 +55,10 @@ else
 	bin/swagger_harness -config tests-client.properties -xml swagger-aunit.xml
 endif
 
-install_lib:
-	$(GPRINSTALL) -p -f --prefix=$(prefix) $(MAKE_ARGS) \
-		--build-name=$(SWAGGER_LIBRARY_TYPE) $(GPRPATH)
-ifeq (${HAVE_SERVER},yes)
-	$(GPRINSTALL) -p -f --prefix=$(prefix) $(MAKE_ARGS) \
-		--build-name=$(SWAGGER_LIBRARY_TYPE) $(SERVER_GPRPATH)
-endif
-
-install_web:
-	rm -rf ${sharedir}/swagger-ada
-	${MKDIR} -p ${sharedir}/swagger-ada
-	${CP} -rp web ${sharedir}/swagger-ada/web
+install::
+	rm -rf ${prefix}/share/swagger-ada
+	${MKDIR} -p ${prefix}/share/swagger-ada
+	${CP} -rp web ${prefix}/share/swagger-ada/web
 
 $(eval $(call ada_library,$(NAME)))
 
