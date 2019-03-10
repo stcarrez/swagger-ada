@@ -56,9 +56,9 @@ else
 endif
 
 install::
-	rm -rf ${prefix}/share/swagger-ada
-	${MKDIR} -p ${prefix}/share/swagger-ada
-	${CP} -rp web ${prefix}/share/swagger-ada/web
+	rm -rf $(DESTDIR)${prefix}/share/swagger-ada
+	${MKDIR} -p $(DESTDIR)${prefix}/share/swagger-ada
+	${CP} -rp web $(DESTDIR)${prefix}/share/swagger-ada/web
 
 $(eval $(call ada_library,$(NAME)))
 
