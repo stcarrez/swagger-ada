@@ -23,7 +23,7 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 include Makefile.defaults
 
 build-test::  setup
-	$(GNATMAKE) -p -Pswagger_tests $(MAKE_ARGS)
+	$(GNATMAKE) $(GPRFLAGS) -p -P$(NAME)_tests $(MAKE_ARGS)
 
 ifeq (${HAVE_SERVER},yes)
 setup:: src/server/swagger-servers-config.ads
