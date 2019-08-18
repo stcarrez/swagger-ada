@@ -64,5 +64,9 @@ $(eval $(call ada_library,$(NAME)))
 
 ifeq ($(HAVE_SERVER),yes)
 $(eval $(call ada_library,swagger_server))
+
+build-test::
+	$(GNATMAKE) $(GPRFLAGS) -p -Ptestapi_server $(MAKE_ARGS)
+
 endif
 
