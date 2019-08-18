@@ -20,9 +20,9 @@ with Swagger.Testsuite;
 with Util.Tests;
 with Util.Http.Clients.Web;
 
-procedure Swagger_Harness is
+procedure Swagger_Harness_Aws is
    procedure Harness is new Util.Tests.Harness (Swagger.Testsuite.Suite);
 begin
    Util.Http.Clients.Web.Register;
    Harness ("swagger-tests.xml");
-end Swagger_Harness;
+end Swagger_Harness_Aws;
