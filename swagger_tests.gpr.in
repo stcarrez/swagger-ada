@@ -1,6 +1,7 @@
 with "@UTIL_DIR@config";
 with "@UTIL_DIR@utilada_sys";
 with "@UTIL_DIR@utilada_unit";
+with "@UTIL_DIR@utilada_http";
 with "testapi_model";
 with "swagger";
 
