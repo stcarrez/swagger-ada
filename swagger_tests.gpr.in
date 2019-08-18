@@ -9,7 +9,23 @@ project Swagger_Tests is
 
    for Languages use ("Ada");
 
-   Mains := ("swagger_harness.adb");
+   Mains := ();
+
+   case Utilada_Http.Has_Curl is
+      when "yes" =>
+         Mains := Mains & ("swagger_harness_curl.adb");
+
+      when "no" =>
+         null;
+   end case;
+
+   case Utilada_Http.Has_Aws is
+      when "yes" =>
+         Mains := Mains & ("swagger_harness_aws.adb");
+
+      when "no" =>
+         null;
+   end case;
 
    for Source_Dirs use ("regtests", "regtests/client/src/client");
 
