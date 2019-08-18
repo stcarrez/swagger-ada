@@ -26,6 +26,9 @@ package body Swagger.Clients is
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Clients");
 
+   type Form_Output_Stream_Access is access all Swagger.Streams.Forms.Output_Stream'Class;
+   type Json_Output_Stream_Access is access all Util.Serialize.IO.JSON.Output_Stream'Class;
+
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
       return Stream_Accessor '(Stream => Req.Data.all'Access, N => 0);
@@ -333,8 +336,8 @@ package body Swagger.Clients is
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
                          Types   : in Content_Type_Array) is
-      Json  : access Util.Serialize.IO.JSON.Output_Stream'Class;
-      Forms : access Swagger.Streams.Forms.Output_Stream'Class;
+      Json  : Json_Output_Stream_Access;
+      Forms : Form_Output_Stream_Access;
    begin
       case Types (Types'First) is
          when APPLICATION_FORM =>
