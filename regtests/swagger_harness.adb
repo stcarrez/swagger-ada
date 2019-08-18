@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger_harness -- Unit tests
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2019 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,11 @@
 
 with Swagger.Testsuite;
 with Util.Tests;
-with Util.Http.Clients.Curl;
+with Util.Http.Clients.Web;
 
 procedure Swagger_Harness is
    procedure Harness is new Util.Tests.Harness (Swagger.Testsuite.Suite);
 begin
-   Util.Http.Clients.Curl.Register;
+   Util.Http.Clients.Web.Register;
    Harness ("swagger-tests.xml");
 end Swagger_Harness;
