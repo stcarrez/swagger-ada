@@ -49,10 +49,16 @@ ifeq (${HAVE_SERVER},yes)
 	bin/testapi-server & \
         SERVER_PID=$$!; \
         sleep 1; \
-	bin/swagger_harness -config tests.properties -xml swagger-aunit.xml ;\
+	(test ! -f bin/swagger_harness_aws || \
+          bin/swagger_harness_aws -p AWS -config tests.properties -xml swagger-aws-aunit.xml) ;\
+	(test ! -f bin/swagger_harness_curl || \
+          bin/swagger_harness_curl -p CURL -config tests.properties -xml swagger-curl-aunit.xml) ;\
         kill $$SERVER_PID
 else
-	bin/swagger_harness -config tests-client.properties -xml swagger-aunit.xml
+	test ! -f bin/swagger_harness_aws || \
+          bin/swagger_harness_aws -p AWS -config tests-client.properties -xml swagger-aws-aunit.xml
+	test ! -f bin/swagger_harness_curl || \
+          bin/swagger_harness_curl -p CURL -config tests-client.properties -xml swagger-curl-aunit.xml
 endif
 
 install::
