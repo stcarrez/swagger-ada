@@ -21,5 +21,6 @@ bin/
 obj/
 lib/
 regtests/results
-swagger-aunit.xml
+swagger-*aunit.xml
 src/server/swagger-servers-config.ads
+regtests/result
