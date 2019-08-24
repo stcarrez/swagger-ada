@@ -46,13 +46,13 @@ generate:
 # Build and run the unit tests
 test:	build-test
 ifeq (${HAVE_SERVER},yes)
-	bin/testapi-server & \
+	bin/testapi-server > testapi-server.log & \
         SERVER_PID=$$!; \
         sleep 1; \
 	(test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -p AWS -config tests.properties -xml swagger-aws-aunit.xml) ;\
+          bin/swagger_harness_aws -l $(NAME):AWS: -p AWS -config tests.properties -xml swagger-aws-aunit.xml) ;\
 	(test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -p CURL -config tests.properties -xml swagger-curl-aunit.xml) ;\
+          bin/swagger_harness_curl -l $(NAME):CURL: -p CURL -config tests.properties -xml swagger-curl-aunit.xml) ;\
         kill $$SERVER_PID
 else
 	test ! -f bin/swagger_harness_aws || \
