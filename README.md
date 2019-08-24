@@ -1,9 +1,9 @@
 # Swagger Ada Library
 
-[![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](http://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](http://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
+[![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
+[![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
 [![Download](https://img.shields.io/badge/download-0.1.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.1.0.tar.gz)
-[![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 ![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.1.0.svg)
 
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
@@ -21,8 +21,8 @@ specific operations or types.
 Before building this library, you may need to install the following projects:
 
 * Ada Util      (https://github.com/stcarrez/ada-util)
-* AWS      (http://libre.adacore.com/libre/tools/aws/)
-* XMLAda   (http://libre.adacore.com/libre/tools/xmlada/)
+* AWS      (https://libre.adacore.com/libre/tools/aws/)
+* XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
 
 Then, to build Ada Swagger library, configure as follows:
 ```
@@ -171,13 +171,13 @@ to use Curl, you should initialize with the following:
    Util.Http.Clients.Curl.Register;
 ```
 
-But if you want to use [AWS](http://libre.adacore.com/libre/tools/aws/), you will initialize with:
+But if you want to use [AWS](https://libre.adacore.com/libre/tools/aws/), you will initialize with:
 
 ```
    Util.Http.Clients.Web.Register;
 ```
 
-Curl may be easier to start with because [AWS](http://libre.adacore.com/libre/tools/aws/)
+Curl may be easier to start with because [AWS](https://libre.adacore.com/libre/tools/aws/)
 does not support HTTP DELETE operation except in some latest version.
 
 After the initialization is done, you will declare a client instance to access
