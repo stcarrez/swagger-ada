@@ -16,21 +16,9 @@ AC_SUBST(SWAGGER_MAJOR_VERSION)
 AC_SUBST(SWAGGER_MINOR_VERSION)
 AC_SUBST(SWAGGER_MICRO_VERSION)
 
-EXEC_PREFIX="$prefix"
-AC_SUBST(EXEC_PREFIX)
-
 AM_GNAT_LIBRARY_PROJECT(swagger)
 
-##########################################
-# Ada Util library
-##########################################
-AM_GNAT_FIND_PROJECT([ada-util],[Ada Utility Library],[utilada_base],
-  [git@github.com:stcarrez/ada-util.git],
-  [Building swagger requires the Ada Utility Library.],
-  [
-    UTIL_DIR=${gnat_project_dir_utilada_base}
-  ])
-AC_SUBST(UTIL_DIR)
+AM_GNAT_FIND_ADA_UTIL([Ada Swagger])
 
 ##########################################
 # Check for Swagger Server support
@@ -49,30 +37,10 @@ SWAGGER_HAVE_SERVER=$ac_enable_server
 AC_SUBST(SWAGGER_HAVE_SERVER)
 
 if test T${ac_enable_server} = Tyes; then
-
-##########################################
-# Ada Servlet library
-##########################################
-AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servletada],
-  [git@github.com:stcarrez/ada-servlet.git],
-  [Building swagger requires the Ada Servlet Library.],
-  [
-    SERVLET_DIR=${gnat_project_dir_servletada}
-  ])
-AC_SUBST(SERVLET_DIR)
-
+  AM_GNAT_FIND_ADA_SERVLET([Ada Swagger])
 fi
 
-##########################################
-# Ada Security library
-##########################################
-AM_GNAT_FIND_PROJECT([ada-security],[Ada Security Library],[security],
-  [git@github.com:stcarrez/ada-security.git],
-  [Building Ada Servlet requires the Ada Security Library.],
-  [
-    SECURITY_DIR=${gnat_project_dir_security}
-  ])
-AC_SUBST(SECURITY_DIR)
+AM_GNAT_FIND_ADA_SECURITY([Ada Swagger])
 
 AC_OUTPUT(
 Makefile.conf
