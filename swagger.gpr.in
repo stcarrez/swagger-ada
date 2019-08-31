@@ -7,7 +7,7 @@ library project swagger is
 
    Version := "@SWAGGER_VERSION@";
    Library_Dir := "lib";
-   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "static");
+   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "@DEFAULT_LIBRARY_TYPE@");
 
    for Library_Name use "ada_swagger";
    for Library_Kind use Library_Type;
