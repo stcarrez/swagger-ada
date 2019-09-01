@@ -61,7 +61,9 @@ else
           bin/swagger_harness_curl -p CURL -config tests-client.properties -xml swagger-curl-aunit.xml
 endif
 
-install::
+install:: install-data
+
+install-data::
 	rm -rf $(DESTDIR)${prefix}/share/swagger-ada
 	${MKDIR} -p $(DESTDIR)${prefix}/share/swagger-ada
 	${CP} -rp web $(DESTDIR)${prefix}/share/swagger-ada/web
