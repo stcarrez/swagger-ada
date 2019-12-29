@@ -35,13 +35,15 @@ else
 setup::
 endif
 
+SWAGGER=java -jar openapi-generator-cli.jar
+
 generate:
-	java -jar openapi-generator-cli.jar generate \
-           --generator-name ada -i regtests/swagger.yaml -o regtests/client \
-           -DprojectName=TestAPI --model-package TestAPI
-	java -jar openapi-generator-cli.jar generate \
-           --generator-name ada-server -i regtests/swagger.yaml -o regtests/server \
-           -DprojectName=TestAPI --model-package TestAPI
+	$(SWAGGER) generate --generator-name ada -i regtests/swagger.yaml \
+            --additional-properties projectName=TestAPI \
+            --model-package TestAPI -o regtests/client
+	$(SWAGGER) generate --generator-name ada-server -i regtests/swagger.yaml \
+            --additional-properties projectName=TestAPI \
+            --model-package TestAPI -o regtests/server
 
 # Build and run the unit tests
 test:	build-test
