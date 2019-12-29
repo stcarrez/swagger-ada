@@ -2150,6 +2150,10 @@ test -n "$GNATMAKE" || GNATMAKE=""""
 
   fi
 
+  if test -z "$GNATMAKE"; then
+    as_fn_error $? "gnatmake or gprbuild must be installed." "$LINENO" 5
+  fi;
+
   for ac_prog in gprclean
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -2446,10 +2450,14 @@ $as_echo "done" >&6; }
 # Check whether --with-ada-util was given.
 if test "${with_ada_util+set}" = set; then :
   withval=$with_ada_util;
-      ac_cv_gnat_project_name_utilada_base=${withval}/
-      if test -d "${withval}"; then
-	    ac_cv_gnat_project_name_utilada_base=${withval}/utilada_base
-	  fi
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_utilada_base=${awa_build_root}utilada_base
+      else
+        ac_cv_gnat_project_name_utilada_base=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_utilada_base=${withval}/utilada_base
+	    fi
+      fi
 
 else
 
@@ -2572,10 +2580,14 @@ if test T${ac_enable_server} = Tyes; then
 # Check whether --with-ada-servlet was given.
 if test "${with_ada_servlet+set}" = set; then :
   withval=$with_ada_servlet;
-      ac_cv_gnat_project_name_servletada=${withval}/
-      if test -d "${withval}"; then
-	    ac_cv_gnat_project_name_servletada=${withval}/servletada
-	  fi
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_servletada=${awa_build_root}servletada
+      else
+        ac_cv_gnat_project_name_servletada=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_servletada=${withval}/servletada
+	    fi
+      fi
 
 else
 
@@ -2679,10 +2691,14 @@ fi
 # Check whether --with-ada-security was given.
 if test "${with_ada_security+set}" = set; then :
   withval=$with_ada_security;
-      ac_cv_gnat_project_name_security=${withval}/
-      if test -d "${withval}"; then
-	    ac_cv_gnat_project_name_security=${withval}/security
-	  fi
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_security=${awa_build_root}security
+      else
+        ac_cv_gnat_project_name_security=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_security=${withval}/security
+	    fi
+      fi
 
 else
 
