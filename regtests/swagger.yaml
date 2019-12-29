@@ -164,7 +164,6 @@ paths:
                 owner:
                   description: Ticket owner
                   type: string
-                  required: true
                 status:
                   description: Ticket status
                   type: string
