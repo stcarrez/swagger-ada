@@ -22,6 +22,10 @@ AC_DEFUN(AM_GNAT_CHECK_GPRBUILD,
     AC_CHECK_PROGS(GNATMAKE, gnatmake, "")
   fi
 
+  if test -z "$GNATMAKE"; then
+    AC_MSG_ERROR([gnatmake or gprbuild must be installed.])
+  fi;
+
   AC_CHECK_PROGS(GPRCLEAN, gprclean, "")
   if test -n "$GPRCLEAN"; then
     GNATCLEAN="$GPRCLEAN"
@@ -55,10 +59,14 @@ AC_DEFUN(AM_GNAT_FIND_PROJECT,
   AC_ARG_WITH($1,
     AS_HELP_STRING([--with-$1=x], [Path for $2]),
     [
-      ac_cv_gnat_project_name_$3=${withval}/
-      if test -d "${withval}"; then
-	    ac_cv_gnat_project_name_$3=${withval}/$3
-	  fi
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_$3=${awa_build_root}$3
+      else
+        ac_cv_gnat_project_name_$3=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_$3=${withval}/$3
+	    fi
+      fi
     ],
     [
       ac_cv_gnat_project_name_$3=${awa_build_root}$3
