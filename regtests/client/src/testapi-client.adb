@@ -1,7 +1,7 @@
 with TestAPI.Clients;
 with TestAPI.Models;
 with Swagger;
-with Util.Http.Clients.AWS;
+with Util.Http.Clients.Curl;
 with Ada.Text_IO;
 with Ada.Command_Line;
 with Ada.Calendar.Formatting;
@@ -26,7 +26,7 @@ begin
       Usage;
       return;
    end if;
-   Util.Http.Clients.AWS.Register;
+   Util.Http.Clients.Curl.Register;
    declare
       Command : constant String := Ada.Command_Line.Argument (Arg);
       Item    : constant String := Ada.Command_Line.Argument (Arg + 1);

@@ -14,13 +14,14 @@ the [Swagger Ada library](https://github.com/stcarrez/swagger-ada).
 When the GNAT Ada compiler and Swagger Ada libraries are installed,
 run the following command:
 
-```
+```shell
   gprbuild -p -PTestAPI
 ```
 
-After the build is successfull, you will get the server binary
+After the build is successful, you will get the server binary
 in bin/testapi-server and you can start it as follows:
-```
+
+```shell
   ./bin/testapi-server
 ```
 
@@ -51,8 +52,8 @@ The server instance is represented by the **TestAPI.Servers.Server_Type** Ada ty
 The REST API will need an instance of it to make the operation call.  Two server model
 exists:
 
-* The instance per request model creates an instance of the server type for each request.
-* The shared instance model shares the same instance across all concurrent REST requests.  This instance is protected using an Ada protected object which holds the server instance.
+- The instance per request model creates an instance of the server type for each request.
+- The shared instance model shares the same instance across all concurrent REST requests.  This instance is protected using an Ada protected object which holds the server instance.
 
 The choice of the server model is made at the compilation time by instantiating either
 the **TestAPI.Skeletons.Skeleton** package or the **TestAPI.Skeletons.Shared_Instance**
@@ -65,9 +66,9 @@ All you have to do is implement the server operation in the **src/testapi-server
 The package already contains the operation with its parameters and you only have to replace
 the **null** instruction by real code.
 
-# Documentation
+## Documentation
 
-## API Documentation
+### API Documentation
 
 All URIs are relative to *https://localhost:8082/v1*
 
@@ -81,15 +82,20 @@ Method | HTTP request | Description
 [**Do_List_Tickets**](TicketsApi.md#Do_List_Tickets) | **GET** /tickets | List the tickets
 
 
-## Models
- - [TestAPI.Models.Body_2_Type](Body_2_Type.md)
+### Models
+
+ - [TestAPI.Models.InlineObject1_Type](InlineObject1_Type.md)
+ - [TestAPI.Models.InlineObject2_Type](InlineObject2_Type.md)
+ - [TestAPI.Models.InlineObject_Type](InlineObject_Type.md)
  - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
 
 
-## Authorization
+### Authorization
+
 
 ## ticketAuth
+
 
 - **Type**: OAuth
 - **Flow**: implicit

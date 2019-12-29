@@ -131,7 +131,7 @@ package body TestAPI.Servers is
    overriding
    procedure Orch_Store
       (Server : in out Server_Type;
-       Body2_Type : in Body_2_Type;
+       Body2_Type : in InlineObject2_Type;
        Context : in out Swagger.Servers.Context_Type) is
    begin
       null;
