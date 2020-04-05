@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-streams -- Stream operations
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -343,6 +343,9 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Integer_Map) is
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object);
+
       List : Util.Beans.Objects.Object;
 
       procedure Process (Name : in String;
@@ -363,6 +366,9 @@ package body Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer_Map) is
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object);
+
       List : Util.Beans.Objects.Object;
 
       procedure Process (Name : in String;

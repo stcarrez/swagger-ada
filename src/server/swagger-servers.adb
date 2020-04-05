@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server -- Rest server support
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -263,7 +263,9 @@ package body Swagger.Servers is
    --  ------------------------------
    function Has_Permission (Context    : in Context_Type;
                             Permission : in Security.Permissions.Permission_Index)
-                            return Boolean is
+                           return Boolean is
+      pragma Unreferenced (Permission);
+
       use type Security.Principal_Access;
 
       User : constant Security.Principal_Access := Context.Req.Get_User_Principal;
