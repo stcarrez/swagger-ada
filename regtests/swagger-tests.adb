@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-tests -- Unit tests for REST clients
---  Copyright (C) 2018 Stephane Carrez
+--  Copyright (C) 2018, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,6 @@
 with Util.Log.Loggers;
 with Util.Test_Caller;
 with Swagger.Clients;
-with TestAPI.Clients;
 with Ada.Text_IO;
 with TestAPI.Models;
 package body Swagger.Tests is
@@ -102,9 +101,12 @@ package body Swagger.Tests is
 
          Client.Do_Update_Ticket (Tid         => Ticket.Id,
                                   Owner       => Ticket.Owner,
-                                  Status      => (Is_Null => False, Value => To_UString ("closed")),
-                                  Title       => (Is_Null => True, Value => <>),
-                                  Description => (Is_Null => False, Value => To_UString ("ok")),
+                                  Status      => (Is_Null => False,
+                                                  Value => To_UString ("closed")),
+                                  Title       => (Is_Null => True,
+                                                  Value => <>),
+                                  Description => (Is_Null => False,
+                                                  Value => To_UString ("ok")),
                                   Result      => Ticket);
          Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
 
