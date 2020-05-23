@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2019 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2019, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ package body Swagger.Clients is
 
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
-      return Stream_Accessor '(Stream => Req.Data.all'Access, N => 0);
+      return Stream_Accessor '(Stream => Req.Data, N => 0);
    end Stream;
 
    --  ------------------------------
