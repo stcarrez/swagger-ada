@@ -17,7 +17,6 @@ swagger_tests.gpr
 testapi_server.gpr
 testapi_model.gpr
 swagger-tests.xml
-bin/
 obj/
 lib/
 regtests/results
