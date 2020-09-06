@@ -69,7 +69,7 @@ install-data::
 	rm -rf $(DESTDIR)${prefix}/share/swagger-ada
 	${MKDIR} -p $(DESTDIR)${prefix}/share/swagger-ada
 	${CP} -rp web $(DESTDIR)${prefix}/share/swagger-ada/web
-	$(INSTALL) bin/openapi-generator.sh $(DESTDIR)$(prefix)/bin/openapi-generator
+	$(INSTALL) openapi-generator.sh $(DESTDIR)$(prefix)/bin/openapi-generator
 	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/swagger-ada
 
 $(eval $(call ada_library,$(NAME)))
