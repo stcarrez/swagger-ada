@@ -18,23 +18,51 @@ provided by Swagger Codegen.  The library provides support to serialize the data
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+## Version 0.3.0 -
+
+- Install the openapi generator
+- Update the openapi generator to version 5.0.0
+- Fixed Ada client code generator to support `FreeFormObject` and multi-path parameters
+
+[List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
+
 ## Build and installation
-Before building this library, you may need to install the following projects:
+
+The Swagger Ada library provides support for client and server.  The client part has
+less constraint than the server part which needs more components.  For both parts,
+before building this library, you may need to install the following projects:
 
 * Ada Util      (https://github.com/stcarrez/ada-util)
 * AWS      (https://libre.adacore.com/libre/tools/aws/)
 * XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
 
+If you also need to server part, you must also install the following components:
+
+* Ada EL        (https://github.com/stcarrez/ada-el)
+* Ada Security  (https://github.com/stcarrez/ada-security)
+* Ada Servlet   (https://github.com/stcarrez/ada-servlet)
+
 Then, to build Ada Swagger library, configure as follows:
 ```
-   ./configure
-   make
+./configure
+make
+```
+
+And if you want the server part, configure and build with:
+```
+./configure --enable-server
+make
 ```
 
 For the installation, use the following command:
 ```
-   make install
+make install
 ```
+
+The git repository comes with a pre-compiled [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator)
+that will be installed in `/usr/local/share/swagger-ada/openapi-generator-cli.jar`.  To help in launching the
+generator, a script is installed in `/usr/local/bin/openapi-generator`.  You must have a Java JRE installed
+to be able to run the generator.
 
 ## Using Swagger Ada
 
@@ -42,7 +70,7 @@ For the installation, use the following command:
 
 The command to generate an Ada REST client is the following:
 ```
-  java -jar openapi-generator-cli.jar generate --generator-name ada -i my-api.yaml -o client \
+  openapi-generator generate --generator-name ada -i my-api.yaml -o client \
        -DprojectName=MyProject --model-package MyProject.MyModule
 ```
 where *my-api.yaml* is the OpenAPI specification file that describes your API,
