@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-streams -- Stream operations
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2017, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,6 +58,10 @@ package Swagger.Streams is
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
                         Value  : in Nullable_Integer_Map);
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Object_Map);
 
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in Swagger.Value_Type;
@@ -127,5 +131,9 @@ package Swagger.Streams is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer_Map);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Object_Map);
 
 end Swagger.Streams;
