@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-clients -- Rest client support
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,7 +45,7 @@ package Swagger.Clients is
 
    function Stream (Req : in Request_Type) return Stream_Accessor;
 
-   type Operation_Type is (GET, POST, PUT, DELETE);
+   type Operation_Type is (HEAD, GET, POST, PUT, DELETE, OPTIONS, PATCH);
 
    --  The possible content types that are supported by the Swagger Ada client library.
    type Content_Type is (APPLICATION_JSON, APPLICATION_XML, APPLICATION_FORM);
