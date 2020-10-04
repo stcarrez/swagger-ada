@@ -22,6 +22,7 @@ with Ada.Iterator_Interfaces;
 with Ada.Containers.Vectors;
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Util.Beans.Objects.Vectors;
+with Util.Beans.Objects.Maps;
 with Util.Strings.Vectors;
 with Util.Nullables;
 
@@ -72,6 +73,8 @@ package Swagger is
    subtype Value_Type is Util.Beans.Objects.Object;
 
    package UString_Vectors renames Util.Strings.Vectors;
+
+   subtype Object_Map is Util.Beans.Objects.Maps.Map;
 
    package Nullable_UString_Vectors is
      new Ada.Containers.Vectors (Index_Type   => Positive,
