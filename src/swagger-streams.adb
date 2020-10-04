@@ -92,6 +92,24 @@ package body Swagger.Streams is
       null;
    end Serialize;
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Object_Map) is
+      procedure Process (Pos : in Util.Beans.Objects.Maps.Cursor) is
+         use Util.Beans.Objects.Maps;
+      begin
+         Stream.Write_Entity (Maps.Key (Pos), Maps.Element (Pos));
+      end Process;
+   begin
+      if Name'Length > 0 then
+         Stream.Start_Entity (Name);
+      end if;
+      Util.Beans.Objects.Maps.Maps.Iterate (Value, Process'Access);
+      if Name'Length > 0 then
+         Stream.End_Entity (Name);
+      end if;
+   end Serialize;
+
    --  ------------------------------
    --  Extract a boolean value stored under the given name.
    --  ------------------------------
@@ -380,6 +398,29 @@ package body Swagger.Streams is
             Value.Include (Name, (Is_Null => False,
                                   Value => Util.Beans.Objects.To_Integer (Item)));
          end if;
+      end Process;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      Util.Beans.Objects.Maps.Iterate (List, Process'Access);
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out Object_Map) is
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object);
+
+      List : Util.Beans.Objects.Object;
+
+      procedure Process (Name : in String;
+                         Item : in Util.Beans.Objects.Object) is
+      begin
+         Value.Include (Name, Item);
       end Process;
    begin
       if Name'Length = 0 then
