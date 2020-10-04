@@ -202,6 +202,9 @@ package body Swagger.Clients is
       end if;
 
       case Operation is
+         when HEAD | PATCH | OPTIONS =>
+            raise Parameter_Error;
+
          when GET =>
             Client.Get (Path, Client.Response);
 
