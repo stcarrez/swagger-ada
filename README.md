@@ -22,6 +22,7 @@ specific operations or types.
 
 - Install the openapi generator
 - Update the openapi generator to version 5.0.0
+- Update to use Swagger UI 3.36.0
 - Fixed Ada client code generator to support `FreeFormObject` and multi-path parameters
 
 [List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
