@@ -29,7 +29,7 @@ ifeq (${HAVE_SERVER},yes)
 setup:: src/server/swagger-servers-config.ads
 
 src/server/swagger-servers-config.ads: Makefile src/server/swagger-servers-config.gpb
-	gnatprep -DWEB_DIR=\"${sharedir}/swagger-ada/web\" \
+	gnatprep -DWEB_DIR=\"${prefix}/share/swagger-ada/web\" \
 		src/server/swagger-servers-config.gpb $@
 else
 setup::
