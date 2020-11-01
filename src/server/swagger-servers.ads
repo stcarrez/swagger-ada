@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-server -- Rest server support
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,10 +30,13 @@ package Swagger.Servers is
 
    subtype Method_Type is Servlet.Rest.Method_Type;
 
-   GET    : constant Method_Type := Servlet.Rest.GET;
-   POST   : constant Method_Type := Servlet.Rest.POST;
-   DELETE : constant Method_Type := Servlet.Rest.DELETE;
-   PUT    : constant Method_Type := Servlet.Rest.PUT;
+   GET     : constant Method_Type := Servlet.Rest.GET;
+   POST    : constant Method_Type := Servlet.Rest.POST;
+   DELETE  : constant Method_Type := Servlet.Rest.DELETE;
+   PUT     : constant Method_Type := Servlet.Rest.PUT;
+   HEAD    : constant Method_Type := Servlet.Rest.HEAD;
+   OPTIONS : constant Method_Type := Servlet.Rest.OPTIONS;
+   PATCH   : constant Method_Type := Servlet.Rest.PATCH;
 
    subtype Descriptor_Access is Servlet.Rest.Descriptor_Access;
 
