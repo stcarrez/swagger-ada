@@ -1,4 +1,4 @@
-# Swagger Ada Library
+# OpenAPI Ada Library
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
 [![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
@@ -13,8 +13,8 @@ given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 
 The Ada client support has been integrated in [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator).
 
-The Swagger Ada library is a small support library for the Ada code generator
-provided by Swagger Codegen.  The library provides support to serialize the data,
+The OpenAPI Ada library is a small support library for the Ada code generator
+provided by OpenAPI Generator.  The library provides support to serialize the data,
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
@@ -30,21 +30,21 @@ specific operations or types.
 
 ## Build and installation
 
-The Swagger Ada library provides support for client and server.  The client part has
-less constraint than the server part which needs more components.  For both parts,
+The OpenAPI Ada library provides support for client and server.  The client part has
+less constraints than the server part which needs more components.  For both parts,
 before building this library, you may need to install the following projects:
 
 * Ada Util      (https://github.com/stcarrez/ada-util)
+* Ada Security  (https://github.com/stcarrez/ada-security)
 * AWS      (https://libre.adacore.com/libre/tools/aws/)
 * XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
 
 If you also need to server part, you must also install the following components:
 
 * Ada EL        (https://github.com/stcarrez/ada-el)
-* Ada Security  (https://github.com/stcarrez/ada-security)
 * Ada Servlet   (https://github.com/stcarrez/ada-servlet)
 
-Then, to build Ada Swagger library, configure as follows:
+Then, to build OpenAPI Ada library, configure as follows:
 ```
 ./configure
 make
@@ -66,7 +66,17 @@ that will be installed in `/usr/local/share/swagger-ada/openapi-generator-cli.ja
 generator, a script is installed in `/usr/local/bin/openapi-generator`.  You must have a Java JRE installed
 to be able to run the generator.
 
-## Using Swagger Ada
+## Docker
+
+A docker container is available for those who want to try OpenAPI Ada without installing
+and building all required packages.  To use the OpenAPI Ada docker container you can
+run the following commands:
+
+```
+sudo docker pull ciceron/openapi-ada
+```
+
+## Using OpenAPI Ada
 
 ### Generating the REST client from OpenAPI Spec
 
@@ -195,7 +205,7 @@ end Samples.Petstore.Clients;
 ### Initialization
 
 The HTTP/REST support is provided by [Ada Util](https://github.com/stcarrez/ada-util)
-and encapsulated by [Swagger Ada](https://github.com/stcarrez/swagger-ada).  If you want
+and encapsulated by [OpenAPI Ada](https://github.com/stcarrez/swagger-ada).  If you want
 to use Curl, you should initialize with the following:
 
 ```
@@ -256,7 +266,7 @@ At this stage, you can access information from the 'Pet' instance:
 
 ## Documentation
 
-The Ada Swagger sources as well as a wiki documentation is provided on:
+The OpenAPI Ada sources as well as a wiki documentation is provided on:
 
 - https://github.com/stcarrez/swagger-ada/wiki
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
