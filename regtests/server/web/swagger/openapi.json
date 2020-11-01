@@ -77,6 +77,19 @@
         "summary" : "List the tickets",
         "tags" : [ "tickets" ]
       },
+      "head" : {
+        "operationId" : "do_head_ticket",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "read:ticket" ]
+        } ],
+        "summary" : "List the tickets",
+        "tags" : [ "ticket" ]
+      },
       "post" : {
         "operationId" : "do_create_ticket",
         "requestBody" : {
@@ -202,6 +215,109 @@
         "summary" : "Get a ticket",
         "tags" : [ "tickets" ]
       },
+      "options" : {
+        "description" : "Get a ticket",
+        "operationId" : "do_options_ticket",
+        "parameters" : [ {
+          "description" : "Ticket identifier",
+          "explode" : false,
+          "in" : "path",
+          "name" : "tid",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ticket"
+                }
+              }
+            },
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Ticket not found"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "read:ticket" ]
+        } ],
+        "summary" : "Get a ticket",
+        "tags" : [ "tickets" ]
+      },
+      "patch" : {
+        "operationId" : "do_patch_ticket",
+        "parameters" : [ {
+          "description" : "Ticket identifier",
+          "explode" : false,
+          "in" : "path",
+          "name" : "tid",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object_2",
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "properties" : {
+                  "owner" : {
+                    "description" : "Ticket owner",
+                    "type" : "string"
+                  },
+                  "status" : {
+                    "description" : "Ticket status",
+                    "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
+                    "type" : "string"
+                  },
+                  "title" : {
+                    "description" : "Ticket title",
+                    "type" : "string"
+                  },
+                  "description" : {
+                    "description" : "Ticket description",
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Ticket"
+                }
+              }
+            },
+            "description" : "successful operation"
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "ticket_auth" : [ "write:ticket" ]
+        } ],
+        "summary" : "Patch a ticket",
+        "tags" : [ "ticket" ]
+      },
       "put" : {
         "operationId" : "do_update_ticket",
         "parameters" : [ {
@@ -272,7 +388,7 @@
         "description" : "Query an orchestrated service instance",
         "operationId" : "orchStore",
         "requestBody" : {
-          "$ref" : "#/components/requestBodies/inline_object_2",
+          "$ref" : "#/components/requestBodies/inline_object_3",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -322,15 +438,24 @@
           }
         }
       },
-      "inline_object_2" : {
+      "inline_object_3" : {
         "content" : {
           "application/json" : {
             "schema" : {
-              "$ref" : "#/components/schemas/inline_object_2"
+              "$ref" : "#/components/schemas/inline_object_3"
             }
           }
         },
         "required" : true
+      },
+      "inline_object_2" : {
+        "content" : {
+          "application/x-www-form-urlencoded" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object_2"
+            }
+          }
+        }
       }
     },
     "schemas" : {
@@ -444,6 +569,28 @@
         "type" : "object"
       },
       "inline_object_2" : {
+        "properties" : {
+          "owner" : {
+            "description" : "Ticket owner",
+            "type" : "string"
+          },
+          "status" : {
+            "description" : "Ticket status",
+            "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
+            "type" : "string"
+          },
+          "title" : {
+            "description" : "Ticket title",
+            "type" : "string"
+          },
+          "description" : {
+            "description" : "Ticket description",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "inline_object_3" : {
         "properties" : {
           "requestedQoS" : {
             "$ref" : "#/components/schemas/stringsMap"

@@ -18,7 +18,7 @@ package TestAPI.Clients is
    --  Query an orchestrated service instance
    procedure Orch_Store
       (Client : in out Client_Type;
-       Inline_Object_2Type : in TestAPI.Models.InlineObject2_Type);
+       Inline_Object_3Type : in TestAPI.Models.InlineObject3_Type);
 
    --  Create a ticket
    procedure Do_Create_Ticket
@@ -32,6 +32,20 @@ package TestAPI.Clients is
    procedure Do_Delete_Ticket
       (Client : in out Client_Type;
        Tid : in Swagger.Long);
+
+   --  List the tickets
+   procedure Do_Head_Ticket
+      (Client : in out Client_Type);
+
+   --  Patch a ticket
+   procedure Do_Patch_Ticket
+      (Client : in out Client_Type;
+       Tid : in Swagger.Long;
+       Owner : in Swagger.Nullable_UString;
+       Status : in Swagger.Nullable_UString;
+       Title : in Swagger.Nullable_UString;
+       Description : in Swagger.Nullable_UString;
+       Result : out TestAPI.Models.Ticket_Type);
 
    --  Update a ticket
    procedure Do_Update_Ticket
@@ -57,5 +71,12 @@ package TestAPI.Clients is
        Status : in Swagger.Nullable_UString;
        Owner : in Swagger.Nullable_UString;
        Result : out TestAPI.Models.Ticket_Type_Vectors.Vector);
+
+   --  Get a ticket
+   --  Get a ticket
+   procedure Do_Options_Ticket
+      (Client : in out Client_Type;
+       Tid : in Swagger.Long;
+       Result : out TestAPI.Models.Ticket_Type);
 
 end TestAPI.Clients;

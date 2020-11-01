@@ -38,6 +38,18 @@ package TestAPI.Servers is
        Tid : in Swagger.Long;
        Context : in out Swagger.Servers.Context_Type);
 
+   --  Patch a ticket
+   overriding
+   procedure Do_Patch_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Owner : in Swagger.Nullable_UString;
+       Status : in Swagger.Nullable_UString;
+       Title : in Swagger.Nullable_UString;
+       Description : in Swagger.Nullable_UString;
+       Result  : out TestAPI.Models.Ticket_Type;
+       Context : in out Swagger.Servers.Context_Type);
+
    --  Update a ticket
    overriding
    procedure Do_Update_Ticket
@@ -59,6 +71,21 @@ package TestAPI.Servers is
        Result  : out TestAPI.Models.Ticket_Type;
        Context : in out Swagger.Servers.Context_Type);
 
+   --  Options the tickets
+   --  List the tickets created for the project.
+   overriding
+   procedure Do_Options_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Result  : out TestAPI.Models.Ticket_Type;
+       Context : in out Swagger.Servers.Context_Type);
+
+   --  List the tickets
+   overriding
+   procedure Do_Head_Ticket
+      (Server : in out Server_Type;
+       Context : in out Swagger.Servers.Context_Type);
+
    --  List the tickets
    --  List the tickets created for the project.
    overriding
@@ -74,7 +101,7 @@ package TestAPI.Servers is
    overriding
    procedure Orch_Store
       (Server : in out Server_Type;
-       Body2_Type : in InlineObject2_Type;
+       Body2_Type : in InlineObject3_Type;
        Context : in out Swagger.Servers.Context_Type);
 
    package Server_Impl is

@@ -27,7 +27,7 @@ package TestAPI.Skeletons is
    --  Query an orchestrated service instance
    procedure Orch_Store
       (Server : in out Server_Type;
-       Inline_Object_2Type : in InlineObject2_Type;
+       Inline_Object_3Type : in InlineObject3_Type;
        Context : in out Swagger.Servers.Context_Type) is abstract;
 
    --  Create a ticket
@@ -43,6 +43,23 @@ package TestAPI.Skeletons is
    procedure Do_Delete_Ticket
       (Server : in out Server_Type;
        Tid : in Swagger.Long;
+       Context : in out Swagger.Servers.Context_Type) is abstract;
+
+   --  List the tickets
+   procedure Do_Head_Ticket
+      (Server : in out Server_Type
+       ;
+       Context : in out Swagger.Servers.Context_Type) is abstract;
+
+   --  Patch a ticket
+   procedure Do_Patch_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Owner : in Swagger.Nullable_UString;
+       Status : in Swagger.Nullable_UString;
+       Title : in Swagger.Nullable_UString;
+       Description : in Swagger.Nullable_UString;
+       Result  : out TestAPI.Models.Ticket_Type;
        Context : in out Swagger.Servers.Context_Type) is abstract;
 
    --  Update a ticket
@@ -71,6 +88,14 @@ package TestAPI.Skeletons is
        Status : in Swagger.Nullable_UString;
        Owner : in Swagger.Nullable_UString;
        Result  : out TestAPI.Models.Ticket_Type_Vectors.Vector;
+       Context : in out Swagger.Servers.Context_Type) is abstract;
+
+   --  Get a ticket
+   --  Get a ticket
+   procedure Do_Options_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Result  : out TestAPI.Models.Ticket_Type;
        Context : in out Swagger.Servers.Context_Type) is abstract;
 
    generic
@@ -105,6 +130,22 @@ package TestAPI.Skeletons is
           Context : in out Swagger.Servers.Context_Type);
 
 
+      --  List the tickets
+      procedure Do_Head_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
+      --  Patch a ticket
+      procedure Do_Patch_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
       --  Update a ticket
       procedure Do_Update_Ticket
          (Req     : in out Swagger.Servers.Request'Class;
@@ -123,6 +164,14 @@ package TestAPI.Skeletons is
 
       --  List the tickets
       procedure Do_List_Tickets
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
+      --  Get a ticket
+      procedure Do_Options_Ticket
          (Req     : in out Swagger.Servers.Request'Class;
           Reply   : in out Swagger.Servers.Response'Class;
           Stream  : in out Swagger.Servers.Output_Stream'Class;
@@ -162,6 +211,22 @@ package TestAPI.Skeletons is
           Context : in out Swagger.Servers.Context_Type);
 
 
+      --  List the tickets
+      procedure Do_Head_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
+      --  Patch a ticket
+      procedure Do_Patch_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
       --  Update a ticket
       procedure Do_Update_Ticket
          (Req     : in out Swagger.Servers.Request'Class;
@@ -186,12 +251,20 @@ package TestAPI.Skeletons is
           Context : in out Swagger.Servers.Context_Type);
 
 
+      --  Get a ticket
+      procedure Do_Options_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type);
+
+
    private
       protected Server is
 
          --  
          procedure Orch_Store
-            (Inline_Object_2Type : in InlineObject2_Type;
+            (Inline_Object_3Type : in InlineObject3_Type;
              Context : in out Swagger.Servers.Context_Type);
 
          --  Create a ticket
@@ -205,6 +278,19 @@ package TestAPI.Skeletons is
          --  Delete a ticket
          procedure Do_Delete_Ticket
             (Tid : in Swagger.Long;
+             Context : in out Swagger.Servers.Context_Type);
+
+         --  List the tickets
+         procedure Do_Head_Ticket (Context : in out Swagger.Servers.Context_Type);
+
+         --  Patch a ticket
+         procedure Do_Patch_Ticket
+            (Tid : in Swagger.Long;
+             Owner : in Swagger.Nullable_UString;
+             Status : in Swagger.Nullable_UString;
+             Title : in Swagger.Nullable_UString;
+             Description : in Swagger.Nullable_UString;
+             Result  : out TestAPI.Models.Ticket_Type;
              Context : in out Swagger.Servers.Context_Type);
 
          --  Update a ticket
@@ -228,6 +314,12 @@ package TestAPI.Skeletons is
             (Status : in Swagger.Nullable_UString;
              Owner : in Swagger.Nullable_UString;
              Result  : out TestAPI.Models.Ticket_Type_Vectors.Vector;
+             Context : in out Swagger.Servers.Context_Type);
+
+         --  Get a ticket
+         procedure Do_Options_Ticket
+            (Tid : in Swagger.Long;
+             Result  : out TestAPI.Models.Ticket_Type;
              Context : in out Swagger.Servers.Context_Type);
 
       private

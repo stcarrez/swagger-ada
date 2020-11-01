@@ -28,13 +28,13 @@ package body TestAPI.Skeletons is
           Context : in out Swagger.Servers.Context_Type) is
          Input   : Swagger.Value_Type;
          Impl : Implementation_Type;
-         Inline_Object_2Type : InlineObject2_Type;
+         Inline_Object_3Type : InlineObject3_Type;
       begin
          Swagger.Servers.Read (Req, Input);
          
-         TestAPI.Models.Deserialize (Input, "InlineObject2_Type", Inline_Object_2Type);
+         TestAPI.Models.Deserialize (Input, "InlineObject3_Type", Inline_Object_3Type);
          Impl.Orch_Store
-            (Inline_Object_2Type, Context);
+            (Inline_Object_3Type, Context);
 
       end Orch_Store;
 
@@ -102,6 +102,76 @@ package body TestAPI.Skeletons is
             (Tid, Context);
 
       end Do_Delete_Ticket;
+
+      package API_Do_Head_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Head_Ticket,
+                                        Method  => Swagger.Servers.HEAD,
+                                        URI     => URI_Prefix & "/tickets");
+
+      --  List the tickets
+      procedure Do_Head_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Impl : Implementation_Type;
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Read_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Impl.Do_Head_Ticket (Context);
+
+      end Do_Head_Ticket;
+
+      package API_Do_Patch_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Patch_Ticket,
+                                        Method  => Swagger.Servers.PATCH,
+                                        URI     => URI_Prefix & "/tickets/{tid}");
+
+      --  Patch a ticket
+      procedure Do_Patch_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Impl : Implementation_Type;
+         Tid : Swagger.Long;
+         Owner : Swagger.Nullable_UString;
+         Status : Swagger.Nullable_UString;
+         Title : Swagger.Nullable_UString;
+         Description : Swagger.Nullable_UString;
+         Result : TestAPI.Models.Ticket_Type;
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Write_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
+         Impl.Do_Patch_Ticket
+            (Tid,
+             Owner,
+             Status,
+             Title,
+             Description, Result, Context);
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
+      end Do_Patch_Ticket;
 
       package API_Do_Update_Ticket is
          new Swagger.Servers.Operation (Handler => Do_Update_Ticket,
@@ -217,14 +287,50 @@ package body TestAPI.Skeletons is
          end if;
       end Do_List_Tickets;
 
+      package API_Do_Options_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Options_Ticket,
+                                        Method  => Swagger.Servers.OPTIONS,
+                                        URI     => URI_Prefix & "/tickets/{tid}");
+
+      --  Get a ticket
+      procedure Do_Options_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Impl : Implementation_Type;
+         Tid : Swagger.Long;
+         Result : TestAPI.Models.Ticket_Type;
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Read_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+         Impl.Do_Options_Ticket
+            (Tid, Result, Context);
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
+      end Do_Options_Ticket;
+
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class) is
       begin
          Swagger.Servers.Register (Server, API_Orch_Store.Definition);
          Swagger.Servers.Register (Server, API_Do_Create_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Delete_Ticket.Definition);
+         Swagger.Servers.Register (Server, API_Do_Head_Ticket.Definition);
+         Swagger.Servers.Register (Server, API_Do_Patch_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Update_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Get_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_List_Tickets.Definition);
+         Swagger.Servers.Register (Server, API_Do_Options_Ticket.Definition);
       end Register;
 
    end Skeleton;
@@ -239,13 +345,13 @@ package body TestAPI.Skeletons is
           Stream  : in out Swagger.Servers.Output_Stream'Class;
           Context : in out Swagger.Servers.Context_Type) is
          Input   : Swagger.Value_Type;
-         Inline_Object_2Type : InlineObject2_Type;
+         Inline_Object_3Type : InlineObject3_Type;
       begin
          Swagger.Servers.Read (Req, Input);
          
-         TestAPI.Models.Deserialize (Input, "InlineObject2_Type", Inline_Object_2Type);
+         TestAPI.Models.Deserialize (Input, "InlineObject3_Type", Inline_Object_3Type);
          Server.Orch_Store
-            (Inline_Object_2Type, Context);
+            (Inline_Object_3Type, Context);
 
       end Orch_Store;
 
@@ -315,6 +421,74 @@ package body TestAPI.Skeletons is
       package API_Do_Delete_Ticket is
          new Swagger.Servers.Operation (Handler => Do_Delete_Ticket,
                                         Method  => Swagger.Servers.DELETE,
+                                        URI     => URI_Prefix & "/tickets/{tid}");
+
+      --  List the tickets
+      procedure Do_Head_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Read_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Server.Do_Head_Ticket (Context);
+
+      end Do_Head_Ticket;
+
+      package API_Do_Head_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Head_Ticket,
+                                        Method  => Swagger.Servers.HEAD,
+                                        URI     => URI_Prefix & "/tickets");
+
+      --  Patch a ticket
+      procedure Do_Patch_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Tid : Swagger.Long;
+         Owner : Swagger.Nullable_UString;
+         Status : Swagger.Nullable_UString;
+         Title : Swagger.Nullable_UString;
+         Description : Swagger.Nullable_UString;
+         Result : TestAPI.Models.Ticket_Type;
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Write_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+         Swagger.Servers.Get_Parameter (Context, "owner", Owner);
+         Swagger.Servers.Get_Parameter (Context, "status", Status);
+         Swagger.Servers.Get_Parameter (Context, "title", Title);
+         Swagger.Servers.Get_Parameter (Context, "description", Description);
+         Server.Do_Patch_Ticket
+            (Tid,
+             Owner,
+             Status,
+             Title,
+             Description, Result, Context);
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
+      end Do_Patch_Ticket;
+
+      package API_Do_Patch_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Patch_Ticket,
+                                        Method  => Swagger.Servers.PATCH,
                                         URI     => URI_Prefix & "/tickets/{tid}");
 
       --  Update a ticket
@@ -428,24 +602,59 @@ package body TestAPI.Skeletons is
                                         Method  => Swagger.Servers.GET,
                                         URI     => URI_Prefix & "/tickets");
 
+      --  Get a ticket
+      procedure Do_Options_Ticket
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
+         Tid : Swagger.Long;
+         Result : TestAPI.Models.Ticket_Type;
+      begin
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         if not Context.Has_Permission (ACL_Read_Ticket.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+         Server.Do_Options_Ticket
+            (Tid, Result, Context);
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;
+            TestAPI.Models.Serialize (Stream, "", Result);
+            Stream.End_Document;
+         end if;
+      end Do_Options_Ticket;
+
+      package API_Do_Options_Ticket is
+         new Swagger.Servers.Operation (Handler => Do_Options_Ticket,
+                                        Method  => Swagger.Servers.OPTIONS,
+                                        URI     => URI_Prefix & "/tickets/{tid}");
+
       procedure Register (Server : in out Swagger.Servers.Application_Type'Class) is
       begin
          Swagger.Servers.Register (Server, API_Orch_Store.Definition);
          Swagger.Servers.Register (Server, API_Do_Create_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Delete_Ticket.Definition);
+         Swagger.Servers.Register (Server, API_Do_Head_Ticket.Definition);
+         Swagger.Servers.Register (Server, API_Do_Patch_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Update_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_Get_Ticket.Definition);
          Swagger.Servers.Register (Server, API_Do_List_Tickets.Definition);
+         Swagger.Servers.Register (Server, API_Do_Options_Ticket.Definition);
       end Register;
 
       protected body Server is
          --  
          procedure Orch_Store
-            (Inline_Object_2Type : in InlineObject2_Type;
+            (Inline_Object_3Type : in InlineObject3_Type;
              Context : in out Swagger.Servers.Context_Type) is
          begin
             Impl.Orch_Store
-               (Inline_Object_2Type,
+               (Inline_Object_3Type,
                 Context);
          end Orch_Store;
 
@@ -474,6 +683,32 @@ package body TestAPI.Skeletons is
                (Tid,
                 Context);
          end Do_Delete_Ticket;
+
+         --  List the tickets
+         procedure Do_Head_Ticket (Context : in out Swagger.Servers.Context_Type) is
+         begin
+            Impl.Do_Head_Ticket (Context);
+         end Do_Head_Ticket;
+
+         --  Patch a ticket
+         procedure Do_Patch_Ticket
+            (Tid : in Swagger.Long;
+             Owner : in Swagger.Nullable_UString;
+             Status : in Swagger.Nullable_UString;
+             Title : in Swagger.Nullable_UString;
+             Description : in Swagger.Nullable_UString;
+             Result : out TestAPI.Models.Ticket_Type;
+             Context : in out Swagger.Servers.Context_Type) is
+         begin
+            Impl.Do_Patch_Ticket
+               (Tid,
+                Owner,
+                Status,
+                Title,
+                Description,
+                Result,
+                Context);
+         end Do_Patch_Ticket;
 
          --  Update a ticket
          procedure Do_Update_Ticket
@@ -520,6 +755,18 @@ package body TestAPI.Skeletons is
                 Result,
                 Context);
          end Do_List_Tickets;
+
+         --  Get a ticket
+         procedure Do_Options_Ticket
+            (Tid : in Swagger.Long;
+             Result : out TestAPI.Models.Ticket_Type;
+             Context : in out Swagger.Servers.Context_Type) is
+         begin
+            Impl.Do_Options_Ticket
+               (Tid,
+                Result,
+                Context);
+         end Do_Options_Ticket;
 
       end Server;
 

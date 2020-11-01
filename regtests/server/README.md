@@ -77,15 +77,19 @@ Method | HTTP request | Description
 [**Orch_Store**](DefaultApi.md#Orch_Store) | **POST** /orchestration | 
 [**Do_Create_Ticket**](TicketApi.md#Do_Create_Ticket) | **POST** /tickets | Create a ticket
 [**Do_Delete_Ticket**](TicketApi.md#Do_Delete_Ticket) | **DELETE** /tickets/{tid} | Delete a ticket
+[**Do_Head_Ticket**](TicketApi.md#Do_Head_Ticket) | **HEAD** /tickets | List the tickets
+[**Do_Patch_Ticket**](TicketApi.md#Do_Patch_Ticket) | **PATCH** /tickets/{tid} | Patch a ticket
 [**Do_Update_Ticket**](TicketApi.md#Do_Update_Ticket) | **PUT** /tickets/{tid} | Update a ticket
 [**Do_Get_Ticket**](TicketsApi.md#Do_Get_Ticket) | **GET** /tickets/{tid} | Get a ticket
 [**Do_List_Tickets**](TicketsApi.md#Do_List_Tickets) | **GET** /tickets | List the tickets
+[**Do_Options_Ticket**](TicketsApi.md#Do_Options_Ticket) | **OPTIONS** /tickets/{tid} | Get a ticket
 
 
 ### Models
 
  - [TestAPI.Models.InlineObject1_Type](InlineObject1_Type.md)
  - [TestAPI.Models.InlineObject2_Type](InlineObject2_Type.md)
+ - [TestAPI.Models.InlineObject3_Type](InlineObject3_Type.md)
  - [TestAPI.Models.InlineObject_Type](InlineObject_Type.md)
  - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)

@@ -14,33 +14,90 @@ package TestAPI.Models is
 
 
 
-   type InlineObject_Type is
+   type InlineObject1_Type is
      record
        Owner : Swagger.Nullable_UString;
        Status : Swagger.Nullable_UString;
-       Title : Swagger.UString;
+       Title : Swagger.Nullable_UString;
        Description : Swagger.Nullable_UString;
      end record;
 
-   package InlineObject_Type_Vectors is
+   package InlineObject1_Type_Vectors is
       new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => InlineObject_Type);
+                                  Element_Type => InlineObject1_Type);
 
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
-                        Value : in InlineObject_Type);
+                        Value : in InlineObject1_Type);
 
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
-                        Value : in InlineObject_Type_Vectors.Vector);
+                        Value : in InlineObject1_Type_Vectors.Vector);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
-                          Value : out InlineObject_Type);
+                          Value : out InlineObject1_Type);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
-                          Value : out InlineObject_Type_Vectors.Vector);
+                          Value : out InlineObject1_Type_Vectors.Vector);
+
+
+
+
+   type StringsMap_Type is
+     record
+       Key : Swagger.Nullable_UString;
+     end record;
+
+   package StringsMap_Type_Vectors is
+      new Ada.Containers.Vectors (Index_Type   => Positive,
+                                  Element_Type => StringsMap_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in StringsMap_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in StringsMap_Type_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out StringsMap_Type);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out StringsMap_Type_Vectors.Vector);
+
+
+
+
+   type InlineObject3_Type is
+     record
+       Requested_Qo_S : TestAPI.Models.StringsMap_Type;
+       Commands : TestAPI.Models.StringsMap_Type;
+     end record;
+
+   package InlineObject3_Type_Vectors is
+      new Ada.Containers.Vectors (Index_Type   => Positive,
+                                  Element_Type => InlineObject3_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in InlineObject3_Type);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in InlineObject3_Type_Vectors.Vector);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out InlineObject3_Type);
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out InlineObject3_Type_Vectors.Vector);
 
 
 
@@ -82,38 +139,43 @@ package TestAPI.Models is
 
 
 
-   type StringsMap_Type is
+   type InlineObject_Type is
      record
-       Key : Swagger.Nullable_UString;
+       Owner : Swagger.Nullable_UString;
+       Status : Swagger.Nullable_UString;
+       Title : Swagger.UString;
+       Description : Swagger.Nullable_UString;
      end record;
 
-   package StringsMap_Type_Vectors is
+   package InlineObject_Type_Vectors is
       new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => StringsMap_Type);
+                                  Element_Type => InlineObject_Type);
 
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
-                        Value : in StringsMap_Type);
+                        Value : in InlineObject_Type);
 
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
-                        Value : in StringsMap_Type_Vectors.Vector);
+                        Value : in InlineObject_Type_Vectors.Vector);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
-                          Value : out StringsMap_Type);
+                          Value : out InlineObject_Type);
 
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
-                          Value : out StringsMap_Type_Vectors.Vector);
+                          Value : out InlineObject_Type_Vectors.Vector);
 
 
 
 
    type InlineObject2_Type is
      record
-       Requested_Qo_S : TestAPI.Models.StringsMap_Type;
-       Commands : TestAPI.Models.StringsMap_Type;
+       Owner : Swagger.Nullable_UString;
+       Status : Swagger.Nullable_UString;
+       Title : Swagger.Nullable_UString;
+       Description : Swagger.Nullable_UString;
      end record;
 
    package InlineObject2_Type_Vectors is
@@ -135,37 +197,6 @@ package TestAPI.Models is
    procedure Deserialize (From  : in Swagger.Value_Type;
                           Name  : in String;
                           Value : out InlineObject2_Type_Vectors.Vector);
-
-
-
-
-   type InlineObject1_Type is
-     record
-       Owner : Swagger.Nullable_UString;
-       Status : Swagger.Nullable_UString;
-       Title : Swagger.Nullable_UString;
-       Description : Swagger.Nullable_UString;
-     end record;
-
-   package InlineObject1_Type_Vectors is
-      new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => InlineObject1_Type);
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in InlineObject1_Type);
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in InlineObject1_Type_Vectors.Vector);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out InlineObject1_Type);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out InlineObject1_Type_Vectors.Vector);
 
 
 

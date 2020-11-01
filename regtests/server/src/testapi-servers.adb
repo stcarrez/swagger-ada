@@ -95,6 +95,41 @@ package body TestAPI.Servers is
       Context.Set_Error (404, "Ticket does not exist");
    end Do_Update_Ticket;
 
+   --  Patch a ticket
+   procedure Do_Patch_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Owner : in Swagger.Nullable_UString;
+       Status : in Swagger.Nullable_UString;
+       Title : in Swagger.Nullable_UString;
+       Description : in Swagger.Nullable_UString;
+       Result  : out TestAPI.Models.Ticket_Type;
+       Context : in out Swagger.Servers.Context_Type) is
+      procedure Update (T : in out Models.Ticket_Type) is
+      begin
+         if not Title.Is_Null then
+            T.Title := Title.Value;
+         end if;
+         if not Description.Is_Null then
+            T.Description := Description.Value;
+         end if;
+         if not Status.Is_Null then
+            T.Status := Status.Value;
+         end if;
+      end Update;
+      Pos : Models.Ticket_Type_Vectors.Cursor := Server.Todos.First;
+   begin
+      while Models.Ticket_Type_Vectors.Has_Element (Pos) loop
+         if Models.Ticket_Type_Vectors.Element (Pos).Id = Tid then
+            Server.Todos.Update_Element (Pos, Update'Access);
+            Result := Models.Ticket_Type_Vectors.Element (Pos);
+            return;
+         end if;
+         Models.Ticket_Type_Vectors.Next (Pos);
+      end loop;
+      Context.Set_Error (404, "Ticket does not exist");
+   end Do_Patch_Ticket;
+
    --  Get a ticket
    --  Get a ticket
    overriding
@@ -112,6 +147,33 @@ package body TestAPI.Servers is
       end loop;
       Context.Set_Error (404, "Ticket does not exist");
    end Do_Get_Ticket;
+
+   --  Get a ticket
+   --  Get a ticket
+   overriding
+   procedure Do_Options_Ticket
+      (Server : in out Server_Type;
+       Tid : in Swagger.Long;
+       Result  : out TestAPI.Models.Ticket_Type;
+       Context : in out Swagger.Servers.Context_Type) is
+   begin
+      for T of Server.Todos loop
+         if T.Id = Tid then
+            Result := T;
+            return;
+         end if;
+      end loop;
+      Context.Set_Error (404, "Ticket does not exist");
+   end Do_Options_Ticket;
+
+   --  List the tickets
+   overriding
+   procedure Do_Head_Ticket
+      (Server : in out Server_Type;
+       Context : in out Swagger.Servers.Context_Type) is
+   begin
+      null;
+   end Do_Head_Ticket;
 
    --  List the tickets
    --  List the tickets created for the project.
@@ -131,7 +193,7 @@ package body TestAPI.Servers is
    overriding
    procedure Orch_Store
       (Server : in out Server_Type;
-       Body2_Type : in InlineObject2_Type;
+       Body2_Type : in InlineObject3_Type;
        Context : in out Swagger.Servers.Context_Type) is
    begin
       null;

@@ -15,13 +15,13 @@ package body TestAPI.Clients is
    --  Query an orchestrated service instance
    procedure Orch_Store
       (Client : in out Client_Type;
-       Inline_Object_2Type : in TestAPI.Models.InlineObject2_Type) is
+       Inline_Object_3Type : in TestAPI.Models.InlineObject3_Type) is
       URI   : Swagger.Clients.URI_Type;
       Req   : Swagger.Clients.Request_Type;
    begin
 
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      TestAPI.Models.Serialize (Req.Stream, "", Inline_Object_2Type);
+      TestAPI.Models.Serialize (Req.Stream, "", Inline_Object_3Type);
 
       URI.Set_Path ("/orchestration");
       Client.Call (Swagger.Clients.POST, URI, Req);
@@ -60,6 +60,43 @@ package body TestAPI.Clients is
       URI.Set_Path_Param ("tid", Swagger.To_String (Tid));
       Client.Call (Swagger.Clients.DELETE, URI);
    end Do_Delete_Ticket;
+
+   --  List the tickets
+   procedure Do_Head_Ticket
+      (Client : in out Client_Type) is
+      URI   : Swagger.Clients.URI_Type;
+   begin
+
+
+      URI.Set_Path ("/tickets");
+      Client.Call (Swagger.Clients.HEAD, URI);
+   end Do_Head_Ticket;
+
+   --  Patch a ticket
+   procedure Do_Patch_Ticket
+      (Client : in out Client_Type;
+       Tid : in Swagger.Long;
+       Owner : in Swagger.Nullable_UString;
+       Status : in Swagger.Nullable_UString;
+       Title : in Swagger.Nullable_UString;
+       Description : in Swagger.Nullable_UString;
+       Result : out TestAPI.Models.Ticket_Type) is
+      URI   : Swagger.Clients.URI_Type;
+      Req   : Swagger.Clients.Request_Type;
+      Reply : Swagger.Value_Type;
+   begin
+      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
+      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_FORM));
+      Req.Stream.Write_Entity ("owner", Owner);
+      Req.Stream.Write_Entity ("status", Status);
+      Req.Stream.Write_Entity ("title", Title);
+      Req.Stream.Write_Entity ("description", Description);
+
+      URI.Set_Path ("/tickets/{tid}");
+      URI.Set_Path_Param ("tid", Swagger.To_String (Tid));
+      Client.Call (Swagger.Clients.PATCH, URI, Req, Reply);
+      TestAPI.Models.Deserialize (Reply, "", Result);
+   end Do_Patch_Ticket;
 
    --  Update a ticket
    procedure Do_Update_Ticket
@@ -122,4 +159,21 @@ package body TestAPI.Clients is
       Client.Call (Swagger.Clients.GET, URI, Reply);
       TestAPI.Models.Deserialize (Reply, "", Result);
    end Do_List_Tickets;
+
+   --  Get a ticket
+   --  Get a ticket
+   procedure Do_Options_Ticket
+      (Client : in out Client_Type;
+       Tid : in Swagger.Long;
+       Result : out TestAPI.Models.Ticket_Type) is
+      URI   : Swagger.Clients.URI_Type;
+      Reply : Swagger.Value_Type;
+   begin
+      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
+
+      URI.Set_Path ("/tickets/{tid}");
+      URI.Set_Path_Param ("tid", Swagger.To_String (Tid));
+      Client.Call (Swagger.Clients.OPTIONS, URI, Reply);
+      TestAPI.Models.Deserialize (Reply, "", Result);
+   end Do_Options_Ticket;
 end TestAPI.Clients;
