@@ -1,4 +1,4 @@
-with "config";
+with "openapi_config";
 with "utilada_sys";
 with "utilada_http";
 with "security";
@@ -7,22 +7,22 @@ library project Openapi is
 
    Version := "1.0.0";
    Library_Dir := "lib";
-   Library_Type : Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
+   Library_Type : Openapi_Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
 
    for Source_Dirs use ("../src");
    for Library_Name use "openapi";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
 
-   for Library_Dir use "lib/openapi/" & Project'Library_Kind;
-   for Object_Dir use "obj/openapi/" & Project'Library_Kind;
+   for Library_Dir use "../lib/openapi/" & Project'Library_Kind;
+   for Object_Dir use "../obj/openapi/" & Project'Library_Kind;
 
-   package Builder renames Config.Builder;
-   package Compiler renames Config.Compiler;
-   package Ide      renames Config.Ide;
+   package Builder  renames Openapi_Config.Builder;
+   package Compiler renames Openapi_Config.Compiler;
+   package Ide      renames Openapi_Config.Ide;
 
    package Binder is
-       for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
+       for Default_Switches ("Ada") use Openapi_Config.Binder'Default_Switches ("Ada") & ("-a");
    end Binder;
 
 end Openapi;
