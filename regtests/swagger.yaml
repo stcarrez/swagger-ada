@@ -100,6 +100,18 @@ paths:
                   type: string
               required:
                 - title
+    head:
+      tags:
+        - ticket
+      summary: List the tickets
+      description: ''
+      operationId: do_head_ticket
+      responses:
+        '200':
+          description: successful operation
+      security:
+        - ticket_auth:
+            - 'read:ticket'
   '/tickets/{tid}':
     get:
       tags:
@@ -179,6 +191,56 @@ paths:
                 description:
                   description: Ticket description
                   type: string
+    patch:
+      tags:
+        - ticket
+      summary: Patch a ticket
+      description: ''
+      operationId: do_patch_ticket
+      parameters:
+        - name: tid
+          in: path
+          description: Ticket identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '405':
+          description: Invalid input
+      security:
+        - ticket_auth:
+            - 'write:ticket'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                owner:
+                  description: Ticket owner
+                  type: string
+                status:
+                  description: Ticket status
+                  type: string
+                  enum:
+                    - open
+                    - onhold
+                    - assigned
+                    - closed
+                    - rejected
+                title:
+                  description: Ticket title
+                  type: string
+                description:
+                  description: Ticket description
+                  type: string
     delete:
       tags:
         - ticket
@@ -201,6 +263,34 @@ paths:
       security:
         - ticket_auth:
             - 'write:ticket'
+    options:
+      tags:
+        - tickets
+      summary: Get a ticket
+      description: Get a ticket
+      operationId: do_options_ticket
+      parameters:
+        - name: tid
+          in: path
+          description: Ticket identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ticket not found
+      security:
+        - ticket_auth:
+            - 'read:ticket'
   /orchestration:
     post:
       description: Query an orchestrated service instance
