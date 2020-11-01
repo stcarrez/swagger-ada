@@ -1,4 +1,4 @@
-Version 0.3.0   -
+Version 0.3.0   - Nov 2020
   - Install the openapi generator
   - Update the openapi generator to version 5.0.0
   - Update to use Swagger UI 3.36.0
