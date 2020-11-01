@@ -202,8 +202,8 @@ package body Swagger.Clients is
       end if;
 
       case Operation is
-         when HEAD | PATCH | OPTIONS =>
-            raise Parameter_Error;
+         when HEAD =>
+            Client.Head (Path, Client.Response);
 
          when GET =>
             Client.Get (Path, Client.Response);
@@ -213,6 +213,12 @@ package body Swagger.Clients is
 
          when PUT =>
             Client.Put (Path, "", Client.Response);
+
+         when PATCH =>
+            Client.Patch (Path, "", Client.Response);
+
+         when OPTIONS =>
+            Client.Options (Path, Client.Response);
 
          when DELETE =>
             Client.Delete (Path, Client.Response);
@@ -247,6 +253,10 @@ package body Swagger.Clients is
          Data     : constant String := Util.Streams.Texts.To_String (Request.Buffer);
       begin
          case Operation is
+         when HEAD =>
+            Log.Debug ("HEAD {0}", Path);
+            Client.Head (Path, Client.Response);
+
          when GET =>
             Log.Debug ("GET {0}", Path);
             Client.Get (Path, Client.Response);
@@ -259,9 +269,17 @@ package body Swagger.Clients is
             Log.Debug ("PUT {0} {1}", Path, Data);
             Client.Put (Path, Data, Client.Response);
 
-         when others =>
-            Log.Error ("REST operation is not supported");
-            raise Program_Error;
+         when PATCH =>
+            Log.Debug ("PATCH {0} {1}", Path, Data);
+            Client.Patch (Path, Data, Client.Response);
+
+         when OPTIONS =>
+            Log.Debug ("OPTIONS {0}", Path);
+            Client.Options (Path, Client.Response);
+
+         when DELETE =>
+            Log.Debug ("DELETE {0}", Path);
+            Client.Delete (Path, Client.Response);
 
          end case;
       end;
