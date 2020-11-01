@@ -86,6 +86,7 @@ package body Swagger.Tests is
       Cred   : aliased Swagger.Credentials.OAuth.OAuth2_Credential_Type;
       List   : TestAPI.Models.Ticket_Type_Vectors.Vector;
       Count  : Natural;
+      T2     : TestAPI.Models.Ticket_Type;
    begin
       T.Configure (Client);
       T.Authenticate (Cred);
@@ -96,8 +97,23 @@ package body Swagger.Tests is
       Ada.Text_IO.Put_Line (Client.Get_Header ("Location"));
       Client.Do_List_Tickets (Empty, Empty, List);
       Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
+
+      Client.Do_Head_Ticket;
+      Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
+
       for Ticket of List loop
          Log.Info ("Ticket {0} - {1}", To_String (Ticket.Title), To_String (Ticket.Status));
+
+         Client.Do_Patch_Ticket (Tid         => Ticket.Id,
+                                 Owner       => Ticket.Owner,
+                                 Status      => (Is_Null => False,
+                                                 Value => To_UString ("assigned")),
+                                 Title       => (Is_Null => True,
+                                                 Value => <>),
+                                 Description => (Is_Null => False,
+                                                 Value => To_UString ("patch")),
+                                 Result      => Ticket);
+         Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
 
          Client.Do_Update_Ticket (Tid         => Ticket.Id,
                                   Owner       => Ticket.Owner,
@@ -114,6 +130,15 @@ package body Swagger.Tests is
                                    "Invalid status after Update_Ticket");
          Util.Tests.Assert_Equals (T, "ok", To_String (Ticket.Description),
                                    "Invalid description after Update_Ticket");
+
+         Client.Do_Get_Ticket (Tid => Ticket.Id,
+                               Result => T2);
+         Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
+
+         Client.Do_Options_Ticket (Tid => Ticket.Id,
+                                   Result => T2);
+         Util.Tests.Assert_Equals (T, 200, Client.Get_Status, "Invalid response status");
+
       end loop;
       Count := Natural (List.Length);
       Log.Info ("Number of tickets{0}", Natural'Image (Count));
