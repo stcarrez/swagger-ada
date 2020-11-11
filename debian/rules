@@ -1,0 +1,64 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+$(foreach line,$(shell sed -n '\
+  s/^ gnat, gnat-\([0-9.]\+\),$$/ \
+    GNAT_VERSION:=\1 \
+  /p;\
+  s/^Package: libopenapi\([0-9.]\+\)$$/ \
+    soname:=libopenapi.so.\1 \
+  /p;\
+  ' debian/control),$(eval $(line)))
+
+DH_VERBOSE=1
+export DH_OPTIONS=-v
+
+DEB_BUILD_MAINT_OPTIONS := hardening=+all
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/ada/debian_packaging-$(GNAT_VERSION).mk
+ADAFLAGS += -gnatafno -gnatVa -gnatwa
+
+%:
+	dh $@ --with ada-library
+
+override_dh_auto_configure:
+	dh_auto_configure -- --enable-shared --enable-default-shared
+
+override_dh_auto_build-arch:
+	make GPRFLAGS="-R -m -q"
+
+override_dh_auto_test::
+
+override_dh_auto_install::
+
+swagger_LIB_PKG = libswagger0.3.0
+swagger_DEV_PKG = libswagger1-dev
+
+swagger_server_LIB_PKG = libswagger-server0.3.0
+swagger_server_DEV_PKG = libswagger-server1-dev
+
+override_dh_install::
+	# Files installed in the web/ directory are part of the binary
+	# server package.
+	$(MAKE) prefix=$(CURDIR)/debian/tmp/usr install
+	dh_installdirs --package=$(swagger_DEV_PKG) \
+	   usr/share/swagger-ada
+	dh_install --package=$(swagger_DEV_PKG) \
+	   usr/share/swagger-ada/openapi-generator-cli.jar usr/share/swagger-ada/
+	dh_install --package=$(swagger_DEV_PKG) \
+	   usr/bin/openapi-generator usr/bin
+	dh_installdirs --package=$(swagger_server_LIB_PKG) \
+	   usr/share/swagger-ada/web
+	dh_installdirs --package=$(swagger_server_LIB_PKG) \
+	   usr/share/swagger-ada/web/ui
+	files=`cd $(CURDIR)/web && find . -type f`; \
+	for i in $$files; do \
+		dir=`dirname $$i`; \
+		dh_install --package=$(swagger_server_LIB_PKG) \
+		   usr/share/swagger-ada/web/$$i usr/share/swagger-ada/web/$$dir ; \
+	done

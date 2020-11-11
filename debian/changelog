@@ -1,0 +1,5 @@
+libswagger (0.3.0) unstable; urgency=medium
+
+  * Initial release to setup a debian library and development package
+
+ -- Stephane Carrez <Stephane.Carrez@gmail.com>  Tue, 10 Nov 2020 21:19:06 +0100
