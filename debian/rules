@@ -39,6 +39,8 @@ override_dh_auto_install::
 swagger_LIB_PKG = libswagger0.3.0
 swagger_DEV_PKG = libswagger1-dev
 
+swagger_generator_DEV_PKG = libswagger-generator1-dev
+
 swagger_server_LIB_PKG = libswagger-server0.3.0
 swagger_server_DEV_PKG = libswagger-server1-dev
 
@@ -46,19 +48,23 @@ override_dh_install::
 	# Files installed in the web/ directory are part of the binary
 	# server package.
 	$(MAKE) prefix=$(CURDIR)/debian/tmp/usr install
-	dh_installdirs --package=$(swagger_DEV_PKG) \
+	dh_installdirs --package=$(swagger_generator_DEV_PKG) \
 	   usr/share/swagger-ada
-	dh_install --package=$(swagger_DEV_PKG) \
+	dh_install --package=$(swagger_generator_DEV_PKG) \
 	   usr/share/swagger-ada/openapi-generator-cli.jar usr/share/swagger-ada/
-	dh_install --package=$(swagger_DEV_PKG) \
+	dh_install --package=$(swagger_generator_DEV_PKG) \
 	   usr/bin/openapi-generator usr/bin
 	dh_installdirs --package=$(swagger_server_LIB_PKG) \
 	   usr/share/swagger-ada/web
 	dh_installdirs --package=$(swagger_server_LIB_PKG) \
 	   usr/share/swagger-ada/web/ui
+	dh_installdirs --package=$(swagger_DEV_PKG) \
+	   usr/share/swagger-ada
 	files=`cd $(CURDIR)/web && find . -type f`; \
 	for i in $$files; do \
 		dir=`dirname $$i`; \
 		dh_install --package=$(swagger_server_LIB_PKG) \
 		   usr/share/swagger-ada/web/$$i usr/share/swagger-ada/web/$$dir ; \
 	done
+	rm -rf $(CURDIR)/debian/tmp
+
