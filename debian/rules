@@ -39,7 +39,7 @@ override_dh_auto_install::
 swagger_LIB_PKG = libswagger0.3.0
 swagger_DEV_PKG = libswagger2-dev
 
-swagger_generator_DEV_PKG = libswagger-generator1-dev
+swagger_generator_DEV_PKG = libswagger-generator2-dev
 
 swagger_server_LIB_PKG = libswagger-server0.3.0
 swagger_server_DEV_PKG = libswagger-server2-dev
