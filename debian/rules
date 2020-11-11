@@ -37,10 +37,10 @@ override_dh_auto_test::
 override_dh_auto_install::
 
 swagger_LIB_PKG = libswagger0.3.0
-swagger_DEV_PKG = libswagger1-dev
+swagger_DEV_PKG = libswagger2-dev
 
 swagger_server_LIB_PKG = libswagger-server0.3.0
-swagger_server_DEV_PKG = libswagger-server1-dev
+swagger_server_DEV_PKG = libswagger-server2-dev
 
 override_dh_install::
 	# Files installed in the web/ directory are part of the binary

@@ -4,20 +4,20 @@ Section: libdevel
 Maintainer: Stephane Carrez <Stephane.Carrez@gmail.com>
 Build-Depends: debhelper (>= 10), autotools-dev,
  dh-ada-library,
- gnat, gnat-7,
+ gnat, gnat-9,
 # This line is parsed by debian/rules.
  gprbuild (>= 2015-2),
 # 2015-2 is compatible with gnat-6
- libxmlada-sax7-dev,
- libservletada1-dev,
- libservletada-unit1-dev,
- libutilada-xml1-dev,
- libutilada-aws1-dev,
- libutilada-curl1-dev
+ libxmlada-sax9-dev,
+ libservletada2-dev,
+ libservletada-unit2-dev,
+ libutilada-xml2-dev,
+ libutilada-aws2-dev,
+ libutilada-curl2-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/stcarrez/swagger-ada/
-Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-7
-Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-7
+Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-9
+Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-9
 
 Package: libswagger0.3.0
 Section: libs
@@ -43,7 +43,7 @@ Description: OpenAPI Ada Server Support (runtime)
  .
  This package contains the runtime server libraries.
 
-Package: libswagger1-dev
+Package: libswagger2-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
@@ -55,7 +55,7 @@ Description: OpenAPI Ada Client Support (development)
  .
  This package contains the development files for OpenAPI Ada clients.
 
-Package: libswagger-server1-dev
+Package: libswagger-server2-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
