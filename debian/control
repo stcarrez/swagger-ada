@@ -55,6 +55,14 @@ Description: OpenAPI Ada Client Support (development)
  .
  This package contains the development files for OpenAPI Ada clients.
 
+Package: libswagger-generator2-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, openjdk-11-jre
+Description: OpenAPI Ada Generator (development)
+ This is the OpenAPI Code gnerator that is capable of generating
+ Ada client and server support with the OpenAPI Ada library.
+
 Package: libswagger-server2-dev
 Section: libdevel
 Architecture: any
