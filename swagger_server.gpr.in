@@ -1,6 +1,5 @@
 with "@UTIL_DIR@config";
 with "@UTIL_DIR@utilada_sys";
-with "@UTIL_DIR@utilada_http";
 with "@SERVLET_DIR@servletada";
 with "@SERVLET_DIR@servletada_aws";
 with "@SECURITY_DIR@security";

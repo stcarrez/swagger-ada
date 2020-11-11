@@ -23,7 +23,7 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 include Makefile.defaults
 
 build-test::  setup
-	$(GNATMAKE) $(GPRFLAGS) -p -P$(NAME)_tests $(MAKE_ARGS)
+	#$(GNATMAKE) $(GPRFLAGS) -p -P$(NAME)_tests $(MAKE_ARGS)
 
 ifeq (${HAVE_SERVER},yes)
 setup:: src/server/swagger-servers-config.ads
@@ -69,6 +69,7 @@ install-data::
 	rm -rf $(DESTDIR)${prefix}/share/swagger-ada
 	${MKDIR} -p $(DESTDIR)${prefix}/share/swagger-ada
 	${CP} -rp web $(DESTDIR)${prefix}/share/swagger-ada/web
+	${MKDIR} -p $(DESTDIR)${prefix}/bin
 	$(INSTALL) openapi-generator.sh $(DESTDIR)$(prefix)/bin/openapi-generator
 	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/swagger-ada
 
@@ -78,7 +79,7 @@ ifeq ($(HAVE_SERVER),yes)
 $(eval $(call ada_library,swagger_server))
 
 build-test::
-	$(GNATMAKE) $(GPRFLAGS) -p -Ptestapi_server $(MAKE_ARGS)
+	# $(GNATMAKE) $(GPRFLAGS) -p -Ptestapi_server $(MAKE_ARGS)
 
 endif
 
