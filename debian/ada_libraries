@@ -1,0 +1,5 @@
+MODE=distrib SWAGGER_LIBRARY_TYPE=relocatable
+swagger.gpr
+
+MODE=distrib SWAGGER_LIBRARY_TYPE=relocatable
+swagger_server.gpr
