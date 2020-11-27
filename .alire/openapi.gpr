@@ -1,6 +1,5 @@
 with "openapi_config";
 with "utilada_sys";
-with "utilada_http";
 with "security";
 
 library project Openapi is
