@@ -376,6 +376,7 @@ package body Swagger.Clients is
             Request.Buffer.Initialize (Size => 1000000);
             Json.Initialize (Request.Buffer'Unchecked_Access);
             Request.Data.Start_Document;
+            Request.Data.Start_Entity ("");
 
          when APPLICATION_XML =>
             Client.Set_Header ("Content-Type", "application/xml");
