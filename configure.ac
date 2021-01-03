@@ -18,6 +18,9 @@ AC_SUBST(SWAGGER_MICRO_VERSION)
 
 AM_GNAT_LIBRARY_PROJECT(swagger)
 
+AC_CHECK_PROG(HAVE_PANDOC,pandoc,yes)
+AC_CHECK_PROG(HAVE_DYNAMO,dynamo,yes)
+
 AM_GNAT_FIND_ADA_UTIL([Ada Swagger])
 
 ##########################################
