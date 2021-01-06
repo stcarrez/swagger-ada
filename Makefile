@@ -75,6 +75,36 @@ install-data::
 
 $(eval $(call ada_library,$(NAME)))
 
+ifeq ($(HAVE_PANDOC),yes)
+doc::  docs/openapi-book.pdf docs/openapi-book.html
+ifeq ($(HAVE_DYNAMO),yes)
+	$(DYNAMO) build-doc -markdown wiki
+endif
+
+OPENAPI_DOC= \
+  title.md \
+  pagebreak.tex \
+  index.md \
+  pagebreak.tex \
+  Installation.md \
+  pagebreak.tex \
+  Tutorial.md
+
+DOC_OPTIONS=-f markdown -o openapi-book.pdf --listings --number-sections --toc
+HTML_OPTIONS=-f markdown -o openapi-book.html --listings --number-sections --toc --css pandoc.css
+
+docs/openapi-book.pdf: $(OPENAPI_DOC_DEP) force
+ifeq ($(HAVE_DYNAMO),yes)
+	$(DYNAMO) build-doc -pandoc docs
+endif
+	#cat docs/Model.md docs/ADO_Objects.md > docs/ADO_Model.md
+	cd docs && pandoc $(DOC_OPTIONS) --template=./eisvogel.tex $(OPENAPI_DOC)
+
+docs/openapi-book.html: docs/openapi-book.pdf force
+	cd docs && pandoc $(HTML_OPTIONS) $(OPENAPI_DOC)
+
+endif
+
 ifeq ($(HAVE_SERVER),yes)
 $(eval $(call ada_library,swagger_server))
 
