@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="601.42853"
+   height="721.51404"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="openapi-ada-client.svg"
+   inkscape:export-filename="/home/ciceron/work/vacs/icons/src/misc/swagger-ada-generator.png"
+   inkscape:export-xdpi="80.143845"
+   inkscape:export-ydpi="80.143845">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="263.4381"
+     inkscape:cy="365.97546"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1132"
+     inkscape:window-x="1280"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     fit-margin-top="0.5"
+     fit-margin-left="0.5"
+     fit-margin-bottom="0.5"
+     fit-margin-right="0.5">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3890"
+       originx="-67.736487"
+       originy="-433.64508" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-67.736487,102.79694)">
+    <rect
+       style="opacity:1;fill:#fcfcdb;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:3.79165983;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect7494"
+       width="596.63684"
+       height="493.06549"
+       x="70.132317"
+       y="123.25578"
+       rx="10.777958"
+       ry="12.005075" />
+    <rect
+       style="opacity:1;fill:#d4ef5d;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:4.71322823;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865"
+       width="546.61536"
+       height="94.319771"
+       x="96.483231"
+       y="260.23059"
+       rx="11.024401"
+       ry="12.025364" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="290.79309"
+       y="314.28745"
+       id="text4867"><tspan
+         sodipodi:role="line"
+         id="tspan4869"
+         x="290.79309"
+         y="314.28745"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">Ada Security</tspan></text>
+    <rect
+       style="opacity:1;fill:#a9df26;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:4.72558498;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-1"
+       width="549.56012"
+       height="94.306931"
+       x="95.060829"
+       y="140.18015"
+       rx="11.081936"
+       ry="12.023838" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="287.71198"
+       y="194.23059"
+       id="text4867-3"><tspan
+         sodipodi:role="line"
+         id="tspan4869-3"
+         x="287.71198"
+         y="194.23059"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">OpenAPI Ada</tspan></text>
+    <rect
+       style="opacity:1;fill:#d4ef5d;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:4.67758942;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-8"
+       width="538.17957"
+       height="94.354919"
+       x="99.32254"
+       y="380.27042"
+       rx="10.852447"
+       ry="12.029958" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="256.30905"
+       y="434.34485"
+       id="text4867-2"><tspan
+         sodipodi:role="line"
+         id="tspan4869-1"
+         x="256.30905"
+         y="434.34485"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">Ada Utility Library</tspan></text>
+    <rect
+       style="opacity:1;fill:#f4f48a;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:3.85461164;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-8-0"
+       width="161.95811"
+       height="96.243874"
+       x="100.66378"
+       y="499.38312"
+       rx="11.126689"
+       ry="12.018155" />
+    <rect
+       style="opacity:1;fill:#f4f48a;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:3.73033333;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-8-0-6"
+       width="166.26514"
+       height="96.265167"
+       x="283.51028"
+       y="499.37247"
+       rx="10.407304"
+       ry="12.03371" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="147.45705"
+       y="556.60541"
+       id="text4867-2-4"><tspan
+         sodipodi:role="line"
+         id="tspan4869-1-9"
+         x="147.45705"
+         y="556.60541"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">CURL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="339.09158"
+       y="556.60541"
+       id="text4867-2-4-8"><tspan
+         sodipodi:role="line"
+         id="tspan4869-1-9-9"
+         x="339.09158"
+         y="556.60541"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">AWS</tspan></text>
+    <rect
+       style="opacity:1;fill:#b9d478;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:4.91255522;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-1-6"
+       width="595.08746"
+       height="94.119957"
+       x="70.868599"
+       y="12.216497"
+       rx="12"
+       ry="12" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="253.69064"
+       y="68.596542"
+       id="text4867-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan4869-3-7"
+         x="253.69064"
+         y="68.596542"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">Client API &amp; Model</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:4.91255522;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-1-6-7"
+       width="595.08746"
+       height="94.119957"
+       x="70.868599"
+       y="-99.84066"
+       rx="12"
+       ry="12" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="258.75046"
+       y="-45.883709"
+       id="text4867-3-7-4"><tspan
+         sodipodi:role="line"
+         id="tspan4869-3-7-1"
+         x="258.75046"
+         y="-45.883709"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">Client Application</tspan></text>
+    <rect
+       style="opacity:1;fill:#f4f48a;fill-opacity:1;fill-rule:nonzero;stroke:#6d9a00;stroke-width:3.79199934;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4865-8-0-6-0"
+       width="171.91777"
+       height="96.203506"
+       x="467.4697"
+       y="500.47473"
+       rx="10.761127"
+       ry="12.026001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="499.72986"
+       y="556.91388"
+       id="text4867-2-4-8-0"><tspan
+         sodipodi:role="line"
+         id="tspan4869-1-9-9-4"
+         x="499.72986"
+         y="556.91388"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">XML/Ada</tspan></text>
+  </g>
+</svg>
