@@ -14,7 +14,7 @@ package TestAPI.Clients is
 
    type Client_Type is new Swagger.Clients.Client_Type with null record;
 
-   --  
+   --
    --  Query an orchestrated service instance
    procedure Orch_Store
       (Client : in out Client_Type;
