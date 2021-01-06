@@ -8,10 +8,9 @@
 --  https://openapi-generator.tech
 --  Do not edit the class manually.
 
-with Swagger.Streams;
 package body TestAPI.Clients is
 
-   --  
+   --
    --  Query an orchestrated service instance
    procedure Orch_Store
       (Client : in out Client_Type;

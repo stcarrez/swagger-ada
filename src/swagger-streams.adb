@@ -95,6 +95,7 @@ package body Swagger.Streams is
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
                         Value  : in Object_Map) is
+      procedure Process (Pos : in Util.Beans.Objects.Maps.Cursor);
       procedure Process (Pos : in Util.Beans.Objects.Maps.Cursor) is
          use Util.Beans.Objects.Maps;
       begin
