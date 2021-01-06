@@ -19,7 +19,6 @@
 package body Swagger.Credentials.OAuth is
 
    use Ada.Strings.Unbounded;
-   use type Security.OAuth.Clients.Access_Token_Access;
 
    --  ------------------------------
    --  Set the credendials on the HTTP client request before doing the call.

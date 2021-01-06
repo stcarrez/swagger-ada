@@ -29,7 +29,7 @@ abstract project Config is
 
          when "debug" =>
             for Default_Switches ("Ada") use defaults & warnings
-               & ("-gnata", "-gnatVaMI", "-gnaty3abcefhiklmnprstxM99");
+               & ("-gnata", "-gnatVaMI", "-gnaty3abcefhiklmnprstxM127");
 
          when "optimize" =>
             for Default_Switches ("Ada") use defaults & warnings
