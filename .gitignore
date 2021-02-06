@@ -17,9 +17,13 @@ swagger_tests.gpr
 testapi_server.gpr
 testapi_model.gpr
 swagger-tests.xml
+bin
 obj/
 lib/
 regtests/results
 swagger-*aunit.xml
 src/server/swagger-servers-config.ads
-regtests/result
+alire
+cover
+wiki
+openapi.cov
