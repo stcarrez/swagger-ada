@@ -87,10 +87,7 @@ Method | HTTP request | Description
 
 ### Models
 
- - [TestAPI.Models.InlineObject1_Type](InlineObject1_Type.md)
- - [TestAPI.Models.InlineObject2_Type](InlineObject2_Type.md)
  - [TestAPI.Models.InlineObject3_Type](InlineObject3_Type.md)
- - [TestAPI.Models.InlineObject_Type](InlineObject_Type.md)
  - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
 
