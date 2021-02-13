@@ -2,10 +2,10 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
 [![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Download](https://img.shields.io/badge/download-0.3.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.3.0.tar.gz)
+[![Download](https://img.shields.io/badge/download-0.4.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.4.0.tar.gz)
 [![codecov](https://codecov.io/gh/stcarrez/swagger-ada/branch/master/graph/badge.svg)](https://codecov.io/gh/stcarrez/swagger-ada)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.3.0.svg)
+![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.4.0.svg)
 
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
@@ -18,13 +18,8 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
-## Version 0.3.0 - Nov 2020
-
-- Install the openapi generator
-- Update the openapi generator to version 5.0.0
-- Update to use Swagger UI 3.36.0
-- Fixed Ada client code generator to support `FreeFormObject` and multi-path parameters
-- Add support for HTTP HEAD, OPTIONS and PATCH requests
+## Version 0.4.0   - Feb 2021
+- Update the openapi generator to version 5.1.0
 
 [List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
 

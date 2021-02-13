@@ -1,3 +1,6 @@
+Version 0.4.0   - Feb 2021
+  - Update the openapi generator to version 5.1.0
+
 Version 0.3.0   - Nov 2020
   - Install the openapi generator
   - Update the openapi generator to version 5.0.0
