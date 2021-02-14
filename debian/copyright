@@ -8,11 +8,11 @@ Files-Excluded:
  install-sh
 
 Files: *
-Copyright: 2017-2020 Stephane Carrez <Stephane.Carrez@gmail.com>
+Copyright: 2017-2021 Stephane Carrez <Stephane.Carrez@gmail.com>
 License: Apache-2.0
 
 Files: debian/*
-Copyright: 2018-2020 Stephane Carrez <Stephane.Carrez@gmail.com>
+Copyright: 2018-2021 Stephane Carrez <Stephane.Carrez@gmail.com>
 License: GPL-3.0+
 
 License: Apache-2.0
