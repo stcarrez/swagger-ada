@@ -9,11 +9,11 @@ Build-Depends: debhelper (>= 10), autotools-dev,
  gprbuild (>= 2015-2),
 # 2015-2 is compatible with gnat-6
  libxmlada-sax9-dev,
- libservletada2-dev,
- libservletada-unit2-dev,
- libutilada-xml2-dev,
- libutilada-aws2-dev,
- libutilada-curl2-dev
+ libservletada3-dev,
+ libservletada-unit3-dev,
+ libutilada-xml3-dev,
+ libutilada-aws3-dev,
+ libutilada-curl3-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/stcarrez/swagger-ada/
 Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-9
@@ -43,7 +43,7 @@ Description: OpenAPI Ada Server Support (runtime)
  .
  This package contains the runtime server libraries.
 
-Package: libswagger2-dev
+Package: libswagger3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
@@ -55,7 +55,7 @@ Description: OpenAPI Ada Client Support (development)
  .
  This package contains the development files for OpenAPI Ada clients.
 
-Package: libswagger-generator2-dev
+Package: libswagger-generator3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, openjdk-11-jre
@@ -63,7 +63,7 @@ Description: OpenAPI Ada Generator (development)
  This is the OpenAPI Code gnerator that is capable of generating
  Ada client and server support with the OpenAPI Ada library.
 
-Package: libswagger-server2-dev
+Package: libswagger-server3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
