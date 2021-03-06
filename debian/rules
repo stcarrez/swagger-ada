@@ -37,7 +37,7 @@ override_dh_auto_test::
 override_dh_auto_install::
 
 version=0.4.0
-aliversion=2
+aliversion=3
 
 swagger_LIB_PKG = libswagger${version}
 swagger_DEV_PKG = libswagger${aliversion}-dev
