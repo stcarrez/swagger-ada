@@ -4,11 +4,11 @@ Section: libdevel
 Maintainer: Stephane Carrez <Stephane.Carrez@gmail.com>
 Build-Depends: debhelper (>= 10), autotools-dev,
  dh-ada-library,
- gnat, gnat-9,
+ gnat, gnat-8,
 # This line is parsed by debian/rules.
  gprbuild (>= 2015-2),
 # 2015-2 is compatible with gnat-6
- libxmlada-sax9-dev,
+ libxmlada-sax8-dev,
  libservletada2-dev,
  libservletada-unit2-dev,
  libutilada-xml2-dev,
@@ -16,8 +16,8 @@ Build-Depends: debhelper (>= 10), autotools-dev,
  libutilada-curl2-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/stcarrez/swagger-ada/
-Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-9
-Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-9
+Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-8
+Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-8
 
 Package: libswagger0.4.0
 Section: libs
