@@ -1,7 +1,7 @@
 description = "OpenAPI library to build REST client applications"
 tags = ["rest", "web", "api", "openapi"]
 name = "openapi"
-version = "0.4.0"
+version = "0.5.0"
 licenses = ["Apache 2.0"]
 authors = ["Stephane.Carrez@gmail.com"]
 maintainers = ["Stephane.Carrez@gmail.com"]
@@ -27,8 +27,8 @@ specific operations or types.
 """
 
 [[depends-on]]
-utilada = "^2.4.0"
-utilada_xml = "^2.4.0"
+utilada = "^2.4.1"
+utilada_xml = "^2.4.1"
 security = "^1.4.0"
 
 [gpr-externals]
