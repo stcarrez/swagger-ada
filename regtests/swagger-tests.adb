@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  swagger-tests -- Unit tests for REST clients
---  Copyright (C) 2018, 2020 Stephane Carrez
+--  Copyright (C) 2018, 2020, 2021 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -90,7 +90,7 @@ package body Swagger.Tests is
    begin
       T.Configure (Client);
       T.Authenticate (Cred);
-      Client.Set_Credentials (Cred'Access);
+      Client.Set_Credentials (Cred'Unchecked_Access);
       Client.Do_Create_Ticket (To_UString ("test"), Empty, Empty, Empty);
       Util.Tests.Assert_Equals (T, 201, Client.Get_Status, "Invalid response status");
 
