@@ -1,3 +1,7 @@
+Version 0.5.1   - Jul 2021
+  - Fix for GNAT 2021
+  - Update the openapi generator to version 5.2.0
+
 Version 0.4.0   - Feb 2021
   - Update the openapi generator to version 5.1.0
 

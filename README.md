@@ -18,8 +18,9 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
-## Version 0.4.0   - Feb 2021
-- Update the openapi generator to version 5.1.0
+## Version 0.5.0   - Jul 2021
+  - Fix for GNAT 2021
+  - Update the openapi generator to version 5.2.0
 
 [List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
 
