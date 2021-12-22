@@ -11,7 +11,7 @@ library project Openapi_Server is
    Library_Dir := "lib";
    Library_Type : Openapi_Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
 
-   for Source_Dirs use ("../src/server");
+   for Source_Dirs use ("../src/server", ".");
    for Library_Name use "openapi_server";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
