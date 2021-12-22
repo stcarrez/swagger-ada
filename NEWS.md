@@ -1,4 +1,8 @@
-Version 0.5.1   - Jul 2021
+Version 0.5.1   -
+  - Fix #6: Issues in README.md
+  - Fix #8: Missing swagger-servers-config.ads when compiling with alire
+
+Version 0.5.0   - Jul 2021
   - Fix for GNAT 2021
   - Update the openapi generator to version 5.2.0
 

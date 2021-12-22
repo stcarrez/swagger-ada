@@ -18,6 +18,10 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+## Version 0.5.1   - Under development
+  - Fix #6: Issues in README.md
+  - Fix #8: Missing swagger-servers-config.ads when compiling with alire
+
 ## Version 0.5.0   - Jul 2021
   - Fix for GNAT 2021
   - Update the openapi generator to version 5.2.0
