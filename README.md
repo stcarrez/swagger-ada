@@ -211,7 +211,7 @@ to use Curl, you should initialize with the following:
 But if you want to use [AWS](https://libre.adacore.com/libre/tools/aws/), you will initialize with:
 
 ```
-   Util.Http.Clients.Web.Register;
+   Util.Http.Clients.AWS.Register;
 ```
 
 Curl may be easier to start with because [AWS](https://libre.adacore.com/libre/tools/aws/)
@@ -264,6 +264,6 @@ At this stage, you can access information from the 'Pet' instance:
 
 The OpenAPI Ada sources as well as a wiki documentation is provided on:
 
-- https://github.com/stcarrez/swagger-ada/wiki
+- [Tutorial](https://github.com/stcarrez/swagger-ada/blob/master/docs/Tutorial.md)
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 
