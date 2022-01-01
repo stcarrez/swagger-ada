@@ -18,6 +18,10 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+## Version 0.5.1   - Under development
+  - Fix #6: Issues in README.md
+  - Fix #8: Missing swagger-servers-config.ads when compiling with alire
+
 ## Version 0.5.0   - Jul 2021
   - Fix for GNAT 2021
   - Update the openapi generator to version 5.2.0
@@ -211,7 +215,7 @@ to use Curl, you should initialize with the following:
 But if you want to use [AWS](https://libre.adacore.com/libre/tools/aws/), you will initialize with:
 
 ```
-   Util.Http.Clients.Web.Register;
+   Util.Http.Clients.AWS.Register;
 ```
 
 Curl may be easier to start with because [AWS](https://libre.adacore.com/libre/tools/aws/)
@@ -264,6 +268,6 @@ At this stage, you can access information from the 'Pet' instance:
 
 The OpenAPI Ada sources as well as a wiki documentation is provided on:
 
-- https://github.com/stcarrez/swagger-ada/wiki
+- [Tutorial](https://github.com/stcarrez/swagger-ada/blob/master/docs/Tutorial.md)
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 

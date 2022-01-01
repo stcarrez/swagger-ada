@@ -1,7 +1,7 @@
 description = "OpenAPI library to build REST client applications"
 tags = ["rest", "web", "api", "openapi"]
 name = "openapi"
-version = "0.5.0"
+version = "0.5.1"
 licenses = ["Apache 2.0"]
 authors = ["Stephane.Carrez@gmail.com"]
 maintainers = ["Stephane.Carrez@gmail.com"]
