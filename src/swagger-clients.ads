@@ -101,7 +101,7 @@ package Swagger.Clients is
    procedure Set_Server (Client : in out Client_Type;
                          Server : in UString);
 
-   --  Set the credendial instance that is responsible for populating the HTTP request
+   --  Set the credential instance that is responsible for populating the HTTP request
    --  before sending the request.
    procedure Set_Credentials (Client     : in out Client_Type;
                               Credential : access Swagger.Credentials.Credential_Type'Class);

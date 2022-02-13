@@ -21,7 +21,7 @@ package body Swagger.Credentials.OAuth is
    use Ada.Strings.Unbounded;
 
    --  ------------------------------
-   --  Set the credendials on the HTTP client request before doing the call.
+   --  Set the credentials on the HTTP client request before doing the call.
    --  ------------------------------
    overriding
    procedure Set_Credentials (Credential : in OAuth2_Credential_Type;
