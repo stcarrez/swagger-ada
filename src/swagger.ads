@@ -33,7 +33,7 @@ with Util.Nullables;
 --
 --    * serialize and deserialize the data in JSON or XML,
 --    * make the client REST operation and retrieve the result,
---    * let a server recieve a REST operation, handle it and return the result
+--    * let a server receive a REST operation, handle it and return the result
 --
 --  The <tt>Swagger</tt> root package defines the global types that are used by
 --  the generator to represent values such as strings, integers, dates.

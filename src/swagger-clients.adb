@@ -163,7 +163,7 @@ package body Swagger.Clients is
    end Set_Server;
 
    --  ------------------------------
-   --  Set the credendial instance that is responsible for populating the HTTP request
+   --  Set the credential instance that is responsible for populating the HTTP request
    --  before sending the request.
    --  ------------------------------
    procedure Set_Credentials (Client     : in out Client_Type;

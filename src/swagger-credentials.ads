@@ -24,7 +24,7 @@ package Swagger.Credentials is
 
    type Credential_Type is limited interface;
 
-   --  Set the credendials on the HTTP client request before doing the call.
+   --  Set the credentials on the HTTP client request before doing the call.
    procedure Set_Credentials (Credential : in Credential_Type;
                               Into       : in out Util.Http.Clients.Client'Class) is abstract;
 

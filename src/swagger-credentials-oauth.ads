@@ -23,7 +23,7 @@ package Swagger.Credentials.OAuth is
    type OAuth2_Credential_Type is new Security.OAuth.Clients.Application
      and Credential_Type with private;
 
-   --  Set the credendials on the HTTP client request before doing the call.
+   --  Set the credentials on the HTTP client request before doing the call.
    overriding
    procedure Set_Credentials (Credential : in OAuth2_Credential_Type;
                               Into       : in out Util.Http.Clients.Client'Class);
