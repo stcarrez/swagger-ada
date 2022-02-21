@@ -82,8 +82,9 @@ sudo docker pull ciceron/openapi-ada
 
 The command to generate an Ada REST client is the following:
 ```
-  openapi-generator generate --generator-name ada -i my-api.yaml -o client \
-       -DprojectName=MyProject --model-package MyProject.MyModule
+  openapi-generator generate --generator-name ada -i my-api.yaml \
+       --additional-properties projectName=MyProject \
+       --model-package MyProject.MyModule -o client
 ```
 where *my-api.yaml* is the OpenAPI specification file that describes your API,
 *MyProject* is the name of the GNAT project to use,
