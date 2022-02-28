@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-streams -- Stream operations
---  Copyright (C) 2017, 2020 Stephane Carrez
+--  openapi-streams -- Stream operations
+--  Copyright (C) 2017, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Maps;
 with Util.Dates.ISO8601;
-package body Swagger.Streams is
+package body OpenAPI.Streams is
 
    --  ------------------------------
    --  Serialize a list of strings in the stream.
    --  ------------------------------
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.UString_Vectors.Vector) is
+                        Value  : in OpenAPI.UString_Vectors.Vector) is
    begin
       Stream.Start_Array (Name);
       for S of Value loop
@@ -35,7 +35,7 @@ package body Swagger.Streams is
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_UString_Vectors.Vector) is
+                        Value  : in OpenAPI.Nullable_UString_Vectors.Vector) is
    begin
       Stream.Start_Array (Name);
       for S of Value loop
@@ -49,13 +49,13 @@ package body Swagger.Streams is
    --  ------------------------------
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Long) is
+                        Value  : in OpenAPI.Long) is
    begin
       Stream.Write_Long_Entity (Name, Value);
    end Serialize;
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_Long) is
+                        Value  : in OpenAPI.Nullable_Long) is
    begin
       if Value.Is_Null then
          Stream.Write_Null_Entity (Name);
@@ -66,14 +66,14 @@ package body Swagger.Streams is
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.UString) is
+                        Value  : in OpenAPI.UString) is
    begin
       Stream.Write_Entity (Name, Value);
    end Serialize;
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_UString) is
+                        Value  : in OpenAPI.Nullable_UString) is
    begin
       Stream.Write_Entity (Name, Value);
    end Serialize;
@@ -114,10 +114,10 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract a boolean value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Boolean) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -130,10 +130,10 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract a boolean value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Boolean) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -150,10 +150,10 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract an integer value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Integer) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -163,10 +163,10 @@ package body Swagger.Streams is
       Value := Util.Beans.Objects.To_Integer (Item);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -183,10 +183,10 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract an integer value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Long) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -196,10 +196,10 @@ package body Swagger.Streams is
       Value := Util.Beans.Objects.To_Long_Long_Integer (Item);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Long) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -216,10 +216,10 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract a string value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out UString) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -229,10 +229,10 @@ package body Swagger.Streams is
       Value := Util.Beans.Objects.To_Unbounded_String (Item);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_UString) is
-      Item : Swagger.Value_Type;
+      Item : OpenAPI.Value_Type;
    begin
       if Name = "" then
          Item := From;
@@ -248,7 +248,7 @@ package body Swagger.Streams is
    --  ------------------------------
    --  Extract a value stored under the given name.
    --  ------------------------------
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Value_Type) is
    begin
@@ -260,7 +260,7 @@ package body Swagger.Streams is
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Value_Array_Type) is
       List : Util.Beans.Objects.Object;
@@ -278,10 +278,10 @@ package body Swagger.Streams is
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Ada.Calendar.Time) is
-      Time : Swagger.Value_Type;
+      Time : OpenAPI.Value_Type;
    begin
       if Name'Length = 0 then
          Time := From;
@@ -295,10 +295,10 @@ package body Swagger.Streams is
       end;
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Date) is
-      Time : Swagger.Value_Type;
+      Time : OpenAPI.Value_Type;
    begin
       if Name'Length = 0 then
          Time := From;
@@ -315,7 +315,7 @@ package body Swagger.Streams is
       end if;
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out UString_Vectors.Vector) is
       use Util.Beans.Objects;
@@ -334,7 +334,7 @@ package body Swagger.Streams is
       end if;
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_UString_Vectors.Vector) is
       use Util.Beans.Objects;
@@ -359,7 +359,7 @@ package body Swagger.Streams is
       end if;
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Integer_Map) is
       procedure Process (Name : in String;
@@ -382,7 +382,7 @@ package body Swagger.Streams is
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer_Map) is
       procedure Process (Name : in String;
@@ -410,7 +410,7 @@ package body Swagger.Streams is
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Object_Map) is
       procedure Process (Name : in String;
@@ -433,4 +433,4 @@ package body Swagger.Streams is
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
 
-end Swagger.Streams;
+end OpenAPI.Streams;
