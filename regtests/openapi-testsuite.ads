@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
---  swagger-testsuite - Swagger Test suite
+--  openapi-testsuite - Swagger Test suite
 --  Copyright (C) 2017 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
@@ -18,8 +18,8 @@
 
 with Util.Tests;
 
-package Swagger.Testsuite is
+package OpenAPI.Testsuite is
 
    function Suite return Util.Tests.Access_Test_Suite;
 
-end Swagger.Testsuite;
+end OpenAPI.Testsuite;
