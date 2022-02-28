@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-tests -- Unit tests for REST clients
---  Copyright (C) 2018, 2020, 2021 Stephane Carrez
+--  openapi-tests -- Unit tests for REST clients
+--  Copyright (C) 2018, 2020, 2021, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,14 @@
 
 with Util.Log.Loggers;
 with Util.Test_Caller;
-with Swagger.Clients;
+with OpenAPI.Clients;
 with Ada.Text_IO;
 with TestAPI.Models;
-package body Swagger.Tests is
+package body OpenAPI.Tests is
 
-   Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Tests");
+   Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("OpenAPI.Tests");
 
-   package Caller is new Util.Test_Caller (Test, "Swagger.Tests");
+   package Caller is new Util.Test_Caller (Test, "OpenAPI.Tests");
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite) is
    begin
@@ -33,6 +33,8 @@ package body Swagger.Tests is
                        Test_Unauthorized'Access);
       Caller.Add_Test (Suite, "Test authorized access",
                        Test_Authorized'Access);
+      Caller.Add_Test (Suite, "Test text/plain response",
+                       Test_Text_Response'Access);
    end Add_Tests;
 
    overriding
@@ -49,7 +51,7 @@ package body Swagger.Tests is
    end Configure;
 
    procedure Authenticate (T    : in out Test;
-                           Cred : in out Swagger.Credentials.OAuth.OAuth2_Credential_Type) is
+                           Cred : in out OpenAPI.Credentials.OAuth.OAuth2_Credential_Type) is
       Username   : constant String := Util.Tests.Get_Parameter ("testapi.username");
       Password   : constant String := Util.Tests.Get_Parameter ("testapi.password");
       Client_Id  : constant String := Util.Tests.Get_Parameter ("testapi.client_id");
@@ -73,7 +75,7 @@ package body Swagger.Tests is
       T.Fail ("No authorization error exception was raised");
 
    exception
-      when Swagger.Clients.Authorization_Error =>
+      when OpenAPI.Clients.Authorization_Error =>
          null;
    end Test_Unauthorized;
 
@@ -83,7 +85,7 @@ package body Swagger.Tests is
    procedure Test_Authorized (T : in out Test) is
       Client : TestAPI.Clients.Client_Type;
       Empty  : Nullable_UString;
-      Cred   : aliased Swagger.Credentials.OAuth.OAuth2_Credential_Type;
+      Cred   : aliased OpenAPI.Credentials.OAuth.OAuth2_Credential_Type;
       List   : TestAPI.Models.Ticket_Type_Vectors.Vector;
       Count  : Natural;
       T2     : TestAPI.Models.Ticket_Type;
@@ -160,4 +162,20 @@ package body Swagger.Tests is
       Util.Tests.Assert_Equals (T, 0, Count, "The ticket list was not cleared");
    end Test_Authorized;
 
-end Swagger.Tests;
+   --  Test API that uses text/plain response.
+   procedure Test_Text_Response (T : in out Test) is
+      Client : TestAPI.Clients.Client_Type;
+      Options : Nullable_UString;
+      Result : OpenAPI.UString;
+   begin
+      T.Configure (Client);
+      Client.Test_Text_Response (Options, Result);
+      Util.Tests.Assert_Equals (T, "text response: ", Result, "Invalid text/plain response");
+
+      Options := (Is_Null => False, Value => OpenAPI.To_UString ("test content '<>;:"""));
+      Client.Test_Text_Response (Options, Result);
+      Util.Tests.Assert_Equals (T, "text response: test content '<>;:""",
+                                Result, "Invalid text/plain response");
+   end Test_Text_Response;
+
+end OpenAPI.Tests;
