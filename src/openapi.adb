@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger -- Support library for swagger code generator
---  Copyright (C) 2017 Stephane Carrez
+--  openapi -- Support library for swagger code generator
+--  Copyright (C) 2017, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 
-package body Swagger is
+package body OpenAPI is
 
    --  ------------------------------
    --  Convert the long value into a string.
@@ -68,4 +68,4 @@ package body Swagger is
       return Res;
    end Next;
 
-end Swagger;
+end OpenAPI;
