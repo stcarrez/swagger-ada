@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2020 Stephane Carrez
+--  openapi-clients -- Rest client support
+--  Copyright (C) 2017, 2018, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
 -----------------------------------------------------------------------
 with Util.Http.Clients;
 private with Util.Streams.Texts;
-with Swagger.Streams;
-with Swagger.Credentials;
+with OpenAPI.Streams;
+with OpenAPI.Credentials;
 with Util.Serialize.IO;
 
 --  == REST Client ==
---  The <tt>Swagger.Clients</tt> package implements the support used by the code generator
+--  The <tt>OpenAPI.Clients</tt> package implements the support used by the code generator
 --  to make REST client operations.
-package Swagger.Clients is
+package OpenAPI.Clients is
 
    --  Exception raised when an API was not found.
    Not_Found           : exception;
@@ -40,15 +40,15 @@ package Swagger.Clients is
 
    type Request_Type is tagged limited private;
 
-   type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is private
+   type Stream_Accessor (Stream : access OpenAPI.Streams.Output_Stream'Class) is private
    with Implicit_Dereference => Stream;
 
    function Stream (Req : in Request_Type) return Stream_Accessor;
 
    type Operation_Type is (HEAD, GET, POST, PUT, DELETE, OPTIONS, PATCH);
 
-   --  The possible content types that are supported by the Swagger Ada client library.
-   type Content_Type is (APPLICATION_JSON, APPLICATION_XML, APPLICATION_FORM);
+   --  The possible content types that are supported by the OpenAPI Ada client library.
+   type Content_Type is (APPLICATION_JSON, APPLICATION_XML, APPLICATION_FORM, TEXT_PLAIN);
 
    --  A list of content types for the Set_Accept and Initialize operations.
    type Content_Type_Array is array (Positive range <>) of Content_Type;
@@ -104,7 +104,7 @@ package Swagger.Clients is
    --  Set the credential instance that is responsible for populating the HTTP request
    --  before sending the request.
    procedure Set_Credentials (Client     : in out Client_Type;
-                              Credential : access Swagger.Credentials.Credential_Type'Class);
+                              Credential : access OpenAPI.Credentials.Credential_Type'Class);
 
    procedure Call (Client    : in out Client_Type;
                    Operation : in Operation_Type;
@@ -155,11 +155,11 @@ private
 
    type Client_Type is new Util.Http.Clients.Client with record
       Server     : UString;
-      Credential : access Swagger.Credentials.Credential_Type'Class;
+      Credential : access OpenAPI.Credentials.Credential_Type'Class;
       Response   : Util.Http.Clients.Response;
    end record;
 
-   type Stream_Accessor (Stream : access Swagger.Streams.Output_Stream'Class) is record
+   type Stream_Accessor (Stream : access OpenAPI.Streams.Output_Stream'Class) is record
       N : Natural := 0;
    end record;
 
@@ -168,4 +168,4 @@ private
       Query : UString;
    end record;
 
-end Swagger.Clients;
+end OpenAPI.Clients;
