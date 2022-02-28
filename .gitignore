@@ -23,6 +23,7 @@ lib/
 regtests/results
 swagger-*aunit.xml
 src/server/swagger-servers-config.ads
+src/server/openapi-servers-config.ads
 alire
 cover
 wiki
