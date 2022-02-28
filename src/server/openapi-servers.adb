@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server -- Rest server support
---  Copyright (C) 2017, 2020 Stephane Carrez
+--  openapi-server -- Rest server support
+--  Copyright (C) 2017, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ with Util.Serialize.IO.Form;
 with Security;
 with Servlet.Streams;
 with Servlet.Responses;
-package body Swagger.Servers is
+package body OpenAPI.Servers is
 
    use type Servlet.Streams.Input_Stream_Access;
 
@@ -276,4 +276,4 @@ package body Swagger.Servers is
       return True;
    end Has_Permission;
 
-end Swagger.Servers;
+end OpenAPI.Servers;
