@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server-operation -- Rest server operation
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  openapi-server-operation -- Rest server operation
+--  Copyright (C) 2017, 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,15 +17,15 @@
 -----------------------------------------------------------------------
 with Security.Permissions;
 generic
-   with procedure Handler (Req     : in out Swagger.Servers.Request'Class;
-                           Reply   : in out Swagger.Servers.Response'Class;
-                           Stream  : in out Swagger.Servers.Output_Stream'Class;
-                           Context : in out Swagger.Servers.Context_Type);
+   with procedure Handler (Req     : in out OpenAPI.Servers.Request'Class;
+                           Reply   : in out OpenAPI.Servers.Response'Class;
+                           Stream  : in out OpenAPI.Servers.Output_Stream'Class;
+                           Context : in out OpenAPI.Servers.Context_Type);
    Method     : Method_Type := Servlet.Rest.GET;
    URI        : String;
    Permission : Security.Permissions.Permission_Index := Security.Permissions.NONE;
-package Swagger.Servers.Operation is
+package OpenAPI.Servers.Operation is
 
    function Definition return Descriptor_Access;
 
-end Swagger.Servers.Operation;
+end OpenAPI.Servers.Operation;
