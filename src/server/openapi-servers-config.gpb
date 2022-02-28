@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server -- Rest server support
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  openapi-server -- Rest server support
+--  Copyright (C) 2017, 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,8 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-package Swagger.Servers.Config is
+package OpenAPI.Servers.Config is
 
    WEB_DIR : constant String := $WEB_DIR;
 
-end Swagger.Servers.Config;
+end OpenAPI.Servers.Config;
