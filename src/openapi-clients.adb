@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2019, 2020 Stephane Carrez
+--  openapi-clients -- Rest client support
+--  Copyright (C) 2017, 2018, 2019, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,14 +19,14 @@ with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
 with Util.Strings;
 with Util.Log.Loggers;
-with Swagger.Streams.Forms;
-package body Swagger.Clients is
+with OpenAPI.Streams.Forms;
+package body OpenAPI.Clients is
 
    use Ada.Strings.Unbounded;
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Clients");
 
-   type Form_Output_Stream_Access is access all Swagger.Streams.Forms.Output_Stream'Class;
+   type Form_Output_Stream_Access is access all OpenAPI.Streams.Forms.Output_Stream'Class;
    type Json_Output_Stream_Access is access all Util.Serialize.IO.JSON.Output_Stream'Class;
 
    function Stream (Req : in Request_Type) return Stream_Accessor is
@@ -167,7 +167,7 @@ package body Swagger.Clients is
    --  before sending the request.
    --  ------------------------------
    procedure Set_Credentials (Client     : in out Client_Type;
-                              Credential : access Swagger.Credentials.Credential_Type'Class) is
+                              Credential : access OpenAPI.Credentials.Credential_Type'Class) is
    begin
       Client.Credential := Credential;
    end Set_Credentials;
@@ -317,6 +317,9 @@ package body Swagger.Clients is
             when APPLICATION_FORM =>
                Append (Header, "application/x-www-form-urlencoded");
 
+            when TEXT_PLAIN =>
+               Append (Header, "text/plain");
+
          end case;
       end loop;
       Client.Set_Header ("Accept", To_String (Header));
@@ -364,7 +367,7 @@ package body Swagger.Clients is
          when APPLICATION_FORM =>
             Client.Set_Header ("Content-Type", "application/x-www-form-urlencoded");
             Request.Buffer.Initialize (Size => 1000000);
-            Forms := new Swagger.Streams.Forms.Output_Stream;
+            Forms := new OpenAPI.Streams.Forms.Output_Stream;
             Request.Data := Forms;
             Forms.Initialize (Request.Buffer'Unchecked_Access);
             Request.Data.Start_Document;
@@ -381,7 +384,10 @@ package body Swagger.Clients is
          when APPLICATION_XML =>
             Client.Set_Header ("Content-Type", "application/xml");
 
+         when TEXT_PLAIN =>
+            Client.Set_Header ("Content-Type", "text/plain");
+
       end case;
    end Initialize;
 
-end Swagger.Clients;
+end OpenAPI.Clients;
