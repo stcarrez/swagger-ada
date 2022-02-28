@@ -26,11 +26,11 @@ build-test::  setup
 	$(GNATMAKE) $(GPRFLAGS) -p -P$(NAME)_tests $(MAKE_ARGS)
 
 ifeq (${HAVE_SERVER},yes)
-setup:: src/server/swagger-servers-config.ads
+setup:: src/server/openapi-servers-config.ads
 
-src/server/swagger-servers-config.ads: Makefile src/server/swagger-servers-config.gpb
-	gnatprep -DWEB_DIR=\"${prefix}/share/swagger-ada/web\" \
-		src/server/swagger-servers-config.gpb $@
+src/server/openapi-servers-config.ads: Makefile src/server/openapi-servers-config.gpb
+	gnatprep -DWEB_DIR=\"${prefix}/share/openapi-ada/web\" \
+		src/server/openapi-servers-config.gpb $@
 else
 setup::
 endif
@@ -52,26 +52,26 @@ ifeq (${HAVE_SERVER},yes)
         SERVER_PID=$$!; \
         sleep 1; \
 	(test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -l $(NAME):AWS: -p AWS -config tests.properties -xml swagger-aws-aunit.xml) ;\
+          bin/swagger_harness_aws -l $(NAME):AWS: -p AWS -config tests.properties -xml openapi-aws-aunit.xml) ;\
 	(test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -l $(NAME):CURL: -p CURL -config tests.properties -xml swagger-curl-aunit.xml) ;\
+          bin/swagger_harness_curl -l $(NAME):CURL: -p CURL -config tests.properties -xml openapi-curl-aunit.xml) ;\
         kill $$SERVER_PID
 else
 	test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -p AWS -config tests-client.properties -xml swagger-aws-aunit.xml
+          bin/swagger_harness_aws -p AWS -config tests-client.properties -xml openapi-aws-aunit.xml
 	test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -p CURL -config tests-client.properties -xml swagger-curl-aunit.xml
+          bin/swagger_harness_curl -p CURL -config tests-client.properties -xml openapi-curl-aunit.xml
 endif
 
 install:: install-data
 
 install-data::
-	rm -rf $(DESTDIR)${prefix}/share/swagger-ada
-	${MKDIR} -p $(DESTDIR)${prefix}/share/swagger-ada
-	${CP} -rp web $(DESTDIR)${prefix}/share/swagger-ada/web
+	rm -rf $(DESTDIR)${prefix}/share/openapi-ada
+	${MKDIR} -p $(DESTDIR)${prefix}/share/openapi-ada
+	${CP} -rp web $(DESTDIR)${prefix}/share/openapi-ada/web
 	${MKDIR} -p $(DESTDIR)${prefix}/bin
 	$(INSTALL) openapi-generator.sh $(DESTDIR)$(prefix)/bin/openapi-generator
-	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/swagger-ada
+	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/openapi-ada
 
 $(eval $(call ada_library,$(NAME)))
 
