@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server-aws -- AWS Rest server support
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  openapi-server-aws -- AWS Rest server support
+--  Copyright (C) 2017, 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,8 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Servlet.Server.Web;
-package Swagger.Servers.AWS is
+package OpenAPI.Servers.AWS is
 
    subtype AWS_Container is Servlet.Server.Web.AWS_Container;
 
-end Swagger.Servers.AWS;
+end OpenAPI.Servers.AWS;
