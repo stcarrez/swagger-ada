@@ -1,3 +1,8 @@
+Version 0.6.0   -
+  - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
+  - Update the openapi generator to version 6.0.0
+  - Add support for text/plain response
+
 Version 0.5.1   - Feb 2022
   - Fix #6: Issues in README.md
   - Fix #8: Missing swagger-servers-config.ads when compiling with alire
