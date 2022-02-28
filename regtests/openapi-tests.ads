@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-tests -- Unit tests for REST clients
---  Copyright (C) 2018 Stephane Carrez
+--  openapi-tests -- Unit tests for REST clients
+--  Copyright (C) 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,9 @@
 -----------------------------------------------------------------------
 with Ada.Strings.Unbounded;
 with Util.Tests;
-with Swagger.Credentials.OAuth;
+with OpenAPI.Credentials.OAuth;
 with TestAPI.Clients;
-package Swagger.Tests is
+package OpenAPI.Tests is
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite);
 
@@ -34,7 +34,7 @@ package Swagger.Tests is
                         Client : in out TestAPI.Clients.Client_Type);
 
    procedure Authenticate (T    : in out Test;
-                           Cred : in out Swagger.Credentials.OAuth.OAuth2_Credential_Type);
+                           Cred : in out OpenAPI.Credentials.OAuth.OAuth2_Credential_Type);
 
    --  Test unauthorized operations.
    procedure Test_Unauthorized (T : in out Test);
@@ -42,4 +42,7 @@ package Swagger.Tests is
    --  Test authorized operations.
    procedure Test_Authorized (T : in out Test);
 
-end Swagger.Tests;
+   --  Test API that uses text/plain response.
+   procedure Test_Text_Response (T : in out Test);
+
+end OpenAPI.Tests;
