@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-clients-tests -- Unit tests for clients
---  Copyright (C) 2017 Stephane Carrez
+--  openapi-clients-tests -- Unit tests for clients
+--  Copyright (C) 2017, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 
 with Util.Tests;
 
-package Swagger.Clients.Tests is
+package OpenAPI.Clients.Tests is
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite);
 
@@ -30,4 +30,4 @@ package Swagger.Clients.Tests is
    --  Test Add_Param operations.
    procedure Test_Add_Param (T : in out Test);
 
-end Swagger.Clients.Tests;
+end OpenAPI.Clients.Tests;
