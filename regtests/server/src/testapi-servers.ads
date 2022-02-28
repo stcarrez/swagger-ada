@@ -104,6 +104,14 @@ package TestAPI.Servers is
        Body2_Type : in InlineObject3_Type;
        Context : in out Swagger.Servers.Context_Type);
 
+   --  Test text/plain response
+   overriding
+   procedure Test_Text_Response
+      (Server : in out Server_Type;
+       Options : in Swagger.Nullable_UString;
+       Result  : out Swagger.UString;
+       Context : in out Swagger.Servers.Context_Type);
+
    package Server_Impl is
       new TestAPI.Skeletons.Shared_Instance (Server_Type);
 

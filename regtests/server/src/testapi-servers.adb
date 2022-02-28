@@ -10,6 +10,7 @@
 --  Then, you can drop this edit note comment.
 --  ------------ EDIT NOTE ------------
 with Ada.Calendar;
+with Ada.Strings.Unbounded;
 with Util.Strings;
 package body TestAPI.Servers is
 
@@ -198,5 +199,19 @@ package body TestAPI.Servers is
    begin
       null;
    end Orch_Store;
+
+   overriding
+   procedure Test_Text_Response
+      (Server : in out Server_Type;
+       Options : in Swagger.Nullable_UString;
+       Result  : out Swagger.UString;
+       Context : in out Swagger.Servers.Context_Type) is
+       use Ada.Strings.Unbounded;
+   begin
+       Result := Swagger.To_UString ("text response: ");
+       if not Options.Is_Null then
+          Append (Result, Options.Value);
+       end if;
+   end Test_Text_Response;
 
 end TestAPI.Servers;

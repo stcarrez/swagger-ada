@@ -1,4 +1,4 @@
-# API to validate - Swagger Ada Server
+# API to validate - OpenAPI Ada Server
 
 ## Overview
 
@@ -9,9 +9,9 @@ you can easily generate a server stub.
 ## Building
 
 To build the server you will need the GNAT Ada compiler as well as
-the [Swagger Ada library](https://github.com/stcarrez/swagger-ada).
+the [OpenAPI Ada library](https://github.com/stcarrez/swagger-ada).
 
-When the GNAT Ada compiler and Swagger Ada libraries are installed,
+When the GNAT Ada compiler and OpenAPI Ada libraries are installed,
 run the following command:
 
 ```shell
@@ -75,6 +75,7 @@ All URIs are relative to *https://localhost:8082/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Orch_Store**](DefaultApi.md#Orch_Store) | **POST** /orchestration | 
+[**Test_Text_Response**](DefaultApi.md#Test_Text_Response) | **GET** /testTextResponse | 
 [**Do_Create_Ticket**](TicketApi.md#Do_Create_Ticket) | **POST** /tickets | Create a ticket
 [**Do_Delete_Ticket**](TicketApi.md#Do_Delete_Ticket) | **DELETE** /tickets/{tid} | Delete a ticket
 [**Do_Head_Ticket**](TicketApi.md#Do_Head_Ticket) | **HEAD** /tickets | List the tickets
@@ -88,6 +89,7 @@ Method | HTTP request | Description
 ### Models
 
  - [TestAPI.Models.InlineObject3_Type](InlineObject3_Type.md)
+ - [TestAPI.Models.Options_Type](Options_Type.md)
  - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
 

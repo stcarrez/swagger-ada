@@ -78,6 +78,7 @@
         "tags" : [ "tickets" ]
       },
       "head" : {
+        "description" : "",
         "operationId" : "do_head_ticket",
         "responses" : {
           "200" : {
@@ -91,6 +92,7 @@
         "tags" : [ "ticket" ]
       },
       "post" : {
+        "description" : "",
         "operationId" : "do_create_ticket",
         "requestBody" : {
           "$ref" : "#/components/requestBodies/inline_object",
@@ -149,6 +151,7 @@
     },
     "/tickets/{tid}" : {
       "delete" : {
+        "description" : "",
         "operationId" : "do_delete_ticket",
         "parameters" : [ {
           "description" : "Ticket identifier",
@@ -255,6 +258,7 @@
         "tags" : [ "tickets" ]
       },
       "patch" : {
+        "description" : "",
         "operationId" : "do_patch_ticket",
         "parameters" : [ {
           "description" : "Ticket identifier",
@@ -319,6 +323,7 @@
         "tags" : [ "ticket" ]
       },
       "put" : {
+        "description" : "",
         "operationId" : "do_update_ticket",
         "parameters" : [ {
           "description" : "Ticket identifier",
@@ -413,6 +418,33 @@
           },
           "default" : {
             "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/testTextResponse" : {
+      "get" : {
+        "operationId" : "testTextResponse",
+        "parameters" : [ {
+          "explode" : true,
+          "in" : "query",
+          "name" : "options",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
           }
         }
       }
@@ -519,6 +551,18 @@
         "properties" : {
           "key" : {
             "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Options" : {
+        "properties" : {
+          "a" : {
+            "items" : {
+              "pattern" : "^[A-Z].*",
+              "type" : "string"
+            },
+            "type" : "array"
           }
         },
         "type" : "object"
