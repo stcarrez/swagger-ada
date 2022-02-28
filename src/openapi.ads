@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger -- Support library for swagger code generator
---  Copyright (C) 2017 Stephane Carrez
+--  openapi -- Support library for OpenAPI code generator
+--  Copyright (C) 2017, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,8 +26,8 @@ with Util.Beans.Objects.Maps;
 with Util.Strings.Vectors;
 with Util.Nullables;
 
---  == Swagger Introduction ==
---  The Swagger Ada library provides a small runtime for use by the Swagger Codegen
+--  == OpenAPI Introduction ==
+--  The OpenAPI Ada library provides a small runtime for use by the OpenAPI Codegen
 --  REST API generator.  The library provides operations that are used by the generated
 --  REST client and servers to:
 --
@@ -38,10 +38,10 @@ with Util.Nullables;
 --  The <tt>Swagger</tt> root package defines the global types that are used by
 --  the generator to represent values such as strings, integers, dates.
 --
---  @include swagger-clients.ads
---  @include swagger-servers.ads
---  @include swagger-streams.ads
-package Swagger is
+--  @include openapi-clients.ads
+--  @include openapi-servers.ads
+--  @include openapi-streams.ads
+package OpenAPI is
 
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
    subtype Nullable_UString is Util.Nullables.Nullable_String;
@@ -142,4 +142,4 @@ private
    overriding
    function Next (Object : in Iterator; Position : in Value_Cursor) return Value_Cursor;
 
-end Swagger;
+end OpenAPI;
