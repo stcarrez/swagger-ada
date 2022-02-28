@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server -- Rest server support
---  Copyright (C) 2017, 2018, 2020 Stephane Carrez
+--  openapi-server -- Rest server support
+--  Copyright (C) 2017, 2018, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 with Servlet.Rest;
 with Servlet.Core;
 with Security.Permissions;
-package Swagger.Servers is
+package OpenAPI.Servers is
 
    subtype Application_Type is Servlet.Core.Servlet_Registry;
 
@@ -141,4 +141,4 @@ private
       Use_Map : Boolean := False;
    end record;
 
-end Swagger.Servers;
+end OpenAPI.Servers;
