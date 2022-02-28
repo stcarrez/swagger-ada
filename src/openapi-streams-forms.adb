@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-streams-forms -- x-www-form-urlencoded streams
---  Copyright (C) 2018 Stephane Carrez
+--  openapi-streams-forms -- x-www-form-urlencoded streams
+--  Copyright (C) 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 
-package body Swagger.Streams.Forms is
+package body OpenAPI.Streams.Forms is
 
    procedure Initialize (Stream : in out Output_Stream;
                          Buffer : in Util.Streams.Texts.Print_Stream_Access) is
@@ -200,4 +200,4 @@ package body Swagger.Streams.Forms is
       null;
    end Write_Null_Entity;
 
-end Swagger.Streams.Forms;
+end OpenAPI.Streams.Forms;
