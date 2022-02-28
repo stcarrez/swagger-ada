@@ -312,6 +312,22 @@ paths:
                   $ref: '#/components/schemas/stringsMap'
         description: Requests an orchestrated service instance
         required: true
+  /testTextResponse:
+    get:
+      operationId: testTextResponse
+      parameters:
+        - name: options
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -376,3 +392,11 @@ components:
       properties:
         key:
           type: string
+    Options:
+      type: object
+      properties:
+        a:
+          type: array
+          items:
+            type: string
+            pattern: '^[A-Z].*'
