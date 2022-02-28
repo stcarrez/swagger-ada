@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-streams-forms -- x-www-form-urlencoded streams
---  Copyright (C) 2018 Stephane Carrez
+--  openapi-streams-forms -- x-www-form-urlencoded streams
+--  Copyright (C) 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 with Ada.Streams;
 with Util.Streams.Texts;
 with Util.Serialize.IO;
-package Swagger.Streams.Forms is
+package OpenAPI.Streams.Forms is
 
    type Output_Stream is limited new Util.Serialize.IO.Output_Stream with private;
 
@@ -137,4 +137,4 @@ private
       Has_Param : Boolean := False;
    end record;
 
-end Swagger.Streams.Forms;
+end OpenAPI.Streams.Forms;
