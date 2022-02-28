@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
---  swagger-streams -- Stream operations
+--  openapi-streams -- Stream operations
 --  Copyright (C) 2017, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
@@ -20,7 +20,7 @@ with Util.Serialize.IO;
 --  == Streams ==
 --  The <tt>Swagger.Streams</tt> package provides operations to manage data streams
 --  in order to serialize and deserialize the data either in JSON or in XML.
-package Swagger.Streams is
+package OpenAPI.Streams is
 
    subtype Output_Stream is Util.Serialize.IO.Output_Stream;
 
@@ -29,27 +29,27 @@ package Swagger.Streams is
    --  Serialize a list of strings in the stream.
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.UString_Vectors.Vector);
+                        Value  : in OpenAPI.UString_Vectors.Vector);
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_UString_Vectors.Vector);
+                        Value  : in OpenAPI.Nullable_UString_Vectors.Vector);
 
    --  Serialize a long value.
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Long);
+                        Value  : in OpenAPI.Long);
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_Long);
+                        Value  : in OpenAPI.Nullable_Long);
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.UString);
+                        Value  : in OpenAPI.UString);
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
-                        Value  : in Swagger.Nullable_UString);
+                        Value  : in OpenAPI.Nullable_UString);
 
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
@@ -64,76 +64,76 @@ package Swagger.Streams is
                         Value  : in Object_Map);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Boolean);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Boolean);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Integer);
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Long);
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Long);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out UString);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_UString);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Value_Type);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Value_Array_Type);
 
    --  Extract an integer value stored under the given name.
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Ada.Calendar.Time);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Date);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out UString_Vectors.Vector);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_UString_Vectors.Vector);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Integer_Map);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Nullable_Integer_Map);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Object_Map);
 
-end Swagger.Streams;
+end OpenAPI.Streams;
