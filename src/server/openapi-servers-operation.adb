@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server-operation -- Rest server operation
---  Copyright (C) 2017, 2018, 2019 Stephane Carrez
+--  openapi-server-operation -- Rest server operation
+--  Copyright (C) 2017, 2018, 2019, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,15 +17,15 @@
 -----------------------------------------------------------------------
 
 with Servlet.Rest.Operation;
-package body Swagger.Servers.Operation is
+package body OpenAPI.Servers.Operation is
 
-   procedure Op (Req     : in out Swagger.Servers.Request'Class;
-                 Reply   : in out Swagger.Servers.Response'Class;
-                 Stream  : in out Swagger.Servers.Output_Stream'Class);
+   procedure Op (Req     : in out OpenAPI.Servers.Request'Class;
+                 Reply   : in out OpenAPI.Servers.Response'Class;
+                 Stream  : in out OpenAPI.Servers.Output_Stream'Class);
 
-   procedure Op (Req     : in out Swagger.Servers.Request'Class;
-                 Reply   : in out Swagger.Servers.Response'Class;
-                 Stream  : in out Swagger.Servers.Output_Stream'Class) is
+   procedure Op (Req     : in out OpenAPI.Servers.Request'Class;
+                 Reply   : in out OpenAPI.Servers.Response'Class;
+                 Stream  : in out OpenAPI.Servers.Output_Stream'Class) is
       Ctx : Context_Type;
    begin
       Ctx.Initialize (Req, Reply, Stream);
@@ -46,4 +46,4 @@ package body Swagger.Servers.Operation is
       return API.Definition;
    end Definition;
 
-end Swagger.Servers.Operation;
+end OpenAPI.Servers.Operation;
