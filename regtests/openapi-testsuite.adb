@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-testsuite - Swagger Test suite
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  openapi-testsuite - Swagger Test suite
+--  Copyright (C) 2017, 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +15,20 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with Swagger.Clients.Tests;
-with Swagger.Tests;
-package body Swagger.Testsuite is
+with OpenAPI.Clients.Tests;
+with OpenAPI.Tests;
+package body OpenAPI.Testsuite is
 
    Tests : aliased Util.Tests.Test_Suite;
 
    function Suite return Util.Tests.Access_Test_Suite is
       Ret : constant Util.Tests.Access_Test_Suite := Tests'Access;
    begin
-      Swagger.Clients.Tests.Add_Tests (Ret);
+      OpenAPI.Clients.Tests.Add_Tests (Ret);
       if Util.Tests.Get_Parameter ("testapi.url") /= "" then
-         Swagger.Tests.Add_Tests (Ret);
+         OpenAPI.Tests.Add_Tests (Ret);
       end if;
       return Ret;
    end Suite;
 
-end Swagger.Testsuite;
+end OpenAPI.Testsuite;
