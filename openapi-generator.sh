@@ -22,7 +22,7 @@ while [ -h "$PRG" ] ; do
   fi
 done
 
-DIR=`dirname $PRG`/../share/swagger-ada/
+DIR=`dirname $PRG`/../share/openapi-ada/
 if [ ! -d $DIR ] ; then
     echo "Cannot find openapi-generator configuration directory: $DIR does not exist"
     exit 1
