@@ -1,4 +1,4 @@
-Version 0.5.1   -
+Version 0.5.1   - Feb 2022
   - Fix #6: Issues in README.md
   - Fix #8: Missing swagger-servers-config.ads when compiling with alire
 
