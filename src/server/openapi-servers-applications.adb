@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server-applications -- REST application
---  Copyright (C) 2017, 2019 Stephane Carrez
+--  openapi-server-applications -- REST application
+--  Copyright (C) 2017, 2019, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,12 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 with Util.Properties.Basic;
-with Swagger.Servers.Config;
-package body Swagger.Servers.Applications is
+with OpenAPI.Servers.Config;
+package body OpenAPI.Servers.Applications is
 
    --  ------------------------------
    --  Configures the REST application so that it is ready to handler REST
-   --  operations as well as give access to the Swagger UI that describes them.
+   --  operations as well as give access to the OpenAPI UI that describes them.
    --  ------------------------------
    not overriding
    procedure Configure (App    : in out Application_Type;
@@ -35,7 +35,7 @@ package body Swagger.Servers.Applications is
       Key        : constant String := Config.Get ("swagger.key");
    begin
       Cfg.Copy (Config);
-      Cfg.Set ("view.dir", Dir & ";" & Swagger.Servers.Config.WEB_DIR);
+      Cfg.Set ("view.dir", Dir & ";" & OpenAPI.Servers.Config.WEB_DIR);
       App.Set_Init_Parameters (Cfg);
 
       App.Realm.Load (Config, Config.Get ("swagger.users", "users"));
@@ -76,4 +76,4 @@ package body Swagger.Servers.Applications is
       end if;
    end Configure;
 
-end Swagger.Servers.Applications;
+end OpenAPI.Servers.Applications;
