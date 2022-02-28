@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-server-applications -- REST application
---  Copyright (C) 2017, 2018 Stephane Carrez
+--  openapi-server-applications -- REST application
+--  Copyright (C) 2017, 2018, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,19 +22,19 @@ private with Servlet.Core.Files;
 private with Servlet.Security.OAuth;
 private with Servlet.Security.Filters.OAuth;
 private with Security.OAuth.File_Registry;
-package Swagger.Servers.Applications is
+package OpenAPI.Servers.Applications is
 
-   type Application_Type is limited new Swagger.Servers.Application_Type with private;
+   type Application_Type is limited new OpenAPI.Servers.Application_Type with private;
 
    --  Configures the REST application so that it is ready to handler REST
-   --  operations as well as give access to the Swagger UI that describes them.
+   --  operations as well as give access to the OpenAPI UI that describes them.
    not overriding
    procedure Configure (App    : in out Application_Type;
                         Config : in Util.Properties.Manager'Class);
 
 private
 
-   type Application_Type is limited new Swagger.Servers.Application_Type with record
+   type Application_Type is limited new OpenAPI.Servers.Application_Type with record
       Api      : aliased Servlet.Core.Rest.Rest_Servlet;
       OAuth    : aliased Servlet.Security.OAuth.Token_Servlet;
       Filter   : aliased Servlet.Security.Filters.OAuth.Auth_Filter;
@@ -45,4 +45,4 @@ private
       Realm    : aliased Security.OAuth.File_Registry.File_Realm_Manager;
    end record;
 
-end Swagger.Servers.Applications;
+end OpenAPI.Servers.Applications;
