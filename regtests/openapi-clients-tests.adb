@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger-clients-tests -- Unit tests for clients
---  Copyright (C) 2017 Stephane Carrez
+--  openapi-clients-tests -- Unit tests for clients
+--  Copyright (C) 2017, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,15 @@
 
 with Util.Test_Caller;
 
-package body Swagger.Clients.Tests is
+package body OpenAPI.Clients.Tests is
 
-   package Caller is new Util.Test_Caller (Test, "Swagger.Clients");
+   package Caller is new Util.Test_Caller (Test, "OpenAPI.Clients");
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite) is
    begin
-      Caller.Add_Test (Suite, "Test Swagger.Clients.Set_Path",
+      Caller.Add_Test (Suite, "Test OpenAPI.Clients.Set_Path",
                        Test_Set_Path'Access);
-      Caller.Add_Test (Suite, "Test Swagger.Clients.Add_Param",
+      Caller.Add_Test (Suite, "Test OpenAPI.Clients.Add_Param",
                        Test_Add_Param'Access);
    end Add_Tests;
 
@@ -54,4 +54,4 @@ package body Swagger.Clients.Tests is
                                 "To_String on URI is invalid");
    end Test_Add_Param;
 
-end Swagger.Clients.Tests;
+end OpenAPI.Clients.Tests;
