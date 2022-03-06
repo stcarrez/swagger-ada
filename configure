@@ -586,7 +586,7 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 SECURITY_DIR
 SERVLET_DIR
-SWAGGER_HAVE_SERVER
+OPENAPI_HAVE_SERVER
 UTIL_DIR
 HAVE_DYNAMO
 HAVE_PANDOC
@@ -620,10 +620,10 @@ build_os
 build_vendor
 build_cpu
 build
-SWAGGER_MICRO_VERSION
-SWAGGER_MINOR_VERSION
-SWAGGER_MAJOR_VERSION
-SWAGGER_VERSION
+OPENAPI_MICRO_VERSION
+OPENAPI_MINOR_VERSION
+OPENAPI_MAJOR_VERSION
+OPENAPI_VERSION
 target_alias
 host_alias
 build_alias
@@ -1306,7 +1306,7 @@ Optional Features:
   --enable-default-shared Use shared libraries by default (disabled)
   --enable-distrib        build for distribution, optimized and strip symbols (enabled)
   --enable-coverage       build with coverage support -fprofile-arcs -ftest-coverage (disabled)
-  --enable-server         Enable the support for Swagger Server (enabled)
+  --enable-server         Enable the support for OpenAPI Server (enabled)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -1746,10 +1746,10 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 # Current release settings
-SWAGGER_MAJOR_VERSION=0
-SWAGGER_MINOR_VERSION=6
-SWAGGER_MICRO_VERSION=0
-SWAGGER_VERSION=$SWAGGER_MAJOR_VERSION.$SWAGGER_MINOR_VERSION.$SWAGGER_MICRO_VERSION
+OPENAPI_MAJOR_VERSION=0
+OPENAPI_MINOR_VERSION=6
+OPENAPI_MICRO_VERSION=0
+OPENAPI_VERSION=$OPENAPI_MAJOR_VERSION.$OPENAPI_MINOR_VERSION.$OPENAPI_MICRO_VERSION
 
 # Set the version number of the project
 
@@ -2455,9 +2455,9 @@ $as_echo "$ac_cv_proc_count" >&6; }
 
 
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking preparing for GNAT project swagger" >&5
-$as_echo_n "checking preparing for GNAT project swagger... " >&6; }
-  mkdir -p obj/swagger/static obj/swagger/relocatable lib/swagger/static lib/swagger/relocatable
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking preparing for GNAT project openapi" >&5
+$as_echo_n "checking preparing for GNAT project openapi... " >&6; }
+  mkdir -p obj/openapi/static obj/openapi/relocatable lib/openapi/static lib/openapi/relocatable
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
 $as_echo "done" >&6; }
 
@@ -2643,10 +2643,10 @@ $as_echo "$ac_cv_gnat_project_utilada_base" >&6; }
       UTIL_DIR=${ac_cv_gnat_project_dir_utilada_base}
 
   else
-    if test x"Building Ada Swagger requires the Ada Utility Library." != x; then
+    if test x"Building Ada OpenAPI requires the Ada Utility Library." != x; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      as_fn_error $? "Building Ada Swagger requires the Ada Utility Library.
+      as_fn_error $? "Building Ada OpenAPI requires the Ada Utility Library.
   You should build and install the Ada Utility Library component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
@@ -2664,7 +2664,7 @@ $as_echo "no" >&6; }
 
 
 ##########################################
-# Check for Swagger Server support
+# Check for OpenAPI Server support
 ##########################################
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking server support" >&5
 $as_echo_n "checking server support... " >&6; }
@@ -2679,7 +2679,7 @@ fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${ac_enable_server}" >&5
 $as_echo "${ac_enable_server}" >&6; }
-SWAGGER_HAVE_SERVER=$ac_enable_server
+OPENAPI_HAVE_SERVER=$ac_enable_server
 
 
 if test T${ac_enable_server} = Tyes; then
@@ -2788,10 +2788,10 @@ $as_echo "$ac_cv_gnat_project_servletada" >&6; }
       SERVLET_DIR=${ac_cv_gnat_project_dir_servletada}
 
   else
-    if test x"Building Ada Swagger requires the Ada Servlet Library." != x; then
+    if test x"Building Ada OpenAPI requires the Ada Servlet Library." != x; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      as_fn_error $? "Building Ada Swagger requires the Ada Servlet Library.
+      as_fn_error $? "Building Ada OpenAPI requires the Ada Servlet Library.
   You should build and install the Ada Servlet Library component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
@@ -2914,10 +2914,10 @@ $as_echo "$ac_cv_gnat_project_security" >&6; }
       SECURITY_DIR=${ac_cv_gnat_project_dir_security}
 
   else
-    if test x"Building Ada Swagger requires the Ada Security Library." != x; then
+    if test x"Building Ada OpenAPI requires the Ada Security Library." != x; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      as_fn_error $? "Building Ada Swagger requires the Ada Security Library.
+      as_fn_error $? "Building Ada OpenAPI requires the Ada Security Library.
   You should build and install the Ada Security Library component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
@@ -2934,7 +2934,7 @@ $as_echo "no" >&6; }
 
 
 
-ac_config_files="$ac_config_files Makefile.conf swagger.gpr swagger_server.gpr swagger_tests.gpr testapi_server.gpr testapi_model.gpr"
+ac_config_files="$ac_config_files Makefile.conf openapi.gpr openapi_server.gpr openapi_tests.gpr testapi_server.gpr testapi_model.gpr"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3643,9 +3643,9 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "Makefile.conf") CONFIG_FILES="$CONFIG_FILES Makefile.conf" ;;
-    "swagger.gpr") CONFIG_FILES="$CONFIG_FILES swagger.gpr" ;;
-    "swagger_server.gpr") CONFIG_FILES="$CONFIG_FILES swagger_server.gpr" ;;
-    "swagger_tests.gpr") CONFIG_FILES="$CONFIG_FILES swagger_tests.gpr" ;;
+    "openapi.gpr") CONFIG_FILES="$CONFIG_FILES openapi.gpr" ;;
+    "openapi_server.gpr") CONFIG_FILES="$CONFIG_FILES openapi_server.gpr" ;;
+    "openapi_tests.gpr") CONFIG_FILES="$CONFIG_FILES openapi_tests.gpr" ;;
     "testapi_server.gpr") CONFIG_FILES="$CONFIG_FILES testapi_server.gpr" ;;
     "testapi_model.gpr") CONFIG_FILES="$CONFIG_FILES testapi_model.gpr" ;;
 
