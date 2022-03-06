@@ -63,7 +63,7 @@ make install
 ```
 
 The git repository comes with a pre-compiled [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator)
-that will be installed in `/usr/local/share/swagger-ada/openapi-generator-cli.jar`.  To help in launching the
+that will be installed in `/usr/local/share/openapi-ada/openapi-generator-cli.jar`.  To help in launching the
 generator, a script is installed in `/usr/local/bin/openapi-generator`.  You must have a Java JRE installed
 to be able to run the generator.
 
@@ -79,14 +79,18 @@ sudo docker pull ciceron/openapi-ada
 
 ## Using OpenAPI Ada
 
+
 ### Generating the REST client from OpenAPI Spec
 
 The command to generate an Ada REST client is the following:
 ```
   openapi-generator generate --generator-name ada -i my-api.yaml \
        --additional-properties projectName=MyProject \
-       --model-package MyProject.MyModule -o client
+       --additional-properties openApiName=OpenAPI \
+       --additional-properties httpSupport=Curl \
+       --model-package MyProject.MyModule -o .
 ```
+
 where *my-api.yaml* is the OpenAPI specification file that describes your API,
 *MyProject* is the name of the GNAT project to use,
 *MyProject.MyModule* is the name of the Ada package that will be the parent
@@ -102,113 +106,176 @@ invoke the REST API.
 For example, if the YAML description file contains the following API
 operation:
 ```
+openapi: 3.0.0
+servers:
+  - url: 'https://todo.vacs.fr/v1'
+  - url: 'http://todo.vacs.fr/v1'
+info:
+  title: Todo API
+  description: Todo API
+  version: 1.0.0
+  termsOfService: 'https://todo.vacs.fr/terms/'
+  contact:
+    email: Stephane.Carrez@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: tasks
+    description: Tasks
 paths:
-  '/pet/{petId}':
+  /:
     get:
       tags:
-        - pet
-      summary: Find pet by ID
-      description: Returns a single pet
-      operationId: getPetById
-      produces:
-        - application/xml
-        - application/json
+        - tasks
+      summary: Redirect to the UI
+      description: |
+        Default operation to redirect to the UI index page.
+      operationId: redirectTodos
+      responses:
+        '302':
+          description: redirect to the UI page
+  /todos:
+    get:
+      tags:
+        - tasks
+      summary: List the available tasks
+      description: |
+        The list of tasks can be filtered by their status.
+      operationId: listTodos
       parameters:
-        - name: petId
-          in: path
-          description: ID of pet to return
-          required: true
-          type: integer
-          format: int64
+        - name: status
+          in: query
+          description: Filters the tasks by their status
+          required: false
+          schema:
+            type: string
+            enum:
+              - done
+              - waiting
+              - working
+              - all
       responses:
         '200':
           description: successful operation
-          schema:
-            $ref: '#/definitions/Pet'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
+          description: Invalid status value
       security:
-        - api_key: []
-definitions:
-  Pet:
-    title: a Pet
-    description: A pet for sale in the pet store
-    type: object
-    required:
-      - name
-      - photoUrls
-    properties:
-      id:
-        type: integer
-        format: int64
-      category:
-        $ref: '#/definitions/Category'
-      name:
-        type: string
-        example: doggie
-      photoUrls:
-        type: array
-        xml:
-          name: photoUrl
-          wrapped: true
-        items:
+        - todo_auth:
+            - 'read:todo'
+security:
+  - todo_auth: []
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  securitySchemes:
+    todo_auth:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: 'http://localhost:8080/v1/oauth/token'
+          scopes:
+            'write:todo': Write a todo
+            'read:todo': Read a todo
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The todo identifier
+        title:
           type: string
-      tags:
-        type: array
-        xml:
-          name: tag
-          wrapped: true
-        items:
-          $ref: '#/definitions/Tag'
-      status:
-        type: string
-        description: pet status in the store
-        enum:
-          - available
-          - pending
-          - sold
-    xml:
-      name: Pet
+          description: The todo title
+        create_date:
+          type: string
+          format: date-time
+          description: The todo creation date
+        done_date:
+          type: string
+          format: date-time
+          description: The todo resolution date
+        status:
+          type: string
+          description: The todo state
+          enum:
+            - waiting
+            - working
+            - done
+      required:
+        - id
+        - title
+        - status
+        - create_date
+      example:
+        id: 23
+        title: Make the FOSDEM presentation
+        description: password
+        status: working
+        create_date: '2017-12-24T00:00:00.000Z'
+      xml:
+        name: Todo
 ```
 
 The generator will generate the following Ada code in the *Models* child package:
 ```
-package Samples.Petstore.Models is
+package Todos.Models is
    ...
-   type Pet_Type is
+   type Todo_Type is
      record
-       Id : Swagger.Long;
-       Category : Samples.Petstore.Models.Category_Type;
-       Name : Swagger.UString;
-       Photo_Urls : Swagger.UString_Vectors.Vector;
-       Tags : Samples.Petstore.Models.Tag_Type_Vectors.Vector;
-       Status : Swagger.UString;
+       Id : OpenAPI.Long;
+       Title : OpenAPI.UString;
+       Create_Date : OpenAPI.Datetime;
+       Done_Date : OpenAPI.Nullable_Date;
+       Status : OpenAPI.UString;
      end record;
      ...
-end Samples.Petstore.Models;
+end Todos.Models;
 ```
 
 and the following code in the *Clients* child package:
 
 ```
-package Samples.Petstore.Clients is
+package Todos.Clients is
    ...
-   type Client_Type is new Swagger.Clients.Client_Type with null record;
-   procedure Get_Pet_By_Id
+   type Client_Type is new OpenAPI.Clients.Client_Type with null record;
+   --  List the available tasks
+   --  The list of tasks can be filtered by their status.
+   procedure List_Todos
       (Client : in out Client_Type;
-       Pet_Id : in Swagger.Long;
-       Result : out Samples.Petstore.Models.Pet_Type);
+       Status : in OpenAPI.Nullable_UString;
+       Result : out Todos.Models.Todo_Type_Vectors.Vector);
+
+   --  Redirect to the UI
+   --  Default operation to redirect to the UI index page.
+   procedure Redirect_Todos
+      (Client : in out Client_Type);
    ...
-end Samples.Petstore.Clients;
+end Todos.Clients;
 ```
 
 ### Initialization
 
 The HTTP/REST support is provided by [Ada Util](https://github.com/stcarrez/ada-util)
-and encapsulated by [OpenAPI Ada](https://github.com/stcarrez/swagger-ada).  If you want
-to use Curl, you should initialize with the following:
+and encapsulated by [OpenAPI Ada](https://github.com/stcarrez/swagger-ada).  This support
+is either based on Curl or on [AWS](https://libre.adacore.com/libre/tools/aws/).
+The OpenAPI code generator uses Curl by default and this can be changed when running
+the `openapi-generator` tool and changing the following option:
+
+```
+       --additional-properties httpSupport=aws
+```
+
+
+If you want to use Curl, the initialization should use the following:
 
 ```
    Util.Http.Clients.Curl.Register;
@@ -227,7 +294,7 @@ After the initialization is done, you will declare a client instance to access
 the API operations:
 
 ```
-   C : Samples.Petstore.Clients.Client_Type;
+   C : Todos.Clients.Client_Type;
 ```
 
 The 'Client_Type' is the generated type that will implement the operations
@@ -236,7 +303,7 @@ described in the OpenAPI description file.
 And you should initialize the server base URI you want to connect to:
 
 ```
-  C.Set_Server ("http://petstore.swagger.io/v2");
+  C.Set_Server ("http://localhost:8080/v1");
 ```
 
 At this stage, you can use the generated operation.
