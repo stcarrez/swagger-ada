@@ -310,27 +310,45 @@ At this stage, you can use the generated operation.
 
 ### Calling an operation
 
-Let's retrieve some pet information by calling the 'Get_Pet_By_Id' operation.
+Let's retrieve some todo list by calling the 'List_Todo' operation.
 This operation needs an integer as input parameter and returns a 'Pet_Type'
 object that contains all the pet information.   You will first declare
 the pet instance as follows:
 
 ```
-  Pet  : Samples.Petstore.Models.Pet_Type;
+  List     : Todos.Models.Todo_Type_Vectors.Vector;
 ```
 
 And then call the 'Get_Pet_By_Id' operation:
 
 ```
-  C.Get_Pet_By_Id (768, Pet);
+  C.List_Todos ((Is_Null => True, Value => <>), List);
 ```
 
-At this stage, you can access information from the 'Pet' instance:
+At this stage, you can access the list of todos:
 
 ```
-  Ada.Text_IO.Put_Line ("Id      : " & Swagger.Long'Image (Pet.Id));
-  Ada.Text_IO.Put_Line ("Name    : " & Swagger.To_String (Pet.Name));
-  Ada.Text_IO.Put_Line ("Status  : " & Swagger.To_String (Pet.Status));
+procedure Print (Todo : in Todos.Models.Todo_Type) is
+begin
+   Put (OpenAPI.Long'Image (Todo.Id));
+   Set_Col (6);
+   Put (OpenAPI.To_String (Todo.Status));
+   Set_Col (15);
+   Put (Ada.Calendar.Formatting.Image (Todo.Create_Date));
+   Set_Col (40);
+   if Todo.Done_Date.Is_Null then
+      Put ("-");
+   else
+      Put (Ada.Calendar.Formatting.Image (Todo.Done_Date.Value));
+   end if;
+   Set_Col (60);
+   Put (OpenAPI.To_String (Todo.Title));
+   New_Line;
+end Print;
+
+  for T of List loop
+     Print (T);
+  end loop;
 ```
 
 ## Documentation
