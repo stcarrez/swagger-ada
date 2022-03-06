@@ -11,9 +11,9 @@ ChangeLog
 .settings
 configure.lineno
 Makefile.conf
-swagger.gpr
-swagger_server.gpr
-swagger_tests.gpr
+openapi.gpr
+openapi_server.gpr
+openapi_tests.gpr
 testapi_server.gpr
 testapi_model.gpr
 swagger-tests.xml
