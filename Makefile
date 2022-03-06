@@ -1,10 +1,10 @@
 
-NAME=swagger
+NAME=openapi
 
 -include Makefile.conf
 
-STATIC_MAKE_ARGS = $(MAKE_ARGS) -XSWAGGER_LIBRARY_TYPE=static
-SHARED_MAKE_ARGS = $(MAKE_ARGS) -XSWAGGER_LIBRARY_TYPE=relocatable
+STATIC_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=static
+SHARED_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=relocatable
 SHARED_MAKE_ARGS += -XSERVLETADA_CORE_BUILD=relocatable
 SHARED_MAKE_ARGS += -XSERVLET_LIBRARY_TYPE=relocatable
 SHARED_MAKE_ARGS += -XSERVLETADA_UNIT_BUILD=relocatable
@@ -105,11 +105,26 @@ docs/openapi-book.html: docs/openapi-book.pdf force
 
 endif
 
+install::
+	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+          $(STATIC_MAKE_ARGS) swagger.gpr
+
+uninstall::
+	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
+
 ifeq ($(HAVE_SERVER),yes)
-$(eval $(call ada_library,swagger_server))
+$(eval $(call ada_library,openapi_server))
 
 build-test::
 	$(GNATMAKE) $(GPRFLAGS) -p -Ptestapi_server $(MAKE_ARGS)
 
+install::
+	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+          $(STATIC_MAKE_ARGS) swagger_server.gpr
+
+uninstall::
+	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
+
 endif
+
 
