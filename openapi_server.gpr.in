@@ -3,20 +3,19 @@ with "@UTIL_DIR@utilada_sys";
 with "@SERVLET_DIR@servletada";
 with "@SERVLET_DIR@servletada_aws";
 with "@SECURITY_DIR@security";
-with "swagger";
-library project swagger_server is
+with "openapi";
+library project openapi_server is
 
-   Version := "@SWAGGER_VERSION@";
-   Library_Dir := "@SWAGGER_LIBDIR@";
-   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "@DEFAULT_LIBRARY_TYPE@");
+   Version := "@OPENAPI_VERSION@";
+   Library_Type : Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "@DEFAULT_LIBRARY_TYPE@");
 
-   for Library_Name use "swagger_server";
+   for Library_Name use "openapi_server";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
 
    for Source_Dirs use ("src/server");
-   for Library_Dir use "lib/swagger_server/" & Project'Library_Kind;
-   for Object_Dir use "obj/swagger_server/" & Project'Library_Kind;
+   for Library_Dir use "lib/openapi_server/" & Project'Library_Kind;
+   for Object_Dir use "obj/openapi_server/" & Project'Library_Kind;
 
    package Builder renames Config.Builder;
    package Compiler renames Config.Compiler;
@@ -26,4 +25,4 @@ library project swagger_server is
        for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
    end Binder;
 
-end swagger_server;
+end openapi_server;
