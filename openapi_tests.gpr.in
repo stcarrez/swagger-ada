@@ -3,9 +3,9 @@ with "@UTIL_DIR@utilada_sys";
 with "@UTIL_DIR@utilada_unit";
 with "@UTIL_DIR@utilada_http";
 with "testapi_model";
-with "swagger";
+with "openapi";
 
-project Swagger_Tests is
+project Openapi_Tests is
 
    for Languages use ("Ada");
 
@@ -49,4 +49,4 @@ project Swagger_Tests is
    package Compiler renames Config.Compiler;
    package Linker renames Config.Linker;
 
-end Swagger_Tests;
+end Openapi_Tests;
