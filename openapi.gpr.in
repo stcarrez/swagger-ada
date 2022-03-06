@@ -2,19 +2,19 @@ with "@UTIL_DIR@config";
 with "@UTIL_DIR@utilada_sys";
 with "@SECURITY_DIR@security";
 
-library project swagger is
+library project openapi is
 
-   Version := "@SWAGGER_VERSION@";
+   Version := "@OPENAPI_VERSION@";
    Library_Dir := "lib";
-   Library_Type : Config.Library_Type_Type := external ("SWAGGER_LIBRARY_TYPE", "@DEFAULT_LIBRARY_TYPE@");
+   Library_Type : Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "@DEFAULT_LIBRARY_TYPE@");
 
-   for Library_Name use "swagger";
+   for Library_Name use "openapi";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
 
    for Source_Dirs use ("src");
-   for Library_Dir use "lib/swagger/" & Project'Library_Kind;
-   for Object_Dir use "obj/swagger/" & Project'Library_Kind;
+   for Library_Dir use "lib/openapi/" & Project'Library_Kind;
+   for Object_Dir use "obj/openapi/" & Project'Library_Kind;
 
    package Builder renames Config.Builder;
    package Compiler renames Config.Compiler;
@@ -24,4 +24,4 @@ library project swagger is
        for Default_Switches ("Ada") use Config.Binder'Default_Switches ("Ada") & ("-a");
    end Binder;
 
-end swagger;
+end openapi;
