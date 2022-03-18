@@ -108,6 +108,30 @@ package body OpenAPI.Clients is
    --  ------------------------------
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
+                        Value : in Boolean) is
+   begin
+      if Length (URI.Query) > 0 then
+         Append (URI.Query, "&");
+      end if;
+      Append (URI.Query, Name);
+      Append (URI.Query, "=");
+      Append (URI.Query, Boolean'Image (Value));
+   end Add_Param;
+
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_Boolean) is
+   begin
+      if not Value.Is_Null then
+         URI.Add_Param (Name, Value.Value);
+      end if;
+   end Add_Param;
+
+   --  ------------------------------
+   --  Add a query parameter.
+   --  ------------------------------
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
                         Value : in UString) is
    begin
       Add_Param (URI, Name, To_String (Value));
