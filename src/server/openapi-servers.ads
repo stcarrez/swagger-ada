@@ -66,6 +66,15 @@ package OpenAPI.Servers is
                                   Name  : in String;
                                   Value : out Nullable_UString_Vectors.Vector);
 
+
+   --  Get a request parameter from the query as boolean.
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Boolean);
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_Boolean);
+
    --  Read the request body and get a value object tree.
    procedure Read (Req   : in Request'Class;
                    Value : out Value_Type);

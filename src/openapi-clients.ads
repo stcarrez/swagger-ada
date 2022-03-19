@@ -85,6 +85,14 @@ package OpenAPI.Clients is
    --  Add a query parameter.
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;
+                        Value : in Boolean);
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
+                        Value : in Nullable_Boolean);
+
+   --  Add a query parameter.
+   procedure Add_Param (URI   : in out URI_Type;
+                        Name  : in String;
                         Value : in UString_Vectors.Vector);
    procedure Add_Param (URI   : in out URI_Type;
                         Name  : in String;

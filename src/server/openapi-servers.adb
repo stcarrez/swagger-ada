@@ -65,6 +65,29 @@ package body OpenAPI.Servers is
       Value.Is_Null := V'Length = 0;
    end Get_Query_Parameter;
 
+   --  ------------------------------
+   --  Get a request parameter from the query as boolean.
+   --  ------------------------------
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Boolean) is
+   begin
+      Value := Boolean'Value (Req.Get_Parameter (Name));
+   end Get_Query_Parameter;
+
+   procedure Get_Query_Parameter (Req   : in Request'Class;
+                                  Name  : in String;
+                                  Value : out Nullable_Boolean) is
+      V : constant String := Req.Get_Parameter (Name);
+   begin
+      Value.Is_Null := V'Length = 0;
+      if Value.Is_Null then
+         Value.Value := False;
+      else
+         Value.Value := Boolean'Value (V);
+      end if;
+   end Get_Query_Parameter;
+
    --  Get a request parameter from the query string.
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
