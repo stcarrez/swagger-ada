@@ -1745,6 +1745,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
 # Current release settings
 OPENAPI_MAJOR_VERSION=0
 OPENAPI_MINOR_VERSION=6
