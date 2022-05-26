@@ -2,7 +2,8 @@ dnl Autoconf configure script for swagger
 
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(src/swagger.ads)
+AC_INIT
+AC_CONFIG_SRCDIR([src/swagger.ads])
 
 # Current release settings
 OPENAPI_MAJOR_VERSION=0
@@ -45,11 +46,11 @@ fi
 
 AM_GNAT_FIND_ADA_SECURITY([Ada OpenAPI])
 
-AC_OUTPUT(
-Makefile.conf
+AC_CONFIG_FILES([Makefile.conf
 openapi.gpr
 openapi_server.gpr
 openapi_tests.gpr
 testapi_server.gpr
 testapi_model.gpr
-)
+])
+AC_OUTPUT
