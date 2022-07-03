@@ -5,6 +5,7 @@
 [![Download](https://img.shields.io/badge/download-0.5.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.5.0.tar.gz)
 [![codecov](https://codecov.io/gh/stcarrez/swagger-ada/branch/master/graph/badge.svg)](https://codecov.io/gh/stcarrez/swagger-ada)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
+[![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
 ![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.5.0.svg)
 
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
