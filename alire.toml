@@ -7,7 +7,7 @@ authors = ["Stephane.Carrez@gmail.com"]
 maintainers = ["Stephane.Carrez@gmail.com"]
 maintainers-logins = ["stcarrez"]
 project-files = [".alire/openapi.gpr"]
-website = "https://gitlab.com/stcarrez/swagger-ada"
+website = "https://gitlab.com/stcarrez/openapi-ada"
 long-description = """
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
