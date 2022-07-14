@@ -13,127 +13,121 @@ with Ada.Containers.Vectors;
 package TestAPI.Models is
    pragma Style_Checks ("-bmrIu");
 
+   type StringsMap_Type is record
+      Key : Swagger.Nullable_UString;
+   end record;
 
+   package StringsMap_Type_Vectors is new Ada.Containers.Vectors
+     (Index_Type => Positive, Element_Type => StringsMap_Type);
 
-   type StringsMap_Type is
-     record
-       Key : Swagger.Nullable_UString;
-     end record;
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     StringsMap_Type);
 
-   package StringsMap_Type_Vectors is
-      new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => StringsMap_Type);
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     StringsMap_Type_Vectors.Vector);
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in StringsMap_Type);
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out StringsMap_Type);
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in StringsMap_Type_Vectors.Vector);
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out StringsMap_Type_Vectors.Vector);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out StringsMap_Type);
+   type OrchStoreRequest_Type is record
+      Requested_Qo_S : TestAPI.Models.StringsMap_Type;
+      Commands       : TestAPI.Models.StringsMap_Type;
+   end record;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out StringsMap_Type_Vectors.Vector);
+   package OrchStoreRequest_Type_Vectors is new Ada.Containers.Vectors
+     (Index_Type => Positive, Element_Type => OrchStoreRequest_Type);
 
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     OrchStoreRequest_Type);
 
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     OrchStoreRequest_Type_Vectors.Vector);
 
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out OrchStoreRequest_Type);
 
-   type OrchStoreRequest_Type is
-     record
-       Requested_Qo_S : TestAPI.Models.StringsMap_Type;
-       Commands : TestAPI.Models.StringsMap_Type;
-     end record;
-
-   package OrchStoreRequest_Type_Vectors is
-      new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => OrchStoreRequest_Type);
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in OrchStoreRequest_Type);
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in OrchStoreRequest_Type_Vectors.Vector);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out OrchStoreRequest_Type);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out OrchStoreRequest_Type_Vectors.Vector);
-
-
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out OrchStoreRequest_Type_Vectors.Vector);
 
    --  ------------------------------
    --  Information about a ticket
    --  ------------------------------
-   type Ticket_Type is
-     record
-       Id : Swagger.Long;
-       Title : Swagger.UString;
-       Description : Swagger.UString;
-       Owner : Swagger.Nullable_UString;
-       Create_Date : Swagger.Datetime;
-       End_Date : Swagger.Nullable_Date;
-       Update_Date : Swagger.Nullable_Date;
-       Status : Swagger.UString;
-     end record;
+   type Ticket_Type is record
+      Id          : Swagger.Long;
+      Title       : Swagger.UString;
+      Description : Swagger.UString;
+      Owner       : Swagger.Nullable_UString;
+      Create_Date : Swagger.Datetime;
+      End_Date    : Swagger.Nullable_Date;
+      Update_Date : Swagger.Nullable_Date;
+      Status      : Swagger.UString;
+   end record;
 
-   package Ticket_Type_Vectors is
-      new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => Ticket_Type);
+   package Ticket_Type_Vectors is new Ada.Containers.Vectors
+     (Index_Type => Positive, Element_Type => Ticket_Type);
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Ticket_Type);
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Ticket_Type);
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Ticket_Type_Vectors.Vector);
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Ticket_Type_Vectors.Vector);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Ticket_Type);
+   procedure Deserialize
+     (From : in Swagger.Value_Type; Name : in String; Value : out Ticket_Type);
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Ticket_Type_Vectors.Vector);
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out Ticket_Type_Vectors.Vector);
 
+   type Options_Type is record
+      A : Swagger.UString_Vectors.Vector;
+   end record;
 
+   package Options_Type_Vectors is new Ada.Containers.Vectors
+     (Index_Type => Positive, Element_Type => Options_Type);
 
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Options_Type);
 
-   type Options_Type is
-     record
-       A : Swagger.UString_Vectors.Vector;
-     end record;
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Options_Type_Vectors.Vector);
 
-   package Options_Type_Vectors is
-      new Ada.Containers.Vectors (Index_Type   => Positive,
-                                  Element_Type => Options_Type);
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out Options_Type);
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Options_Type);
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Options_Type_Vectors.Vector);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Options_Type);
-
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Options_Type_Vectors.Vector);
-
-
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out Options_Type_Vectors.Vector);
 
 end TestAPI.Models;
