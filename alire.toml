@@ -37,3 +37,6 @@ OPENAPI_LIBRARY_TYPE = ["relocatable", "static", "static-pic"]
 
 [configuration]
 disabled = true
+
+[environment]
+PATH.prepend = "${CRATE_ROOT}/bin"
