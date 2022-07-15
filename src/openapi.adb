@@ -33,7 +33,7 @@ package body OpenAPI is
 
    function Has_Element (Pos : in Value_Cursor) return Boolean is
    begin
-      return Pos.Pos > 0 and Pos.Pos <= Util.Beans.Objects.Get_Count (Pos.List);
+      return Pos.Pos > 0 and then Pos.Pos <= Util.Beans.Objects.Get_Count (Pos.List);
    end Has_Element;
 
    function Element_Value (List : in Value_Array_Type;
