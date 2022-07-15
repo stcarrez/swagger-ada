@@ -88,8 +88,8 @@ Method | HTTP request | Description
 
 ### Models
 
- - [TestAPI.Models.InlineObject3_Type](InlineObject3_Type.md)
  - [TestAPI.Models.Options_Type](Options_Type.md)
+ - [TestAPI.Models.OrchStoreRequest_Type](OrchStoreRequest_Type.md)
  - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
  - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
 
