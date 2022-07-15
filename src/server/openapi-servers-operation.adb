@@ -39,7 +39,8 @@ package body OpenAPI.Servers.Operation is
    package API is new Servlet.Rest.Operation (Handler    => Op'Access,
                                               Method     => Method,
                                               URI        => URI,
-                                              Permission => Permission);
+                                              Permission => Permission,
+                                              Mimes      => Mimes);
 
    function Definition return Descriptor_Access is
    begin

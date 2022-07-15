@@ -15,6 +15,7 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
+with Util.Http.Mimes;
 with Servlet.Rest;
 with Servlet.Core;
 with Security.Permissions;
@@ -30,6 +31,10 @@ package OpenAPI.Servers is
 
    subtype Method_Type is Servlet.Rest.Method_Type;
 
+   subtype Mime_List is Servlet.Rest.Mime_List;
+   subtype Mime_List_Access is Servlet.Rest.Mime_List_Access;
+   subtype Mime_Access is Servlet.Rest.Mime_Access;
+
    GET     : constant Method_Type := Servlet.Rest.GET;
    POST    : constant Method_Type := Servlet.Rest.POST;
    DELETE  : constant Method_Type := Servlet.Rest.DELETE;
@@ -37,6 +42,10 @@ package OpenAPI.Servers is
    HEAD    : constant Method_Type := Servlet.Rest.HEAD;
    OPTIONS : constant Method_Type := Servlet.Rest.OPTIONS;
    PATCH   : constant Method_Type := Servlet.Rest.PATCH;
+
+   Mime_Json    : constant Mime_Access := Util.Http.Mimes.Json'Access;
+   Mime_Text    : constant Mime_Access := Util.Http.Mimes.Text'Access;
+   Mime_Xml     : constant Mime_Access := Util.Http.Mimes.Xml'Access;
 
    subtype Descriptor_Access is Servlet.Rest.Descriptor_Access;
 
@@ -65,7 +74,6 @@ package OpenAPI.Servers is
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
                                   Value : out Nullable_UString_Vectors.Vector);
-
 
    --  Get a request parameter from the query as boolean.
    procedure Get_Query_Parameter (Req   : in Request'Class;

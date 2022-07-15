@@ -24,6 +24,7 @@ generic
    Method     : Method_Type := Servlet.Rest.GET;
    URI        : String;
    Permission : Security.Permissions.Permission_Index := Security.Permissions.NONE;
+   Mimes      : Mime_List_Access;
 package OpenAPI.Servers.Operation is
 
    function Definition return Descriptor_Access;
