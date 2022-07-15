@@ -17,6 +17,8 @@
 -----------------------------------------------------------------------
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
+with Util.Serialize.IO.XML;
+with Util.Serialize.IO.Form;
 with Util.Strings;
 with Util.Log.Loggers;
 with OpenAPI.Streams.Forms;
@@ -217,8 +219,6 @@ package body OpenAPI.Clients is
                    Operation : in Operation_Type;
                    URI       : in URI_Type'Class;
                    Reply     : out Value_Type) is
-      Parser   : Util.Serialize.IO.JSON.Parser;
-      Mapper   : Util.Beans.Objects.Readers.Reader;
       Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
       if Client.Credential /= null then
@@ -252,12 +252,43 @@ package body OpenAPI.Clients is
          Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
-      --  Todo check Response.Get_Header ("Content-Type")
-      if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-         Log.Debug ("{0}", Client.Response.Get_Body);
-      end if;
-      Parser.Parse_String (Client.Response.Get_Body, Mapper);
-      Reply := Mapper.Get_Root;
+      declare
+         Content_Type : constant String := Client.Response.Get_Header ("Content-Type");
+         Content      : constant String := Client.Response.Get_Body;
+      begin
+         if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+            Log.Debug ("{0}", Content);
+         end if;
+         if Content_Type = "application/json" then
+            declare
+               Parser   : Util.Serialize.IO.JSON.Parser;
+               Mapper   : Util.Beans.Objects.Readers.Reader;
+            begin
+               Parser.Parse_String (Content, Mapper);
+               Reply := Mapper.Get_Root;
+            end;
+         elsif Content_Type = "application/xml"
+           or else Content_Type = "text/xml"
+         then
+            declare
+               Parser   : Util.Serialize.IO.XML.Parser;
+               Mapper   : Util.Beans.Objects.Readers.Reader;
+            begin
+               Parser.Parse_String (Content, Mapper);
+               Reply := Mapper.Get_Root;
+            end;
+         elsif Content_Type = "application/x-www-form-urlencoded" then
+            declare
+               Parser   : Util.Serialize.IO.Form.Parser;
+               Mapper   : Util.Beans.Objects.Readers.Reader;
+            begin
+               Parser.Parse_String (Content, Mapper);
+               Reply := Mapper.Get_Root;
+            end;
+         else
+            Reply := Util.Beans.Objects.To_Object (Content);
+         end if;
+      end;
    end Call;
 
    procedure Call (Client    : in out Client_Type;
