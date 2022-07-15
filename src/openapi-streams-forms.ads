@@ -50,6 +50,7 @@ package OpenAPI.Streams.Forms is
    procedure Start_Entity (Stream : in out Output_Stream;
                            Name   : in String) is null;
 
+   overriding
    procedure End_Entity (Stream : in out Output_Stream;
                          Name   : in String) is null;
 
