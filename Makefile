@@ -38,11 +38,11 @@ endif
 SWAGGER=java -jar openapi-generator-cli.jar
 
 generate:
-	$(SWAGGER) generate --generator-name ada -i regtests/swagger.yaml \
+	$(SWAGGER) generate --enable-post-process-file --generator-name ada -i regtests/swagger.yaml \
             --additional-properties projectName=TestAPI \
             --model-package TestAPI -o regtests/client
 	$(SWAGGER) generate --generator-name ada-server -i regtests/swagger.yaml \
-            --additional-properties projectName=TestAPI \
+            --additional-properties projectName=TestAPI --enable-post-process-file \
             --model-package TestAPI -o regtests/server
 
 # Build and run the unit tests
