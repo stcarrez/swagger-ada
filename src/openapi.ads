@@ -25,6 +25,8 @@ with Util.Beans.Objects.Vectors;
 with Util.Beans.Objects.Maps;
 with Util.Strings.Vectors;
 with Util.Nullables;
+with Util.Blobs;
+with Util.Http.Mimes;
 
 --  == OpenAPI Introduction ==
 --  The OpenAPI Ada library provides a small runtime for use by the OpenAPI Codegen
@@ -42,6 +44,15 @@ with Util.Nullables;
 --  @include openapi-servers.ads
 --  @include openapi-streams.ads
 package OpenAPI is
+
+   subtype Mime_List is Util.Http.Mimes.Mime_List;
+   subtype Mime_List_Access is Util.Http.Mimes.Mime_List_Access;
+   subtype Mime_Access is Util.Http.Mimes.Mime_Access;
+
+   Mime_Json    : constant Mime_Access := Util.Http.Mimes.Json'Access;
+   Mime_Text    : constant Mime_Access := Util.Http.Mimes.Text'Access;
+   Mime_Xml     : constant Mime_Access := Util.Http.Mimes.Xml'Access;
+   Mime_Form    : constant Mime_Access := Util.Http.Mimes.Form'Access;
 
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
    subtype Nullable_UString is Util.Nullables.Nullable_String;
@@ -65,7 +76,8 @@ package OpenAPI is
    subtype Nullable_Boolean is Util.Nullables.Nullable_Boolean;
 
    subtype Http_Content_Type is UString;
-   subtype File_Part_Type is UString;
+   subtype Blob_Ref is Util.Blobs.Blob_Ref;
+   subtype File_Part_Type is Util.Blobs.Blob_Ref;
 
    subtype Number is Natural;
 
@@ -75,6 +87,11 @@ package OpenAPI is
    package UString_Vectors renames Util.Strings.Vectors;
 
    subtype Object_Map is Util.Beans.Objects.Maps.Map;
+
+   function Is_Null (Value : in Object) return Boolean
+     renames Util.Beans.Objects.Is_Null;
+   function To_String (Value : in Object) return String
+     renames Util.Beans.Objects.To_String;
 
    package Nullable_UString_Vectors is
      new Ada.Containers.Vectors (Index_Type   => Positive,
