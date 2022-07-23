@@ -15,20 +15,23 @@ package body TestAPI.Models is
 
    use Swagger.Streams;
 
-
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in StringsMap_Type) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     StringsMap_Type)
+   is
    begin
+
       Into.Start_Entity (Name);
       Into.Write_Entity ("key", Value.Key);
       Into.End_Entity (Name);
    end Serialize;
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in StringsMap_Type_Vectors.Vector) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     StringsMap_Type_Vectors.Vector)
+   is
    begin
       Into.Start_Array (Name);
       for Item of Value loop
@@ -37,18 +40,22 @@ package body TestAPI.Models is
       Into.End_Array (Name);
    end Serialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out StringsMap_Type) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out StringsMap_Type)
+   is
       Object : Swagger.Value_Type;
    begin
       Swagger.Streams.Deserialize (From, Name, Object);
       Swagger.Streams.Deserialize (Object, "key", Value.Key);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out StringsMap_Type_Vectors.Vector) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out StringsMap_Type_Vectors.Vector)
+   is
       List : Swagger.Value_Array_Type;
       Item : StringsMap_Type;
    begin
@@ -60,22 +67,24 @@ package body TestAPI.Models is
       end loop;
    end Deserialize;
 
-
-
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in OrchStoreRequest_Type) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     OrchStoreRequest_Type)
+   is
    begin
+
       Into.Start_Entity (Name);
       Serialize (Into, "requestedQoS", Value.Requested_Qo_S);
       Serialize (Into, "commands", Value.Commands);
       Into.End_Entity (Name);
    end Serialize;
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in OrchStoreRequest_Type_Vectors.Vector) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     OrchStoreRequest_Type_Vectors.Vector)
+   is
    begin
       Into.Start_Array (Name);
       for Item of Value loop
@@ -84,9 +93,11 @@ package body TestAPI.Models is
       Into.End_Array (Name);
    end Serialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out OrchStoreRequest_Type) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out OrchStoreRequest_Type)
+   is
       Object : Swagger.Value_Type;
    begin
       Swagger.Streams.Deserialize (From, Name, Object);
@@ -94,9 +105,11 @@ package body TestAPI.Models is
       Deserialize (Object, "commands", Value.Commands);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out OrchStoreRequest_Type_Vectors.Vector) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out OrchStoreRequest_Type_Vectors.Vector)
+   is
       List : Swagger.Value_Array_Type;
       Item : OrchStoreRequest_Type;
    begin
@@ -108,13 +121,13 @@ package body TestAPI.Models is
       end loop;
    end Deserialize;
 
-
-
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Ticket_Type) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Ticket_Type)
+   is
    begin
+
       Into.Start_Entity (Name);
       Into.Write_Long_Entity ("id", Value.Id);
       Into.Write_Entity ("title", Value.Title);
@@ -127,9 +140,11 @@ package body TestAPI.Models is
       Into.End_Entity (Name);
    end Serialize;
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Ticket_Type_Vectors.Vector) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Ticket_Type_Vectors.Vector)
+   is
    begin
       Into.Start_Array (Name);
       for Item of Value loop
@@ -138,9 +153,9 @@ package body TestAPI.Models is
       Into.End_Array (Name);
    end Serialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Ticket_Type) is
+   procedure Deserialize
+     (From : in Swagger.Value_Type; Name : in String; Value : out Ticket_Type)
+   is
       Object : Swagger.Value_Type;
    begin
       Swagger.Streams.Deserialize (From, Name, Object);
@@ -154,9 +169,11 @@ package body TestAPI.Models is
       Swagger.Streams.Deserialize (Object, "status", Value.Status);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Ticket_Type_Vectors.Vector) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out Ticket_Type_Vectors.Vector)
+   is
       List : Swagger.Value_Array_Type;
       Item : Ticket_Type;
    begin
@@ -168,21 +185,23 @@ package body TestAPI.Models is
       end loop;
    end Deserialize;
 
-
-
-
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Options_Type) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Options_Type)
+   is
    begin
+
       Into.Start_Entity (Name);
       Serialize (Into, "a", Value.A);
       Into.End_Entity (Name);
    end Serialize;
 
-   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
-                        Name  : in String;
-                        Value : in Options_Type_Vectors.Vector) is
+   procedure Serialize
+     (Into  : in out Swagger.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Options_Type_Vectors.Vector)
+   is
    begin
       Into.Start_Array (Name);
       for Item of Value loop
@@ -191,18 +210,20 @@ package body TestAPI.Models is
       Into.End_Array (Name);
    end Serialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Options_Type) is
+   procedure Deserialize
+     (From : in Swagger.Value_Type; Name : in String; Value : out Options_Type)
+   is
       Object : Swagger.Value_Type;
    begin
       Swagger.Streams.Deserialize (From, Name, Object);
       Swagger.Streams.Deserialize (Object, "a", Value.A);
    end Deserialize;
 
-   procedure Deserialize (From  : in Swagger.Value_Type;
-                          Name  : in String;
-                          Value : out Options_Type_Vectors.Vector) is
+   procedure Deserialize
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out Options_Type_Vectors.Vector)
+   is
       List : Swagger.Value_Array_Type;
       Item : Options_Type;
    begin
@@ -213,7 +234,5 @@ package body TestAPI.Models is
          Value.Append (Item);
       end loop;
    end Deserialize;
-
-
 
 end TestAPI.Models;

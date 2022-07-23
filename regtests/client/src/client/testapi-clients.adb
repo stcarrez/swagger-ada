@@ -13,31 +13,36 @@ with Swagger.Streams;
 package body TestAPI.Clients is
    pragma Style_Checks ("-bmrIu");
 
-   --  
+   Media_List_1 : constant Swagger.Mime_List := (1 => Swagger.Mime_Json);
+   Media_List_2 : constant Swagger.Mime_List := (1 => Swagger.Mime_Text);
+   Media_List_3 : constant Swagger.Mime_List := (1 => Swagger.Mime_Form);
+
+   --
    --  Query an orchestrated service instance
    procedure Orch_Store
-      (Client : in out Client_Type;
-       Orch_Store_Request_Type : in TestAPI.Models.OrchStoreRequest_Type) is
-      URI   : Swagger.Clients.URI_Type;
-      Req   : Swagger.Clients.Request_Type;
+     (Client                  : in out Client_Type;
+      Orch_Store_Request_Type : in     TestAPI.Models.OrchStoreRequest_Type)
+   is
+      URI : Swagger.Clients.URI_Type;
+      Req : Swagger.Clients.Request_Type;
    begin
-
-      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
+      Client.Initialize (Req, Media_List_1);
       TestAPI.Models.Serialize (Req.Stream, "", Orch_Store_Request_Type);
 
       URI.Set_Path ("/orchestration");
       Client.Call (Swagger.Clients.POST, URI, Req);
    end Orch_Store;
 
-   --  
+   --
    procedure Test_Text_Response
-      (Client : in out Client_Type;
-       Options : in Swagger.Nullable_UString;
-       Result : out Swagger.UString) is
+     (Client  : in out Client_Type;
+      Options : in     Swagger.Nullable_UString;
+      Result  :    out Swagger.UString)
+   is
       URI   : Swagger.Clients.URI_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.TEXT_PLAIN));
+      Client.Set_Accept (Media_List_2);
 
       URI.Add_Param ("options", Options);
       URI.Set_Path ("/testTextResponse");
@@ -47,16 +52,17 @@ package body TestAPI.Clients is
 
    --  Create a ticket
    procedure Do_Create_Ticket
-      (Client : in out Client_Type;
-       Title : in Swagger.UString;
-       Owner : in Swagger.Nullable_UString;
-       Status : in Swagger.Nullable_UString;
-       Description : in Swagger.Nullable_UString) is
-      URI   : Swagger.Clients.URI_Type;
-      Req   : Swagger.Clients.Request_Type;
+     (Client      : in out Client_Type;
+      Title       : in     Swagger.UString;
+      Owner       : in     Swagger.Nullable_UString;
+      Status      : in     Swagger.Nullable_UString;
+      Description : in     Swagger.Nullable_UString)
+   is
+      URI : Swagger.Clients.URI_Type;
+      Req : Swagger.Clients.Request_Type;
    begin
 
-      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_FORM));
+      Client.Initialize (Req, Media_List_3);
       Req.Stream.Write_Entity ("owner", Owner);
       Req.Stream.Write_Entity ("status", Status);
       Req.Stream.Write_Entity ("title", Title);
@@ -68,11 +74,10 @@ package body TestAPI.Clients is
 
    --  Delete a ticket
    procedure Do_Delete_Ticket
-      (Client : in out Client_Type;
-       Tid : in Swagger.Long) is
-      URI   : Swagger.Clients.URI_Type;
+     (Client : in out Client_Type; Tid : in Swagger.Long)
+   is
+      URI : Swagger.Clients.URI_Type;
    begin
-
 
       URI.Set_Path ("/tickets/{tid}");
       URI.Set_Path_Param ("tid", Swagger.To_String (Tid));
@@ -80,11 +85,9 @@ package body TestAPI.Clients is
    end Do_Delete_Ticket;
 
    --  List the tickets
-   procedure Do_Head_Ticket
-      (Client : in out Client_Type) is
-      URI   : Swagger.Clients.URI_Type;
+   procedure Do_Head_Ticket (Client : in out Client_Type) is
+      URI : Swagger.Clients.URI_Type;
    begin
-
 
       URI.Set_Path ("/tickets");
       Client.Call (Swagger.Clients.HEAD, URI);
@@ -92,19 +95,21 @@ package body TestAPI.Clients is
 
    --  Patch a ticket
    procedure Do_Patch_Ticket
-      (Client : in out Client_Type;
-       Tid : in Swagger.Long;
-       Owner : in Swagger.Nullable_UString;
-       Status : in Swagger.Nullable_UString;
-       Title : in Swagger.Nullable_UString;
-       Description : in Swagger.Nullable_UString;
-       Result : out TestAPI.Models.Ticket_Type) is
+     (Client      : in out Client_Type;
+      Tid         : in     Swagger.Long;
+      Owner       : in     Swagger.Nullable_UString;
+      Status      : in     Swagger.Nullable_UString;
+      Title       : in     Swagger.Nullable_UString;
+      Description : in     Swagger.Nullable_UString;
+      Result      :    out TestAPI.Models.Ticket_Type)
+   is
       URI   : Swagger.Clients.URI_Type;
       Req   : Swagger.Clients.Request_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
-      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_FORM));
+      Client.Set_Accept (Media_List_1);
+
+      Client.Initialize (Req, Media_List_3);
       Req.Stream.Write_Entity ("owner", Owner);
       Req.Stream.Write_Entity ("status", Status);
       Req.Stream.Write_Entity ("title", Title);
@@ -118,19 +123,21 @@ package body TestAPI.Clients is
 
    --  Update a ticket
    procedure Do_Update_Ticket
-      (Client : in out Client_Type;
-       Tid : in Swagger.Long;
-       Owner : in Swagger.Nullable_UString;
-       Status : in Swagger.Nullable_UString;
-       Title : in Swagger.Nullable_UString;
-       Description : in Swagger.Nullable_UString;
-       Result : out TestAPI.Models.Ticket_Type) is
+     (Client      : in out Client_Type;
+      Tid         : in     Swagger.Long;
+      Owner       : in     Swagger.Nullable_UString;
+      Status      : in     Swagger.Nullable_UString;
+      Title       : in     Swagger.Nullable_UString;
+      Description : in     Swagger.Nullable_UString;
+      Result      :    out TestAPI.Models.Ticket_Type)
+   is
       URI   : Swagger.Clients.URI_Type;
       Req   : Swagger.Clients.Request_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
-      Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_FORM));
+      Client.Set_Accept (Media_List_1);
+
+      Client.Initialize (Req, Media_List_3);
       Req.Stream.Write_Entity ("owner", Owner);
       Req.Stream.Write_Entity ("status", Status);
       Req.Stream.Write_Entity ("title", Title);
@@ -145,13 +152,14 @@ package body TestAPI.Clients is
    --  Get a ticket
    --  Get a ticket
    procedure Do_Get_Ticket
-      (Client : in out Client_Type;
-       Tid : in Swagger.Long;
-       Result : out TestAPI.Models.Ticket_Type) is
+     (Client : in out Client_Type;
+      Tid    : in     Swagger.Long;
+      Result :    out TestAPI.Models.Ticket_Type)
+   is
       URI   : Swagger.Clients.URI_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
+      Client.Set_Accept (Media_List_1);
 
       URI.Set_Path ("/tickets/{tid}");
       URI.Set_Path_Param ("tid", Swagger.To_String (Tid));
@@ -162,14 +170,15 @@ package body TestAPI.Clients is
    --  List the tickets
    --  List the tickets created for the project.
    procedure Do_List_Tickets
-      (Client : in out Client_Type;
-       Status : in Swagger.Nullable_UString;
-       Owner : in Swagger.Nullable_UString;
-       Result : out TestAPI.Models.Ticket_Type_Vectors.Vector) is
+     (Client : in out Client_Type;
+      Status : in     Swagger.Nullable_UString;
+      Owner  : in     Swagger.Nullable_UString;
+      Result :    out TestAPI.Models.Ticket_Type_Vectors.Vector)
+   is
       URI   : Swagger.Clients.URI_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
+      Client.Set_Accept (Media_List_1);
 
       URI.Add_Param ("status", Status);
       URI.Add_Param ("owner", Owner);
@@ -181,13 +190,14 @@ package body TestAPI.Clients is
    --  Get a ticket
    --  Get a ticket
    procedure Do_Options_Ticket
-      (Client : in out Client_Type;
-       Tid : in Swagger.Long;
-       Result : out TestAPI.Models.Ticket_Type) is
+     (Client : in out Client_Type;
+      Tid    : in     Swagger.Long;
+      Result :    out TestAPI.Models.Ticket_Type)
+   is
       URI   : Swagger.Clients.URI_Type;
       Reply : Swagger.Value_Type;
    begin
-      Client.Set_Accept ((1 => Swagger.Clients.APPLICATION_JSON));
+      Client.Set_Accept (Media_List_1);
 
       URI.Set_Path ("/tickets/{tid}");
       URI.Set_Path_Param ("tid", Swagger.To_String (Tid));

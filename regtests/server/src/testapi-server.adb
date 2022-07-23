@@ -7,6 +7,7 @@ with Util.Log.Loggers;
 with Util.Properties;
 with Util.Properties.Basic;
 with TestAPI.Servers;
+with TestBinary.Servers;
 procedure TestAPI.Server is
    use Util.Properties.Basic;
 
@@ -34,6 +35,7 @@ begin
    Port := Integer_Property.Get (Props, "swagger.port", Port);
    App.Configure (Props);
    TestAPI.Servers.Server_Impl.Register (App);
+   TestBinary.Servers.Server_Impl.Register (App);
 
    WS.Configure (Configure'Access);
    WS.Register_Application ("/v1", App'Unchecked_Access);

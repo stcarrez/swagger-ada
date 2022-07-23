@@ -24,3 +24,5 @@
 src/testapi-servers.ads
 src/testapi-servers.adb
 src/testapi-server.adb
+src/testbinary-servers.ads
+src/testbinary-servers.adb

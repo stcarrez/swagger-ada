@@ -15,14 +15,14 @@ When the GNAT Ada compiler and OpenAPI Ada libraries are installed,
 run the following command:
 
 ```shell
-  gprbuild -p -PTestAPI
+  gprbuild -p -PTestBinary
 ```
 
 After the build is successful, you will get the server binary
-in bin/testapi-server and you can start it as follows:
+in bin/testbinary-server and you can start it as follows:
 
 ```shell
-  ./bin/testapi-server
+  ./bin/testbinary-server
 ```
 
 ## Structure of the server
@@ -32,23 +32,23 @@ the OpenAPI specification.
 
 Source file | Package | Description
 ------------ | ------------- | -------------
-src/testapi.ads|TestAPI|The server root package declaration
-src/testapi-servers.ads|TestAPI.Servers|The server declaration and instantiation
-src/testapi-servers.adb|TestAPI.Servers|The server implementation (empty stubs)
-src/server/testapi-skeletons.ads|TestAPI.Skeletons|The server skeleton declaration
-src/server/testapi-skeletons.adb|TestAPI.Skeletons|The server skeleton implementation
-src/server/testapi-models.ads|TestAPI.Skeletons|The server model types declaration
-src/server/testapi-models.adb|TestAPI.Skeletons|The server model types implementation
-src/testapi-server.adb|TestAPI.Server|The server main procedure
+src/testbinary.ads|TestBinary|The server root package declaration
+src/testbinary-servers.ads|TestBinary.Servers|The server declaration and instantiation
+src/testbinary-servers.adb|TestBinary.Servers|The server implementation (empty stubs)
+src/server/testbinary-skeletons.ads|TestBinary.Skeletons|The server skeleton declaration
+src/server/testbinary-skeletons.adb|TestBinary.Skeletons|The server skeleton implementation
+src/server/testbinary-models.ads|TestBinary.Skeletons|The server model types declaration
+src/server/testbinary-models.adb|TestBinary.Skeletons|The server model types implementation
+src/testbinary-server.adb|TestBinary.Server|The server main procedure
 
 Files generated in **src/server** should not be modified.  The server implementation
-files (**src/testapi-server.ads** and **src/testapi-server.adb**) should
+files (**src/testbinary-server.ads** and **src/testbinary-server.adb**) should
 be modified to implement the server operations.  You can also customize the server
 main procedure according to your needs.
 
 ## Server model
 
-The server instance is represented by the **TestAPI.Servers.Server_Type** Ada type.
+The server instance is represented by the **TestBinary.Servers.Server_Type** Ada type.
 The REST API will need an instance of it to make the operation call.  Two server model
 exists:
 
@@ -56,13 +56,13 @@ exists:
 - The shared instance model shares the same instance across all concurrent REST requests.  This instance is protected using an Ada protected object which holds the server instance.
 
 The choice of the server model is made at the compilation time by instantiating either
-the **TestAPI.Skeletons.Skeleton** package or the **TestAPI.Skeletons.Shared_Instance**
-package.  Such instantiation is done in **src/testapi-server.ads** and the default
+the **TestBinary.Skeletons.Skeleton** package or the **TestBinary.Skeletons.Shared_Instance**
+package.  Such instantiation is done in **src/testbinary-server.ads** and the default
 is to use the **Shared_Instance**.
 
 ## Implementing a server operation
 
-All you have to do is implement the server operation in the **src/testapi-servers.adb** file.
+All you have to do is implement the server operation in the **src/testbinary-servers.adb** file.
 The package already contains the operation with its parameters and you only have to replace
 the **null** instruction by real code.
 
@@ -74,36 +74,15 @@ All URIs are relative to *https://localhost:8082/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Orch_Store**](DefaultApi.md#Orch_Store) | **POST** /orchestration | 
-[**Test_Text_Response**](DefaultApi.md#Test_Text_Response) | **GET** /testTextResponse | 
-[**Do_Create_Ticket**](TicketApi.md#Do_Create_Ticket) | **POST** /tickets | Create a ticket
-[**Do_Delete_Ticket**](TicketApi.md#Do_Delete_Ticket) | **DELETE** /tickets/{tid} | Delete a ticket
-[**Do_Head_Ticket**](TicketApi.md#Do_Head_Ticket) | **HEAD** /tickets | List the tickets
-[**Do_Patch_Ticket**](TicketApi.md#Do_Patch_Ticket) | **PATCH** /tickets/{tid} | Patch a ticket
-[**Do_Update_Ticket**](TicketApi.md#Do_Update_Ticket) | **PUT** /tickets/{tid} | Update a ticket
-[**Do_Get_Ticket**](TicketsApi.md#Do_Get_Ticket) | **GET** /tickets/{tid} | Get a ticket
-[**Do_List_Tickets**](TicketsApi.md#Do_List_Tickets) | **GET** /tickets | List the tickets
-[**Do_Options_Ticket**](TicketsApi.md#Do_Options_Ticket) | **OPTIONS** /tickets/{tid} | Get a ticket
+[**Do_Get_Image**](DefaultApi.md#Do_Get_Image) | **GET** /binary | Get an image
 
 
 ### Models
 
- - [TestAPI.Models.Options_Type](Options_Type.md)
- - [TestAPI.Models.OrchStoreRequest_Type](OrchStoreRequest_Type.md)
- - [TestAPI.Models.StringsMap_Type](StringsMap_Type.md)
- - [TestAPI.Models.Ticket_Type](Ticket_Type.md)
+ - [TestBinary.Models.Status_Type](Status_Type.md)
 
 
 ### Authorization
 
-
-## ticketAuth
-
-
-- **Type**: OAuth
-- **Flow**: implicit
-- **Authorization URL**: /oauth/authorize
-- **Scopes**: 
-  - **write:ticket**: Update a ticket
-  - **read:ticket**: Read a ticket
+ All endpoints do not require authorization.
 

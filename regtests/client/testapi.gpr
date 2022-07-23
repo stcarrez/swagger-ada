@@ -10,7 +10,7 @@ with "utilada_sys";
 with "utilada_xml";
 with "utilada_http";
 with "security";
-with "swagger";
+with "Swagger";
 project TestAPI is
 
     Mains := ("testapi-client.adb");
