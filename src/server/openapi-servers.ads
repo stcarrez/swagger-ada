@@ -31,10 +31,6 @@ package OpenAPI.Servers is
 
    subtype Method_Type is Servlet.Rest.Method_Type;
 
-   subtype Mime_List is Servlet.Rest.Mime_List;
-   subtype Mime_List_Access is Servlet.Rest.Mime_List_Access;
-   subtype Mime_Access is Servlet.Rest.Mime_Access;
-
    GET     : constant Method_Type := Servlet.Rest.GET;
    POST    : constant Method_Type := Servlet.Rest.POST;
    DELETE  : constant Method_Type := Servlet.Rest.DELETE;
@@ -42,10 +38,6 @@ package OpenAPI.Servers is
    HEAD    : constant Method_Type := Servlet.Rest.HEAD;
    OPTIONS : constant Method_Type := Servlet.Rest.OPTIONS;
    PATCH   : constant Method_Type := Servlet.Rest.PATCH;
-
-   Mime_Json    : constant Mime_Access := Util.Http.Mimes.Json'Access;
-   Mime_Text    : constant Mime_Access := Util.Http.Mimes.Text'Access;
-   Mime_Xml     : constant Mime_Access := Util.Http.Mimes.Xml'Access;
 
    subtype Descriptor_Access is Servlet.Rest.Descriptor_Access;
 
@@ -60,6 +52,9 @@ package OpenAPI.Servers is
                                  Value : out Long);
 
    --  Get a request parameter from the query string.
+   function Get_Query_Parameter (Req   : in Request'Class;
+                                 Name  : in String) return String;
+
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
                                   Value : out UString);
@@ -84,8 +79,9 @@ package OpenAPI.Servers is
                                   Value : out Nullable_Boolean);
 
    --  Read the request body and get a value object tree.
-   procedure Read (Req   : in Request'Class;
-                   Value : out Value_Type);
+   procedure Read (Req      : in Request'Class;
+                   Consumes : in Mime_List;
+                   Value    : out Value_Type);
 
    type Context_Type is tagged limited private;
 
@@ -129,6 +125,10 @@ package OpenAPI.Servers is
    --  Set the HTTP status in the response.
    procedure Set_Status (Context : in out Context_Type;
                          Code    : in Natural);
+
+   --  Set the response description in the X-OpenAPI-Message header when enabled.
+   procedure Set_Description (Context : in out Context_Type;
+                              Message : in String);
 
    --  Send a Location: header in the response.
    procedure Set_Location (Context : in out Context_Type;
