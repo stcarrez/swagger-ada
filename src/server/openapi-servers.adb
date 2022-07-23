@@ -15,8 +15,10 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
+with Util.Http.Headers;
 with Util.Beans.Objects.Readers;
 with Util.Serialize.IO.JSON;
+with Util.Serialize.IO.XML;
 with Util.Serialize.IO.Form;
 with Security;
 with Servlet.Streams;
@@ -49,6 +51,12 @@ package body OpenAPI.Servers is
    --  ------------------------------
    --  Get a request parameter from the query string.
    --  ------------------------------
+   function Get_Query_Parameter (Req   : in Request'Class;
+                                 Name  : in String) return String is
+   begin
+      return Req.Get_Parameter (Name);
+   end Get_Query_Parameter;
+
    procedure Get_Query_Parameter (Req   : in Request'Class;
                                   Name  : in String;
                                   Value : out UString) is
@@ -109,19 +117,39 @@ package body OpenAPI.Servers is
    --  ------------------------------
    --  Read the request body and get a value object tree.
    --  ------------------------------
-   procedure Read (Req   : in Request'Class;
-                   Value : out Value_Type) is
-
+   procedure Read (Req      : in Request'Class;
+                   Consumes : in Mime_List;
+                   Value    : out Value_Type) is
+      Kind   : constant String := Req.Get_Header (Util.Http.Headers.Content_Type);
       Stream : constant Servlet.Streams.Input_Stream_Access := Req.Get_Input_Stream;
-      Parser : Util.Serialize.IO.JSON.Parser;
       Mapper : Util.Beans.Objects.Readers.Reader;
    begin
-      if Stream = null then
-         Value := Util.Beans.Objects.Null_Object;
-      else
-         Parser.Parse (Stream.all, Mapper);
-         Value := Mapper.Get_Root;
-      end if;
+      for Media of Consumes loop
+         if Media.all = Kind then
+            if Media.all = Util.Http.Mimes.Json then
+               declare
+                  Parser : Util.Serialize.IO.JSON.Parser;
+               begin
+                  Parser.Parse (Stream.all, Mapper);
+               end;
+            elsif Media.all = Util.Http.Mimes.Xml then
+               declare
+                  Parser : Util.Serialize.IO.XML.Parser;
+               begin
+                  Parser.Parse (Stream.all, Mapper);
+               end;
+            elsif Media.all = Util.Http.Mimes.Form then
+               declare
+                  Parser : Util.Serialize.IO.Form.Parser;
+               begin
+                  Parser.Parse (Stream.all, Mapper);
+               end;
+            end if;
+            Value := Mapper.Get_Root;
+            return;
+         end if;
+      end loop;
+      Value := Util.Beans.Objects.Null_Object;
    end Read;
 
    procedure Read (Context : in out Context_Type) is
@@ -252,6 +280,15 @@ package body OpenAPI.Servers is
    begin
       Context.Reply.Set_Status (Code);
    end Set_Status;
+
+   --  ------------------------------
+   --  Set the response description in the X-OpenAPI-Message header when enabled.
+   --  ------------------------------
+   procedure Set_Description (Context : in out Context_Type;
+                              Message : in String) is
+   begin
+      Context.Reply.Set_Header ("X-OpenAPI-Message", Message);
+   end Set_Description;
 
    --  ------------------------------
    --  Get the HTTP status that will be sent in the response.
