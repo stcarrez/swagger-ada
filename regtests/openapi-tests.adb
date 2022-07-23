@@ -18,9 +18,11 @@
 
 with Util.Log.Loggers;
 with Util.Test_Caller;
-with OpenAPI.Clients;
 with Ada.Text_IO;
+with TestAPI.Clients;
 with TestAPI.Models;
+with TestBinary.Clients;
+with TestBinary.Models;
 package body OpenAPI.Tests is
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("OpenAPI.Tests");
@@ -35,6 +37,8 @@ package body OpenAPI.Tests is
                        Test_Authorized'Access);
       Caller.Add_Test (Suite, "Test text/plain response",
                        Test_Text_Response'Access);
+      Caller.Add_Test (Suite, "Test image/png response",
+                       Test_Binary_Response'Access);
    end Add_Tests;
 
    overriding
@@ -44,7 +48,7 @@ package body OpenAPI.Tests is
    end Set_Up;
 
    procedure Configure (T : in out Test;
-                        Client : in out TestAPI.Clients.Client_Type) is
+                        Client : in out OpenAPI.Clients.Client_Type'Class) is
    begin
       Client.Set_Server (To_String (T.Server));
       Client.Set_Server (Util.Tests.Get_Parameter ("testapi.url"));
@@ -177,5 +181,39 @@ package body OpenAPI.Tests is
       Util.Tests.Assert_Equals (T, "text response: test content '<>;:""",
                                 Result, "Invalid text/plain response");
    end Test_Text_Response;
+
+   --  Test API that uses text/plain response.
+   procedure Test_Binary_Response (T : in out Test) is
+      Client  : TestBinary.Clients.Client_Type;
+      Options : Nullable_UString;
+      Result  : OpenAPI.Blob_Ref;
+   begin
+      T.Configure (Client);
+      Client.Do_Get_Image (TestBinary.Models.OPEN, Options, Result);
+      T.Assert (not Result.Is_Null, "Invalid image/png response");
+      Util.Tests.Assert_Equals (T, 10, Natural (Result.Value.Len),
+                                "Invalid length");
+
+      Client.Do_Get_Image (TestBinary.Models.ONHOLD, Options, Result);
+      T.Assert (not Result.Is_Null, "Invalid image/png response");
+      Util.Tests.Assert_Equals (T, 20, Natural (Result.Value.Len),
+                                "Invalid length");
+
+      Client.Do_Get_Image (TestBinary.Models.ASSIGNED, Options, Result);
+      T.Assert (not Result.Is_Null, "Invalid image/png response");
+      Util.Tests.Assert_Equals (T, 30, Natural (Result.Value.Len),
+                                "Invalid length");
+
+      Client.Do_Get_Image (TestBinary.Models.CLOSED, Options, Result);
+      T.Assert (not Result.Is_Null, "Invalid image/png response");
+      Util.Tests.Assert_Equals (T, 40, Natural (Result.Value.Len),
+                                "Invalid length");
+
+      Client.Do_Get_Image (TestBinary.Models.REJECTED, Options, Result);
+      T.Assert (not Result.Is_Null, "Invalid image/png response");
+      Util.Tests.Assert_Equals (T, 50, Natural (Result.Value.Len),
+                                "Invalid length");
+
+   end Test_Binary_Response;
 
 end OpenAPI.Tests;
