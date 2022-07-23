@@ -1,0 +1,11 @@
+README.md
+config.gpr
+src/model/testbinary-models.adb
+src/model/testbinary-models.ads
+src/server/testbinary-skeletons.adb
+src/server/testbinary-skeletons.ads
+src/testbinary-server.adb
+src/testbinary.ads
+testbinary.gpr
+testbinary.properties
+web/swagger/openapi.json

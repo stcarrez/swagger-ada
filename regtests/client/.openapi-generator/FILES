@@ -1,0 +1,8 @@
+config.gpr
+src/client/testbinary-clients.adb
+src/client/testbinary-clients.ads
+src/model/testbinary-models.adb
+src/model/testbinary-models.ads
+src/testbinary-client.adb
+src/testbinary.ads
+testbinary.gpr
