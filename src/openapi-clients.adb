@@ -21,10 +21,12 @@ with Util.Serialize.IO.XML;
 with Util.Serialize.IO.Form;
 with Util.Strings;
 with Util.Log.Loggers;
+with Util.Http.Mimes;
 with OpenAPI.Streams.Forms;
 package body OpenAPI.Clients is
 
    use Ada.Strings.Unbounded;
+   use type Util.Strings.Name_Access;
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Swagger.Clients");
 
@@ -254,16 +256,17 @@ package body OpenAPI.Clients is
       end if;
       declare
          Content_Type : constant String := Client.Response.Get_Header ("Content-Type");
-         Content      : constant String := Client.Response.Get_Body;
       begin
-         if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-            Log.Debug ("{0}", Content);
-         end if;
          if Content_Type = "application/json" then
             declare
-               Parser   : Util.Serialize.IO.JSON.Parser;
-               Mapper   : Util.Beans.Objects.Readers.Reader;
+               Parser  : Util.Serialize.IO.JSON.Parser;
+               Mapper  : Util.Beans.Objects.Readers.Reader;
+               Content : constant String := Client.Response.Get_Body;
             begin
+               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+                  Log.Debug ("{0}", Content);
+               end if;
+
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
@@ -271,22 +274,46 @@ package body OpenAPI.Clients is
            or else Content_Type = "text/xml"
          then
             declare
-               Parser   : Util.Serialize.IO.XML.Parser;
-               Mapper   : Util.Beans.Objects.Readers.Reader;
+               Parser  : Util.Serialize.IO.XML.Parser;
+               Mapper  : Util.Beans.Objects.Readers.Reader;
+               Content : constant String := Client.Response.Get_Body;
             begin
+               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+                  Log.Debug ("{0}", Content);
+               end if;
+
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
          elsif Content_Type = "application/x-www-form-urlencoded" then
             declare
-               Parser   : Util.Serialize.IO.Form.Parser;
-               Mapper   : Util.Beans.Objects.Readers.Reader;
+               Parser  : Util.Serialize.IO.Form.Parser;
+               Mapper  : Util.Beans.Objects.Readers.Reader;
+               Content : constant String := Client.Response.Get_Body;
             begin
+               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+                  Log.Debug ("{0}", Content);
+               end if;
+
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
+         elsif Content_Type = "text/plain" then
+            declare
+               Content : constant String := Client.Response.Get_Body;
+            begin
+               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+                  Log.Debug ("{0}", Content);
+               end if;
+
+               Reply := Util.Beans.Objects.To_Object (Content);
+            end;
          else
-            Reply := Util.Beans.Objects.To_Object (Content);
+            declare
+               Content : constant Util.Blobs.Blob_Ref := Client.Response.Get_Body;
+            begin
+               Reply := Util.Beans.Objects.To_Object (Content);
+            end;
          end if;
       end;
    end Call;
@@ -355,27 +382,14 @@ package body OpenAPI.Clients is
    --  selected by the client.
    --  ------------------------------
    procedure Set_Accept (Client : in out Client_Type;
-                         List   : in Content_Type_Array) is
+                         List   : in Mime_List) is
       Header : UString;
    begin
       for Content_Type of List loop
          if Length (Header) > 0 then
             Append (Header, ", ");
          end if;
-         case Content_Type is
-            when APPLICATION_XML =>
-               null;  --  Append (Header, "application/xml");
-
-            when APPLICATION_JSON =>
-               Append (Header, "application/json");
-
-            when APPLICATION_FORM =>
-               Append (Header, "application/x-www-form-urlencoded");
-
-            when TEXT_PLAIN =>
-               Append (Header, "text/plain");
-
-         end case;
+         Append (Header, Content_Type.all);
       end loop;
       Client.Set_Header ("Accept", To_String (Header));
    end Set_Accept;
@@ -414,35 +428,28 @@ package body OpenAPI.Clients is
    --  ------------------------------
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
-                         Types   : in Content_Type_Array) is
+                         Mimes   : in Mime_List) is
       Json  : Json_Output_Stream_Access;
       Forms : Form_Output_Stream_Access;
+      Mime  : constant Mime_Access := Mimes (Mimes'First);
    begin
-      case Types (Types'First) is
-         when APPLICATION_FORM =>
-            Client.Set_Header ("Content-Type", "application/x-www-form-urlencoded");
-            Request.Buffer.Initialize (Size => 1000000);
-            Forms := new OpenAPI.Streams.Forms.Output_Stream;
-            Request.Data := Forms;
-            Forms.Initialize (Request.Buffer'Unchecked_Access);
-            Request.Data.Start_Document;
+      Client.Set_Header ("Content-Type", Mime.all);
+      if Mime = Util.Http.Mimes.Form'Access then
+         Request.Buffer.Initialize (Size => 1000000);
+         Forms := new OpenAPI.Streams.Forms.Output_Stream;
+         Request.Data := Forms;
+         Forms.Initialize (Request.Buffer'Unchecked_Access);
+         Request.Data.Start_Document;
 
-         when APPLICATION_JSON =>
-            Client.Set_Header ("Content-Type", "application/json");
-            Json := new Util.Serialize.IO.JSON.Output_Stream;
-            Request.Data := Json;
-            Request.Buffer.Initialize (Size => 1000000);
-            Json.Initialize (Request.Buffer'Unchecked_Access);
-            Request.Data.Start_Document;
-            Request.Data.Start_Entity ("");
-
-         when APPLICATION_XML =>
-            Client.Set_Header ("Content-Type", "application/xml");
-
-         when TEXT_PLAIN =>
-            Client.Set_Header ("Content-Type", "text/plain");
-
-      end case;
+      elsif Mime = Util.Http.Mimes.Json'Access then
+         Client.Set_Header ("Content-Type", Mime.all);
+         Json := new Util.Serialize.IO.JSON.Output_Stream;
+         Request.Data := Json;
+         Request.Buffer.Initialize (Size => 1000000);
+         Json.Initialize (Request.Buffer'Unchecked_Access);
+         Request.Data.Start_Document;
+         Request.Data.Start_Entity ("");
+      end if;
    end Initialize;
 
 end OpenAPI.Clients;
