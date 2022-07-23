@@ -17,8 +17,8 @@
 -----------------------------------------------------------------------
 with Ada.Strings.Unbounded;
 with Util.Tests;
+with OpenAPI.Clients;
 with OpenAPI.Credentials.OAuth;
-with TestAPI.Clients;
 package OpenAPI.Tests is
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite);
@@ -31,7 +31,7 @@ package OpenAPI.Tests is
    procedure Set_Up (T : in out Test);
 
    procedure Configure (T : in out Test;
-                        Client : in out TestAPI.Clients.Client_Type);
+                        Client : in out OpenAPI.Clients.Client_Type'Class);
 
    procedure Authenticate (T    : in out Test;
                            Cred : in out OpenAPI.Credentials.OAuth.OAuth2_Credential_Type);
@@ -44,5 +44,8 @@ package OpenAPI.Tests is
 
    --  Test API that uses text/plain response.
    procedure Test_Text_Response (T : in out Test);
+
+   --  Test API that uses image/png response.
+   procedure Test_Binary_Response (T : in out Test);
 
 end OpenAPI.Tests;
