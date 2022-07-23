@@ -47,12 +47,6 @@ package OpenAPI.Clients is
 
    type Operation_Type is (HEAD, GET, POST, PUT, DELETE, OPTIONS, PATCH);
 
-   --  The possible content types that are supported by the OpenAPI Ada client library.
-   type Content_Type is (APPLICATION_JSON, APPLICATION_XML, APPLICATION_FORM, TEXT_PLAIN);
-
-   --  A list of content types for the Set_Accept and Initialize operations.
-   type Content_Type_Array is array (Positive range <>) of Content_Type;
-
    type URI_Type is tagged private;
 
    --  Set the path to use for the URI.
@@ -137,7 +131,7 @@ package OpenAPI.Clients is
    --  Set the Accept header according to what the operation supports and what is
    --  selected by the client.
    procedure Set_Accept (Client : in out Client_Type;
-                         List   : in Content_Type_Array);
+                         List   : in Mime_List);
 
    --  Handle an error after an API call.  The default implementation raises an exception
    --  if the HTTP status code is 400, 401 or 403.
@@ -152,7 +146,7 @@ package OpenAPI.Clients is
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
-                         Types   : in Content_Type_Array);
+                         Mimes   : in Mime_List);
 
 private
 
