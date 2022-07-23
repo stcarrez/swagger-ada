@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-streams -- Stream operations
---  Copyright (C) 2017, 2020 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +15,7 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
+with Util.Blobs;
 with Util.Serialize.IO;
 
 --  == Streams ==
@@ -25,6 +26,9 @@ package OpenAPI.Streams is
    subtype Output_Stream is Util.Serialize.IO.Output_Stream;
 
    type Output_Stream_Access is access all Output_Stream'Class;
+
+   procedure Write (Stream : in out Output_Stream'Class;
+                    Data   : in Util.Blobs.Blob_Ref);
 
    --  Serialize a list of strings in the stream.
    procedure Serialize (Stream : in out Output_Stream'Class;
@@ -135,5 +139,9 @@ package OpenAPI.Streams is
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Object_Map);
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Blob_Ref);
 
 end OpenAPI.Streams;
