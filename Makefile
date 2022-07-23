@@ -36,14 +36,21 @@ setup::
 endif
 
 SWAGGER=java -jar openapi-generator-cli.jar
+OPENAPI_OPTIONS=--enable-post-process-file
 
 generate:
 	$(SWAGGER) generate --enable-post-process-file --generator-name ada -i regtests/swagger.yaml \
-            --additional-properties projectName=TestAPI \
+            --additional-properties projectName=TestAPI $(OPENAPI_OPTIONS) \
             --model-package TestAPI -o regtests/client
+	$(SWAGGER) generate --enable-post-process-file --generator-name ada -i regtests/responses-binary.yaml \
+            --additional-properties projectName=TestBinary $(OPENAPI_OPTIONS) \
+            --model-package TestBinary -o regtests/client
 	$(SWAGGER) generate --generator-name ada-server -i regtests/swagger.yaml \
-            --additional-properties projectName=TestAPI --enable-post-process-file \
+            --additional-properties projectName=TestAPI $(OPENAPI_OPTIONS) \
             --model-package TestAPI -o regtests/server
+	$(SWAGGER) generate --generator-name ada-server -i regtests/responses-binary.yaml \
+            --additional-properties projectName=TestBinary $(OPENAPI_OPTIONS) \
+            --model-package TestBinary -o regtests/server
 
 # Build and run the unit tests
 test:	build-test
