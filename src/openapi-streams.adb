@@ -19,6 +19,12 @@ with Util.Beans.Objects.Maps;
 with Util.Dates.ISO8601;
 package body OpenAPI.Streams is
 
+   procedure Write (Stream : in out Output_Stream'Class;
+                    Data   : in Util.Blobs.Blob_Ref) is
+   begin
+      Stream.Write (Data.Value.Data);
+   end Write;
+
    --  ------------------------------
    --  Serialize a list of strings in the stream.
    --  ------------------------------
@@ -431,6 +437,19 @@ package body OpenAPI.Streams is
       end if;
       Value.Clear;
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
+   end Deserialize;
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Blob_Ref) is
+      Item : OpenAPI.Value_Type;
+   begin
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value := Util.Beans.Objects.To_Blob (Item);
    end Deserialize;
 
 end OpenAPI.Streams;
