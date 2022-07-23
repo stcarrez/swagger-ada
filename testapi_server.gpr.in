@@ -13,7 +13,7 @@ project TestAPI_Server is
    for Main use Mains;
    for Source_Dirs use ("regtests/server/src", "regtests/server/src/server");
    for Object_Dir use "./" & Config'Exec_Dir & "/obj";
-   for Excluded_Source_Files use ("testapi.ads");
+   for Excluded_Source_Files use ("testapi.ads", "testbinary.ads");
    for Exec_Dir use "./" & Config'Exec_Dir & "/bin";
 
    package Binder renames Config.Binder;
