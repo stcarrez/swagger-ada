@@ -23,7 +23,7 @@ package TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     StringsMap_Type);
+      Value : in     TestAPI.Models.StringsMap_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -33,12 +33,12 @@ package TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out StringsMap_Type);
+      Value :    out TestAPI.Models.StringsMap_Type);
 
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out StringsMap_Type_Vectors.Vector);
+      Value : in out StringsMap_Type_Vectors.Vector);
 
    type OrchStoreRequest_Type is record
       Requested_Qo_S : TestAPI.Models.StringsMap_Type;
@@ -51,7 +51,7 @@ package TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     OrchStoreRequest_Type);
+      Value : in     TestAPI.Models.OrchStoreRequest_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -61,12 +61,12 @@ package TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out OrchStoreRequest_Type);
+      Value :    out TestAPI.Models.OrchStoreRequest_Type);
 
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out OrchStoreRequest_Type_Vectors.Vector);
+      Value : in out OrchStoreRequest_Type_Vectors.Vector);
 
    --  ------------------------------
    --  Information about a ticket
@@ -89,7 +89,7 @@ package TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Ticket_Type);
+      Value : in     TestAPI.Models.Ticket_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -97,12 +97,14 @@ package TestAPI.Models is
       Value : in     Ticket_Type_Vectors.Vector);
 
    procedure Deserialize
-     (From : in Swagger.Value_Type; Name : in String; Value : out Ticket_Type);
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out TestAPI.Models.Ticket_Type);
 
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Ticket_Type_Vectors.Vector);
+      Value : in out Ticket_Type_Vectors.Vector);
 
    type Options_Type is record
       A : Swagger.UString_Vectors.Vector;
@@ -114,7 +116,7 @@ package TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Options_Type);
+      Value : in     TestAPI.Models.Options_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -124,11 +126,11 @@ package TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Options_Type);
+      Value :    out TestAPI.Models.Options_Type);
 
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Options_Type_Vectors.Vector);
+      Value : in out Options_Type_Vectors.Vector);
 
 end TestAPI.Models;

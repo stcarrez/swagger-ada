@@ -15,7 +15,8 @@ package TestBinary.Models is
 
    type Status_Type is (OPEN, ONHOLD, ASSIGNED, CLOSED, REJECTED);
 
-   function To_Status_Type (Value : in String) return Status_Type;
+   function To_Status_Type
+     (Value : in String) return TestBinary.Models.Status_Type;
    function To_String (Value : in Status_Type) return String;
 
    package Status_Type_Vectors is new Ada.Containers.Vectors
@@ -24,7 +25,7 @@ package TestBinary.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Status_Type);
+      Value : in     TestBinary.Models.Status_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -32,11 +33,13 @@ package TestBinary.Models is
       Value : in     Status_Type_Vectors.Vector);
 
    procedure Deserialize
-     (From : in Swagger.Value_Type; Name : in String; Value : out Status_Type);
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out TestBinary.Models.Status_Type);
 
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Status_Type_Vectors.Vector);
+      Value : in out Status_Type_Vectors.Vector);
 
 end TestBinary.Models;

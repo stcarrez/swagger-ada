@@ -15,7 +15,9 @@ package body TestBinary.Models is
 
    use Swagger.Streams;
 
-   function To_Status_Type (Value : in String) return Status_Type is
+   function To_Status_Type
+     (Value : in String) return TestBinary.Models.Status_Type
+   is
    begin
       if Value = "open" then
          return OPEN;
@@ -35,7 +37,8 @@ package body TestBinary.Models is
       raise Constraint_Error;
    end To_Status_Type;
 
-   function To_String (Value : in Status_Type) return String is
+   function To_String (Value : in TestBinary.Models.Status_Type) return String
+   is
    begin
       case Value is
          when OPEN =>
@@ -59,7 +62,7 @@ package body TestBinary.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Status_Type)
+      Value : in     TestBinary.Models.Status_Type)
    is
    begin
       Into.Write_Entity (Name, To_String (Value));
@@ -79,7 +82,9 @@ package body TestBinary.Models is
    end Serialize;
 
    procedure Deserialize
-     (From : in Swagger.Value_Type; Name : in String; Value : out Status_Type)
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out TestBinary.Models.Status_Type)
    is
       Object : Swagger.Value_Type;
    begin
@@ -90,7 +95,7 @@ package body TestBinary.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Status_Type_Vectors.Vector)
+      Value : in out Status_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
       Item : Status_Type;

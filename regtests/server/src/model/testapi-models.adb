@@ -18,7 +18,7 @@ package body TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     StringsMap_Type)
+      Value : in     TestAPI.Models.StringsMap_Type)
    is
    begin
 
@@ -43,7 +43,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out StringsMap_Type)
+      Value :    out TestAPI.Models.StringsMap_Type)
    is
       Object : Swagger.Value_Type;
    begin
@@ -54,7 +54,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out StringsMap_Type_Vectors.Vector)
+      Value : in out StringsMap_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
       Item : StringsMap_Type;
@@ -70,7 +70,7 @@ package body TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     OrchStoreRequest_Type)
+      Value : in     TestAPI.Models.OrchStoreRequest_Type)
    is
    begin
 
@@ -96,7 +96,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out OrchStoreRequest_Type)
+      Value :    out TestAPI.Models.OrchStoreRequest_Type)
    is
       Object : Swagger.Value_Type;
    begin
@@ -108,7 +108,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out OrchStoreRequest_Type_Vectors.Vector)
+      Value : in out OrchStoreRequest_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
       Item : OrchStoreRequest_Type;
@@ -124,7 +124,7 @@ package body TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Ticket_Type)
+      Value : in     TestAPI.Models.Ticket_Type)
    is
    begin
 
@@ -154,7 +154,9 @@ package body TestAPI.Models is
    end Serialize;
 
    procedure Deserialize
-     (From : in Swagger.Value_Type; Name : in String; Value : out Ticket_Type)
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out TestAPI.Models.Ticket_Type)
    is
       Object : Swagger.Value_Type;
    begin
@@ -172,7 +174,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Ticket_Type_Vectors.Vector)
+      Value : in out Ticket_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
       Item : Ticket_Type;
@@ -188,7 +190,7 @@ package body TestAPI.Models is
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
       Name  : in     String;
-      Value : in     Options_Type)
+      Value : in     TestAPI.Models.Options_Type)
    is
    begin
 
@@ -211,7 +213,9 @@ package body TestAPI.Models is
    end Serialize;
 
    procedure Deserialize
-     (From : in Swagger.Value_Type; Name : in String; Value : out Options_Type)
+     (From  : in     Swagger.Value_Type;
+      Name  : in     String;
+      Value :    out TestAPI.Models.Options_Type)
    is
       Object : Swagger.Value_Type;
    begin
@@ -222,7 +226,7 @@ package body TestAPI.Models is
    procedure Deserialize
      (From  : in     Swagger.Value_Type;
       Name  : in     String;
-      Value :    out Options_Type_Vectors.Vector)
+      Value : in out Options_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
       Item : Options_Type;
