@@ -48,4 +48,7 @@ package OpenAPI.Tests is
    --  Test API that uses image/png response.
    procedure Test_Binary_Response (T : in out Test);
 
+   --  Test API that uses an external data type.
+   procedure Test_External_Data (T : in out Test);
+
 end OpenAPI.Tests;
