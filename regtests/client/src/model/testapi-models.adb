@@ -57,7 +57,7 @@ package body TestAPI.Models is
       Value : in out StringsMap_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
-      Item : StringsMap_Type;
+      Item : TestAPI.Models.StringsMap_Type;
    begin
       Value.Clear;
       Swagger.Streams.Deserialize (From, Name, List);
@@ -111,7 +111,7 @@ package body TestAPI.Models is
       Value : in out OrchStoreRequest_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
-      Item : OrchStoreRequest_Type;
+      Item : TestAPI.Models.OrchStoreRequest_Type;
    begin
       Value.Clear;
       Swagger.Streams.Deserialize (From, Name, List);
@@ -177,7 +177,7 @@ package body TestAPI.Models is
       Value : in out Ticket_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
-      Item : Ticket_Type;
+      Item : TestAPI.Models.Ticket_Type;
    begin
       Value.Clear;
       Swagger.Streams.Deserialize (From, Name, List);
@@ -229,7 +229,7 @@ package body TestAPI.Models is
       Value : in out Options_Type_Vectors.Vector)
    is
       List : Swagger.Value_Array_Type;
-      Item : Options_Type;
+      Item : TestAPI.Models.Options_Type;
    begin
       Value.Clear;
       Swagger.Streams.Deserialize (From, Name, List);

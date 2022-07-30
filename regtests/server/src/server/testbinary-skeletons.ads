@@ -13,6 +13,7 @@ pragma Warnings (Off, "*no entities of*are referenced");
 with Swagger.Servers;
 with TestBinary.Models;
 with Security.Permissions;
+with External;
 package TestBinary.Skeletons is
    pragma Style_Checks ("-bmrIu");
    pragma Warnings (Off, "*use clause for package*");
@@ -28,6 +29,13 @@ package TestBinary.Skeletons is
       Result  :    out Swagger.Blob_Ref;
       Context : in out Swagger.Servers.Context_Type) is abstract;
 
+   --  Get some stat from external struct
+   procedure Do_Get_Stats
+     (Server  : in out Server_Type;
+      Status  : in     Status_Type;
+      Result  :    out External.Stat_Vector;
+      Context : in out Swagger.Servers.Context_Type) is abstract;
+
    generic
       type Implementation_Type is limited new Server_Type with private;
       URI_Prefix : String := "";
@@ -38,6 +46,13 @@ package TestBinary.Skeletons is
 
       --  Get an image
       procedure Do_Get_Image
+        (Req     : in out Swagger.Servers.Request'Class;
+         Reply   : in out Swagger.Servers.Response'Class;
+         Stream  : in out Swagger.Servers.Output_Stream'Class;
+         Context : in out Swagger.Servers.Context_Type);
+
+      --  Get some stat from external struct
+      procedure Do_Get_Stats
         (Req     : in out Swagger.Servers.Request'Class;
          Reply   : in out Swagger.Servers.Response'Class;
          Stream  : in out Swagger.Servers.Output_Stream'Class;
@@ -60,6 +75,13 @@ package TestBinary.Skeletons is
          Stream  : in out Swagger.Servers.Output_Stream'Class;
          Context : in out Swagger.Servers.Context_Type);
 
+      --  Get some stat from external struct
+      procedure Do_Get_Stats
+        (Req     : in out Swagger.Servers.Request'Class;
+         Reply   : in out Swagger.Servers.Response'Class;
+         Stream  : in out Swagger.Servers.Output_Stream'Class;
+         Context : in out Swagger.Servers.Context_Type);
+
    private
       protected Server is
 
@@ -68,6 +90,12 @@ package TestBinary.Skeletons is
            (Status  : in     Status_Type;
             Owner   : in     Swagger.Nullable_UString;
             Result  :    out Swagger.Blob_Ref;
+            Context : in out Swagger.Servers.Context_Type);
+
+         --  Get some stat from external struct
+         procedure Do_Get_Stats
+           (Status  : in     Status_Type;
+            Result  :    out External.Stat_Vector;
             Context : in out Swagger.Servers.Context_Type);
 
       private

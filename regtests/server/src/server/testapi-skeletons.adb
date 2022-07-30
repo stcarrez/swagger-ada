@@ -148,6 +148,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Impl.Do_Delete_Ticket (Tid, Context);
 
       end Do_Delete_Ticket;
@@ -211,6 +212,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Swagger.Servers.Get_Parameter (Context, "owner", Owner);
          Swagger.Servers.Get_Parameter (Context, "status", Status);
          Swagger.Servers.Get_Parameter (Context, "title", Title);
@@ -263,6 +265,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Swagger.Servers.Get_Parameter (Context, "owner", Owner);
          Swagger.Servers.Get_Parameter (Context, "status", Status);
          Swagger.Servers.Get_Parameter (Context, "title", Title);
@@ -311,6 +314,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Impl.Do_Get_Ticket (Tid, Result, Context);
          if Context.Get_Status = 200 then
             Context.Set_Description ("successful operation");
@@ -405,6 +409,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Impl.Do_Options_Ticket (Tid, Result, Context);
          if Context.Get_Status = 200 then
             Context.Set_Description ("successful operation");
@@ -553,6 +558,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Server.Do_Delete_Ticket (Tid, Context);
 
       end Do_Delete_Ticket;
@@ -614,6 +620,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Swagger.Servers.Get_Parameter (Context, "owner", Owner);
          Swagger.Servers.Get_Parameter (Context, "status", Status);
          Swagger.Servers.Get_Parameter (Context, "title", Title);
@@ -665,6 +672,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Swagger.Servers.Get_Parameter (Context, "owner", Owner);
          Swagger.Servers.Get_Parameter (Context, "status", Status);
          Swagger.Servers.Get_Parameter (Context, "title", Title);
@@ -712,6 +720,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Server.Do_Get_Ticket (Tid, Result, Context);
          if Context.Get_Status = 200 then
             Context.Set_Description ("successful operation");
@@ -804,6 +813,7 @@ package body TestAPI.Skeletons is
          end if;
 
          Swagger.Servers.Get_Path_Parameter (Req, 1, Tid);
+
          Server.Do_Options_Ticket (Tid, Result, Context);
          if Context.Get_Status = 200 then
             Context.Set_Description ("successful operation");

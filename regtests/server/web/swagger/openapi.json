@@ -82,6 +82,59 @@
         },
         "summary" : "Get an image"
       }
+    },
+    "/external/{status}" : {
+      "get" : {
+        "operationId" : "do_get_stats",
+        "parameters" : [ {
+          "description" : "status information",
+          "explode" : false,
+          "in" : "path",
+          "name" : "status",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/Status"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Stat"
+                  },
+                  "type" : "array"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Stat"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "successful operation",
+            "headers" : {
+              "X-RateLimit-Limit" : {
+                "explode" : false,
+                "schema" : {
+                  "description" : "Request limit per hour.",
+                  "type" : "integer"
+                },
+                "style" : "simple"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Invalid status value"
+          }
+        },
+        "summary" : "Get some stat from external struct"
+      }
     }
   },
   "components" : {
@@ -89,6 +142,24 @@
       "Status" : {
         "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
         "type" : "string"
+      },
+      "Stat" : {
+        "example" : {
+          "count" : 0,
+          "name" : "name"
+        },
+        "properties" : {
+          "count" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object",
+        "x-ada-type-name" : "External.Stat_Type",
+        "x-ada-vector-type-name" : "External.Stat_Vector"
       }
     }
   }

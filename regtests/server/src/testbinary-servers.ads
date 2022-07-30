@@ -12,6 +12,7 @@
 with Swagger.Servers;
 with TestBinary.Models;
 with TestBinary.Skeletons;
+with External;
 package TestBinary.Servers is
    pragma Warnings (Off, "*use clause for package*");
    use TestBinary.Models;
@@ -25,6 +26,13 @@ package TestBinary.Servers is
       Status  : in     Status_Type;
       Owner   : in     Swagger.Nullable_UString;
       Result  :    out Swagger.Blob_Ref;
+      Context : in out Swagger.Servers.Context_Type);
+
+   --  Get some stat from external struct
+   overriding procedure Do_Get_Stats
+     (Server  : in out Server_Type;
+      Status  : in     Status_Type;
+      Result  :    out External.Stat_Vector;
       Context : in out Swagger.Servers.Context_Type);
 
    package Server_Impl is new TestBinary.Skeletons.Shared_Instance

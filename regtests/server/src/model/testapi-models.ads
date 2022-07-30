@@ -18,7 +18,7 @@ package TestAPI.Models is
    end record;
 
    package StringsMap_Type_Vectors is new Ada.Containers.Vectors
-     (Index_Type => Positive, Element_Type => StringsMap_Type);
+     (Index_Type => Positive, Element_Type => TestAPI.Models.StringsMap_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -46,7 +46,8 @@ package TestAPI.Models is
    end record;
 
    package OrchStoreRequest_Type_Vectors is new Ada.Containers.Vectors
-     (Index_Type => Positive, Element_Type => OrchStoreRequest_Type);
+     (Index_Type   => Positive,
+      Element_Type => TestAPI.Models.OrchStoreRequest_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -84,7 +85,7 @@ package TestAPI.Models is
    end record;
 
    package Ticket_Type_Vectors is new Ada.Containers.Vectors
-     (Index_Type => Positive, Element_Type => Ticket_Type);
+     (Index_Type => Positive, Element_Type => TestAPI.Models.Ticket_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;
@@ -111,7 +112,7 @@ package TestAPI.Models is
    end record;
 
    package Options_Type_Vectors is new Ada.Containers.Vectors
-     (Index_Type => Positive, Element_Type => Options_Type);
+     (Index_Type => Positive, Element_Type => TestAPI.Models.Options_Type);
 
    procedure Serialize
      (Into  : in out Swagger.Streams.Output_Stream'Class;

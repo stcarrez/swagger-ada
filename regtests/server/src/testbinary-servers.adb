@@ -10,6 +10,7 @@
 --  Then, you can drop this edit note comment.
 --  ------------ EDIT NOTE ------------
 with Util.Blobs;
+with Ada.Strings.Unbounded;
 package body TestBinary.Servers is
 
    --  Get an image
@@ -45,5 +46,30 @@ package body TestBinary.Servers is
 
       end case;
    end Do_Get_Image;
+
+   --  Get some stat from external struct
+   overriding procedure Do_Get_Stats
+     (Server  : in out Server_Type;
+      Status  : in     Status_Type;
+      Result  :    out External.Stat_Vector;
+      Context : in out Swagger.Servers.Context_Type)
+   is
+      use Ada.Strings.Unbounded;
+      Count : constant Natural := (case Status is
+                                      when Open => 1,
+                                      when Assigned => 2,
+                                      when others => 10);
+      Prefix : constant String := Status_Type'Image (Status);
+   begin
+      for I in 1 .. Count loop
+         declare
+            Item : External.Stat_Type;
+         begin
+            Item.Count := I;
+            Item.Name := To_Unbounded_String (Prefix & Natural'Image (I));
+            Result.Append (Item);
+         end;
+      end loop;
+   end Do_Get_Stats;
 
 end TestBinary.Servers;

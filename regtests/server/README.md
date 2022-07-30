@@ -75,10 +75,12 @@ All URIs are relative to *https://localhost:8082/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Do_Get_Image**](DefaultApi.md#Do_Get_Image) | **GET** /binary | Get an image
+[**Do_Get_Stats**](DefaultApi.md#Do_Get_Stats) | **GET** /external/{status} | Get some stat from external struct
 
 
 ### Models
 
+ - [TestBinary.Models.Stat_Type](Stat_Type.md)
  - [TestBinary.Models.Status_Type](Status_Type.md)
 
 

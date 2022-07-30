@@ -10,6 +10,7 @@
 
 with TestBinary.Models;
 with Swagger.Clients;
+with External;
 package TestBinary.Clients is
    pragma Style_Checks ("-bmrIu");
 
@@ -22,5 +23,11 @@ package TestBinary.Clients is
       Status : in     TestBinary.Models.Status_Type;
       Owner  : in     Swagger.Nullable_UString;
       Result :    out Swagger.Blob_Ref);
+
+   --  Get some stat from external struct
+   procedure Do_Get_Stats
+     (Client : in out Client_Type;
+      Status : in     TestBinary.Models.Status_Type;
+      Result :    out External.Stat_Vector);
 
 end TestBinary.Clients;
