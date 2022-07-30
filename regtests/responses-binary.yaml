@@ -51,6 +51,38 @@ paths:
                 format: binary
         '404':
           description: Invalid status value
+  /external/{status}:
+    get:
+      summary: Get some stat from external struct
+      operationId: do_get_stats
+      parameters:
+        - name: status
+          in: path
+          description: status information
+          required: true
+          schema:
+            $ref: '#/components/schemas/Status'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                description: Request limit per hour.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+        '404':
+          description: Invalid status value
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -64,3 +96,13 @@ components:
         - assigned
         - closed
         - rejected
+    Stat:
+      type: object
+      properties:
+        count:
+           type: integer
+           format: int64
+        name:
+           type: string
+      x-ada-type-name: "External.Stat_Type"
+      x-ada-vector-type-name: "External.Stat_Vector"
