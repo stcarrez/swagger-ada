@@ -49,6 +49,15 @@ package body OpenAPI.Servers is
    end Get_Path_Parameter;
 
    --  ------------------------------
+   --  Get a request parameter defined in the URI path.
+   --  ------------------------------
+   function Get_Path_Parameter (Req   : in Request'Class;
+                                Pos   : in Positive) return String is
+   begin
+      return Req.Get_Path_Parameter (Pos);
+   end Get_Path_Parameter;
+
+   --  ------------------------------
    --  Get a request parameter from the query string.
    --  ------------------------------
    function Get_Query_Parameter (Req   : in Request'Class;
