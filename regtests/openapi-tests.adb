@@ -23,11 +23,17 @@ with TestAPI.Clients;
 with TestAPI.Models;
 with TestBinary.Clients;
 with TestBinary.Models;
+with External;
 package body OpenAPI.Tests is
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("OpenAPI.Tests");
 
    package Caller is new Util.Test_Caller (Test, "OpenAPI.Tests");
+
+   procedure Verify_Get_Stats (T      : in out Test;
+                               Result : in External.Stat_Vector;
+                               Count  : in Natural;
+                               Prefix : in String);
 
    procedure Add_Tests (Suite : in Util.Tests.Access_Test_Suite) is
    begin
@@ -39,6 +45,8 @@ package body OpenAPI.Tests is
                        Test_Text_Response'Access);
       Caller.Add_Test (Suite, "Test image/png response",
                        Test_Binary_Response'Access);
+      Caller.Add_Test (Suite, "Test application/json response",
+                       Test_External_Data'Access);
    end Add_Tests;
 
    overriding
@@ -215,5 +223,46 @@ package body OpenAPI.Tests is
                                 "Invalid length");
 
    end Test_Binary_Response;
+
+   procedure Verify_Get_Stats (T      : in out Test;
+                               Result : in External.Stat_Vector;
+                               Count  : in Natural;
+                               Prefix : in String) is
+   begin
+      Util.Tests.Assert_Equals (T, Count, Natural (Result.Length),
+                                "Invalid length");
+      for I in 1 .. Count loop
+         declare
+            Item : constant External.Stat_Type := Result.Element (I);
+         begin
+            Util.Tests.Assert_Equals (T, I, Item.Count, "Invalid count");
+            Util.Tests.Assert_Equals (T, Prefix & Natural'Image (I),
+                                      Item.Name);
+         end;
+      end loop;
+   end Verify_Get_Stats;
+
+   --  Test API that uses text/plain response.
+   procedure Test_External_Data (T : in out Test) is
+      Client  : TestBinary.Clients.Client_Type;
+      Result  : External.Stat_Vector;
+   begin
+      T.Configure (Client);
+      Client.Do_Get_Stats (TestBinary.Models.OPEN, Result);
+      Verify_Get_Stats (T, Result, 1, "OPEN");
+
+      Client.Do_Get_Stats (TestBinary.Models.ASSIGNED, Result);
+      Verify_Get_Stats (T, Result, 2, "ASSIGNED");
+
+      Client.Do_Get_Stats (TestBinary.Models.CLOSED, Result);
+      Verify_Get_Stats (T, Result, 10, "CLOSED");
+
+      Client.Do_Get_Stats (TestBinary.Models.ONHOLD, Result);
+      Verify_Get_Stats (T, Result, 10, "ONHOLD");
+
+      Client.Do_Get_Stats (TestBinary.Models.REJECTED, Result);
+      Verify_Get_Stats (T, Result, 10, "REJECTED");
+
+   end Test_External_Data;
 
 end OpenAPI.Tests;
