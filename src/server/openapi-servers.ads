@@ -50,6 +50,8 @@ package OpenAPI.Servers is
    procedure Get_Path_Parameter (Req   : in Request'Class;
                                  Pos   : in Positive;
                                  Value : out Long);
+   function Get_Path_Parameter (Req   : in Request'Class;
+                                Pos   : in Positive) return String;
 
    --  Get a request parameter from the query string.
    function Get_Query_Parameter (Req   : in Request'Class;
