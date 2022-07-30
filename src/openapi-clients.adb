@@ -257,7 +257,7 @@ package body OpenAPI.Clients is
       declare
          Content_Type : constant String := Client.Response.Get_Header ("Content-Type");
       begin
-         if Content_Type = "application/json" then
+         if Util.Http.Mimes.Is_Mime (Content_Type, Mime_Json.all) then
             declare
                Parser  : Util.Serialize.IO.JSON.Parser;
                Mapper  : Util.Beans.Objects.Readers.Reader;
@@ -270,7 +270,7 @@ package body OpenAPI.Clients is
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
-         elsif Content_Type = "application/xml"
+         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Xml.all)
            or else Content_Type = "text/xml"
          then
             declare
@@ -285,7 +285,7 @@ package body OpenAPI.Clients is
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
-         elsif Content_Type = "application/x-www-form-urlencoded" then
+         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Form.all) then
             declare
                Parser  : Util.Serialize.IO.Form.Parser;
                Mapper  : Util.Beans.Objects.Readers.Reader;
@@ -298,7 +298,7 @@ package body OpenAPI.Clients is
                Parser.Parse_String (Content, Mapper);
                Reply := Mapper.Get_Root;
             end;
-         elsif Content_Type = "text/plain" then
+         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Text.all) then
             declare
                Content : constant String := Client.Response.Get_Body;
             begin
