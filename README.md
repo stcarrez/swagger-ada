@@ -23,6 +23,10 @@ specific operations or types.
   - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
   - Update the openapi generator to version 6.0.0
   - Add support for text/plain response
+  - Add support to use external Ada types in OpenAPI definitions
+  - Add support for multiple response types
+  - Add support for binary responses
+  - Add support for Ada enum generation for OpenAPI enums
   - Integrate Swagger UI v4.13.0
 
 ## Version 0.5.1   - Feb 2022
