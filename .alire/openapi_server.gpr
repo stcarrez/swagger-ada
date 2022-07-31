@@ -1,8 +1,6 @@
 with "openapi_config";
 with "utilada_sys";
-with "utilada_http";
 with "servletada";
-with "servletada_aws";
 with "security";
 with "openapi";
 library project Openapi_Server is
