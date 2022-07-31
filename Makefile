@@ -54,16 +54,27 @@ generate:
 
 # Build and run the unit tests
 test:	build-test
-ifeq (${HAVE_SERVER},yes)
-	bin/testapi-server > testapi-server.log & \
+ifeq (${HAVE_EWS},yes)
+	bin/testapi_ews > testapi-server-ews.log & \
         SERVER_PID=$$!; \
         sleep 1; \
 	(test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -l $(NAME):AWS: -p AWS -config tests.properties -xml openapi-aws-aunit.xml) ;\
+          bin/swagger_harness_aws -l $(NAME):AWS:EWS -p AWS_EWS -config tests.properties -xml openapi-aws-ews-aunit.xml) ;\
 	(test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -l $(NAME):CURL: -p CURL -config tests.properties -xml openapi-curl-aunit.xml) ;\
+          bin/swagger_harness_curl -l $(NAME):CURL:EWS -p CURL_EWS -config tests.properties -xml openapi-curl-ews-aunit.xml) ;\
         kill $$SERVER_PID
-else
+endif
+ifeq (${HAVE_AWS},yes)
+	bin/testapi_aws > testapi-server-aws.log & \
+        SERVER_PID=$$!; \
+        sleep 1; \
+	(test ! -f bin/swagger_harness_aws || \
+          bin/swagger_harness_aws -l $(NAME):AWS:AWS -p AWS_AWS -config tests.properties -xml openapi-aws-aws-aunit.xml) ;\
+	(test ! -f bin/swagger_harness_curl || \
+          bin/swagger_harness_curl -l $(NAME):CURL:AWS -p CURL_AWS -config tests.properties -xml openapi-curl-aws-aunit.xml) ;\
+        kill $$SERVER_PID
+endif
+ifeq (${HAVE_SERVER},no)
 	test ! -f bin/swagger_harness_aws || \
           bin/swagger_harness_aws -p AWS -config tests-client.properties -xml openapi-aws-aunit.xml
 	test ! -f bin/swagger_harness_curl || \
