@@ -30,8 +30,7 @@ specific operations or types.
 utilada = "^2.5.0"
 utilada_xml = "^2.5.0"
 security = "^1.4.1"
-servletada = "^1.5.3"
-servletada_aws = "^1.5.3"
+servletada = "^1.6.0"
 openapi = "^0.6.0"
 
 [gpr-externals]
