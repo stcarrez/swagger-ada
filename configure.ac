@@ -24,6 +24,8 @@ AC_CHECK_PROG(HAVE_DYNAMO,dynamo,yes)
 
 AM_GNAT_FIND_ADA_UTIL([Ada OpenAPI])
 
+AM_GNAT_FIND_ADA_SECURITY([Ada OpenAPI])
+
 ##########################################
 # Check for OpenAPI Server support
 ##########################################
@@ -40,11 +42,39 @@ AC_MSG_RESULT(${ac_enable_server})
 OPENAPI_HAVE_SERVER=$ac_enable_server
 AC_SUBST(OPENAPI_HAVE_SERVER)
 
+OPENAPI_HAVE_EWS=no
+OPENAPI_HAVE_AWS=no
+WITH_SERVLET_EWS=''
+WITH_SERVLET_WWS=''
+SERVER_EWS=''
+SERVER_AWS=''
 if test T${ac_enable_server} = Tyes; then
   AM_GNAT_FIND_ADA_SERVLET([Ada OpenAPI])
+
+  AM_GNAT_FIND_PROJECT([ada-servlet],[Servlet Ada with Embedded Web Server],[servletada_ews],
+   [https://github.com/simonjwright/ews],
+   [],
+   [
+     OPENAPI_HAVE_EWS=yes
+     WITH_SERVLET_EWS="with \"${ac_cv_gnat_project_dir_servletada_ews}servletada_ews\";"
+     SERVER_EWS="\"ews\""
+   ])
+
+  AM_GNAT_FIND_PROJECT([ada-servlet],[Servlet Ada with Ada Web Server],[servletada_aws],
+   [https://libre.adacore.com/libre/tools/aws/],
+   [],
+   [
+     OPENAPI_HAVE_AWS=yes
+     WITH_SERVLET_AWS="with \"${ac_cv_gnat_project_dir_servletada_aws}servletada_aws\";"
+     SERVER_EWS="\"aws\""
+   ])
+
 fi
 
-AM_GNAT_FIND_ADA_SECURITY([Ada OpenAPI])
+AC_SUBST(OPENAPI_HAVE_EWS)
+AC_SUBST(WITH_SERVLET_EWS)
+AC_SUBST(OPENAPI_HAVE_AWS)
+AC_SUBST(WITH_SERVLET_AWS)
 
 AC_CONFIG_FILES([Makefile.conf
 openapi.gpr
