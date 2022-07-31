@@ -1,7 +1,6 @@
 with "@UTIL_DIR@config";
 with "@UTIL_DIR@utilada_sys";
 with "@SERVLET_DIR@servletada";
-with "@SERVLET_DIR@servletada_aws";
 with "@SECURITY_DIR@security";
 with "openapi";
 library project openapi_server is
