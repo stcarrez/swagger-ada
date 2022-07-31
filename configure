@@ -584,9 +584,13 @@ PACKAGE_URL=
 ac_unique_file="src/swagger.ads"
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-SECURITY_DIR
+WITH_SERVLET_AWS
+OPENAPI_HAVE_AWS
+WITH_SERVLET_EWS
+OPENAPI_HAVE_EWS
 SERVLET_DIR
 OPENAPI_HAVE_SERVER
+SECURITY_DIR
 UTIL_DIR
 HAVE_DYNAMO
 HAVE_PANDOC
@@ -672,9 +676,9 @@ enable_default_shared
 enable_distrib
 enable_coverage
 with_ada_util
+with_ada_security
 enable_server
 with_ada_servlet
-with_ada_security
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1313,8 +1317,10 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-build-root=PATH  Path to find the Ada libraries
   --with-ada-util=x       Path for Ada Utility Library
-  --with-ada-servlet=x    Path for Ada Servlet Library
   --with-ada-security=x   Path for Ada Security Library
+  --with-ada-servlet=x    Path for Ada Servlet Library
+  --with-ada-servlet=x    Path for Servlet Ada with Embedded Web Server
+  --with-ada-servlet=x    Path for Servlet Ada with Ada Web Server
 
 Report bugs to the package provider.
 _ACEOF
@@ -2664,6 +2670,131 @@ $as_echo "no" >&6; }
 
 
 
+
+
+
+# Check whether --with-ada-security was given.
+if test "${with_ada_security+set}" = set; then :
+  withval=$with_ada_security;
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_security=${awa_build_root}ada-security
+      else
+        ac_cv_gnat_project_name_security=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_security=${withval}/security
+	    fi
+      fi
+
+else
+
+      ac_cv_gnat_project_name_security=${awa_build_root}security
+
+fi
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Security Library" >&5
+$as_echo_n "checking Ada Security Library... " >&6; }
+if ${ac_cv_gnat_project_security+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+    rm -f conftest.gpr
+    # Search in the GNAT project path.
+    echo "with \"${ac_cv_gnat_project_name_security}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+    if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+    then
+      ac_cv_gnat_project_security=yes
+    else
+      ac_cv_gnat_project_security=no
+
+      # Search in ../ada-security-*/security.gpr
+      dir=`cd .. && pwd ${awa_pwd_option}`
+      files=`ls -r $dir/ada-security/security.gpr $dir/security/security.gpr $dir/ada-security-*/security.gpr 2>/dev/null`
+      for name in $files; do
+        dir=`dirname $name`
+        # AC_MSG_CHECKING([for Ada Security Library project in ${dir}])
+        echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+        if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+        then
+           ac_cv_gnat_project_security=yes
+		   ac_cv_gnat_project_name_security=${name}
+           # AC_MSG_RESULT(yes, using ${name})
+           break
+        else
+           ac_cv_gnat_project_security=no
+           # AC_MSG_RESULT(no)
+        fi
+      done
+      if test x${ac_cv_gnat_project_security} != xyes; then
+        echo "with \"security\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+        if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+        then
+           ac_cv_gnat_project_security=yes
+           ac_cv_gnat_project_name_security=security
+        else
+           ac_cv_gnat_project_security=no
+        fi
+      fi
+    fi
+    rm -f conftest.gpr
+
+    if test x${ac_cv_gnat_project_security} = xyes; then
+      ac_cv_gnat_project_with_security="with \"${ac_cv_gnat_project_name_security}\";";
+      ac_cv_gnat_project_dir_security=`dirname ${ac_cv_gnat_project_name_security}`
+      if test ${ac_cv_gnat_project_dir_security} = . ; then
+        ac_cv_gnat_project_dir_security=
+      else
+        ac_cv_gnat_project_dir_security="${ac_cv_gnat_project_dir_security}/"
+      fi
+    else
+      ac_cv_gnat_project_dir_security=
+      ac_cv_gnat_project_name_security=
+    fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_gnat_project_security" >&5
+$as_echo "$ac_cv_gnat_project_security" >&6; }
+
+  if test x${ac_cv_gnat_project_security} = xyes; then
+
+      SECURITY_DIR=${ac_cv_gnat_project_dir_security}
+
+  else
+    if test x"Building Ada OpenAPI requires the Ada Security Library." != x; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      as_fn_error $? "Building Ada OpenAPI requires the Ada Security Library.
+  You should build and install the Ada Security Library component.
+  It must be available and found by ${GNATMAKE}.
+  This project was not found in the ADA_PROJECT_PATH environment variable.
+  This project was not found in ../security nor in ../ada-security-*.
+  The component is available at git@github.com:stcarrez/ada-security.git.
+  Please, download and configure Ada Security Library.
+  The current configuration was using:
+    ${GNATMAKE}
+    ADA_PROJECT_PATH=$ADA_PROJECT_PATH
+" "$LINENO" 5
+    fi
+  fi
+
+
+
+
 ##########################################
 # Check for OpenAPI Server support
 ##########################################
@@ -2683,6 +2814,12 @@ $as_echo "${ac_enable_server}" >&6; }
 OPENAPI_HAVE_SERVER=$ac_enable_server
 
 
+OPENAPI_HAVE_EWS=no
+OPENAPI_HAVE_AWS=no
+WITH_SERVLET_EWS=''
+WITH_SERVLET_WWS=''
+SERVER_EWS=''
+SERVER_AWS=''
 if test T${ac_enable_server} = Tyes; then
 
 
@@ -2808,39 +2945,37 @@ $as_echo "no" >&6; }
 
 
 
-fi
 
 
 
-
-# Check whether --with-ada-security was given.
-if test "${with_ada_security+set}" = set; then :
-  withval=$with_ada_security;
+# Check whether --with-ada-servlet was given.
+if test "${with_ada_servlet+set}" = set; then :
+  withval=$with_ada_servlet;
       if test "${withval}/" = "yes/"; then
-        ac_cv_gnat_project_name_security=${awa_build_root}ada-security
+        ac_cv_gnat_project_name_servletada_ews=${awa_build_root}ada-servlet
       else
-        ac_cv_gnat_project_name_security=${withval}/
+        ac_cv_gnat_project_name_servletada_ews=${withval}/
         if test -d "${withval}"; then
-	      ac_cv_gnat_project_name_security=${withval}/security
+	      ac_cv_gnat_project_name_servletada_ews=${withval}/servletada_ews
 	    fi
       fi
 
 else
 
-      ac_cv_gnat_project_name_security=${awa_build_root}security
+      ac_cv_gnat_project_name_servletada_ews=${awa_build_root}servletada_ews
 
 fi
 
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Ada Security Library" >&5
-$as_echo_n "checking Ada Security Library... " >&6; }
-if ${ac_cv_gnat_project_security+:} false; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Servlet Ada with Embedded Web Server" >&5
+$as_echo_n "checking Servlet Ada with Embedded Web Server... " >&6; }
+if ${ac_cv_gnat_project_servletada_ews+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
     rm -f conftest.gpr
     # Search in the GNAT project path.
-    echo "with \"${ac_cv_gnat_project_name_security}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+    echo "with \"${ac_cv_gnat_project_name_servletada_ews}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
     if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
@@ -2848,16 +2983,16 @@ else
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
     then
-      ac_cv_gnat_project_security=yes
+      ac_cv_gnat_project_servletada_ews=yes
     else
-      ac_cv_gnat_project_security=no
+      ac_cv_gnat_project_servletada_ews=no
 
-      # Search in ../ada-security-*/security.gpr
+      # Search in ../ada-servlet-*/servletada_ews.gpr
       dir=`cd .. && pwd ${awa_pwd_option}`
-      files=`ls -r $dir/ada-security/security.gpr $dir/security/security.gpr $dir/ada-security-*/security.gpr 2>/dev/null`
+      files=`ls -r $dir/ada-servlet/servletada_ews.gpr $dir/servletada_ews/servletada_ews.gpr $dir/ada-servlet-*/servletada_ews.gpr 2>/dev/null`
       for name in $files; do
         dir=`dirname $name`
-        # AC_MSG_CHECKING([for Ada Security Library project in ${dir}])
+        # AC_MSG_CHECKING([for Servlet Ada with Embedded Web Server project in ${dir}])
         echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
         if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
@@ -2866,17 +3001,17 @@ else
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
         then
-           ac_cv_gnat_project_security=yes
-		   ac_cv_gnat_project_name_security=${name}
+           ac_cv_gnat_project_servletada_ews=yes
+		   ac_cv_gnat_project_name_servletada_ews=${name}
            # AC_MSG_RESULT(yes, using ${name})
            break
         else
-           ac_cv_gnat_project_security=no
+           ac_cv_gnat_project_servletada_ews=no
            # AC_MSG_RESULT(no)
         fi
       done
-      if test x${ac_cv_gnat_project_security} != xyes; then
-        echo "with \"security\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+      if test x${ac_cv_gnat_project_servletada_ews} != xyes; then
+        echo "with \"servletada_ews\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
         if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
   { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
@@ -2884,53 +3019,184 @@ else
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; }
         then
-           ac_cv_gnat_project_security=yes
-           ac_cv_gnat_project_name_security=security
+           ac_cv_gnat_project_servletada_ews=yes
+           ac_cv_gnat_project_name_servletada_ews=servletada_ews
         else
-           ac_cv_gnat_project_security=no
+           ac_cv_gnat_project_servletada_ews=no
         fi
       fi
     fi
     rm -f conftest.gpr
 
-    if test x${ac_cv_gnat_project_security} = xyes; then
-      ac_cv_gnat_project_with_security="with \"${ac_cv_gnat_project_name_security}\";";
-      ac_cv_gnat_project_dir_security=`dirname ${ac_cv_gnat_project_name_security}`
-      if test ${ac_cv_gnat_project_dir_security} = . ; then
-        ac_cv_gnat_project_dir_security=
+    if test x${ac_cv_gnat_project_servletada_ews} = xyes; then
+      ac_cv_gnat_project_with_servletada_ews="with \"${ac_cv_gnat_project_name_servletada_ews}\";";
+      ac_cv_gnat_project_dir_servletada_ews=`dirname ${ac_cv_gnat_project_name_servletada_ews}`
+      if test ${ac_cv_gnat_project_dir_servletada_ews} = . ; then
+        ac_cv_gnat_project_dir_servletada_ews=
       else
-        ac_cv_gnat_project_dir_security="${ac_cv_gnat_project_dir_security}/"
+        ac_cv_gnat_project_dir_servletada_ews="${ac_cv_gnat_project_dir_servletada_ews}/"
       fi
     else
-      ac_cv_gnat_project_dir_security=
-      ac_cv_gnat_project_name_security=
+      ac_cv_gnat_project_dir_servletada_ews=
+      ac_cv_gnat_project_name_servletada_ews=
     fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_gnat_project_security" >&5
-$as_echo "$ac_cv_gnat_project_security" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_gnat_project_servletada_ews" >&5
+$as_echo "$ac_cv_gnat_project_servletada_ews" >&6; }
 
-  if test x${ac_cv_gnat_project_security} = xyes; then
+  if test x${ac_cv_gnat_project_servletada_ews} = xyes; then
 
-      SECURITY_DIR=${ac_cv_gnat_project_dir_security}
+     OPENAPI_HAVE_EWS=yes
+     WITH_SERVLET_EWS="with \"${ac_cv_gnat_project_dir_servletada_ews}servletada_ews\";"
+     SERVER_EWS="\"ews\""
 
   else
-    if test x"Building Ada OpenAPI requires the Ada Security Library." != x; then
+    if test x"" != x; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      as_fn_error $? "Building Ada OpenAPI requires the Ada Security Library.
-  You should build and install the Ada Security Library component.
+      as_fn_error $? "
+  You should build and install the Servlet Ada with Embedded Web Server component.
   It must be available and found by ${GNATMAKE}.
   This project was not found in the ADA_PROJECT_PATH environment variable.
-  This project was not found in ../security nor in ../ada-security-*.
-  The component is available at git@github.com:stcarrez/ada-security.git.
-  Please, download and configure Ada Security Library.
+  This project was not found in ../servletada_ews nor in ../ada-servlet-*.
+  The component is available at https://github.com/simonjwright/ews.
+  Please, download and configure Servlet Ada with Embedded Web Server.
   The current configuration was using:
     ${GNATMAKE}
     ADA_PROJECT_PATH=$ADA_PROJECT_PATH
 " "$LINENO" 5
     fi
   fi
+
+
+
+
+# Check whether --with-ada-servlet was given.
+if test "${with_ada_servlet+set}" = set; then :
+  withval=$with_ada_servlet;
+      if test "${withval}/" = "yes/"; then
+        ac_cv_gnat_project_name_servletada_aws=${awa_build_root}ada-servlet
+      else
+        ac_cv_gnat_project_name_servletada_aws=${withval}/
+        if test -d "${withval}"; then
+	      ac_cv_gnat_project_name_servletada_aws=${withval}/servletada_aws
+	    fi
+      fi
+
+else
+
+      ac_cv_gnat_project_name_servletada_aws=${awa_build_root}servletada_aws
+
+fi
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Servlet Ada with Ada Web Server" >&5
+$as_echo_n "checking Servlet Ada with Ada Web Server... " >&6; }
+if ${ac_cv_gnat_project_servletada_aws+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+    rm -f conftest.gpr
+    # Search in the GNAT project path.
+    echo "with \"${ac_cv_gnat_project_name_servletada_aws}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+    if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+    then
+      ac_cv_gnat_project_servletada_aws=yes
+    else
+      ac_cv_gnat_project_servletada_aws=no
+
+      # Search in ../ada-servlet-*/servletada_aws.gpr
+      dir=`cd .. && pwd ${awa_pwd_option}`
+      files=`ls -r $dir/ada-servlet/servletada_aws.gpr $dir/servletada_aws/servletada_aws.gpr $dir/ada-servlet-*/servletada_aws.gpr 2>/dev/null`
+      for name in $files; do
+        dir=`dirname $name`
+        # AC_MSG_CHECKING([for Servlet Ada with Ada Web Server project in ${dir}])
+        echo "with \"${name}\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+        if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+        then
+           ac_cv_gnat_project_servletada_aws=yes
+		   ac_cv_gnat_project_name_servletada_aws=${name}
+           # AC_MSG_RESULT(yes, using ${name})
+           break
+        else
+           ac_cv_gnat_project_servletada_aws=no
+           # AC_MSG_RESULT(no)
+        fi
+      done
+      if test x${ac_cv_gnat_project_servletada_aws} != xyes; then
+        echo "with \"servletada_aws\"; project conftest is for Source_Dirs use (); end conftest;" > conftest.gpr
+        if { ac_try='$GNATCHECK -Pconftest.gpr $GNATCHECK_ARG > /dev/null 2>conftest.out'
+  { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; }
+        then
+           ac_cv_gnat_project_servletada_aws=yes
+           ac_cv_gnat_project_name_servletada_aws=servletada_aws
+        else
+           ac_cv_gnat_project_servletada_aws=no
+        fi
+      fi
+    fi
+    rm -f conftest.gpr
+
+    if test x${ac_cv_gnat_project_servletada_aws} = xyes; then
+      ac_cv_gnat_project_with_servletada_aws="with \"${ac_cv_gnat_project_name_servletada_aws}\";";
+      ac_cv_gnat_project_dir_servletada_aws=`dirname ${ac_cv_gnat_project_name_servletada_aws}`
+      if test ${ac_cv_gnat_project_dir_servletada_aws} = . ; then
+        ac_cv_gnat_project_dir_servletada_aws=
+      else
+        ac_cv_gnat_project_dir_servletada_aws="${ac_cv_gnat_project_dir_servletada_aws}/"
+      fi
+    else
+      ac_cv_gnat_project_dir_servletada_aws=
+      ac_cv_gnat_project_name_servletada_aws=
+    fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_gnat_project_servletada_aws" >&5
+$as_echo "$ac_cv_gnat_project_servletada_aws" >&6; }
+
+  if test x${ac_cv_gnat_project_servletada_aws} = xyes; then
+
+     OPENAPI_HAVE_AWS=yes
+     WITH_SERVLET_AWS="with \"${ac_cv_gnat_project_dir_servletada_aws}servletada_aws\";"
+     SERVER_EWS="\"aws\""
+
+  else
+    if test x"" != x; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      as_fn_error $? "
+  You should build and install the Servlet Ada with Ada Web Server component.
+  It must be available and found by ${GNATMAKE}.
+  This project was not found in the ADA_PROJECT_PATH environment variable.
+  This project was not found in ../servletada_aws nor in ../ada-servlet-*.
+  The component is available at https://libre.adacore.com/libre/tools/aws/.
+  Please, download and configure Servlet Ada with Ada Web Server.
+  The current configuration was using:
+    ${GNATMAKE}
+    ADA_PROJECT_PATH=$ADA_PROJECT_PATH
+" "$LINENO" 5
+    fi
+  fi
+
+
+fi
+
+
 
 
 
