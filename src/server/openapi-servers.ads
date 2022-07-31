@@ -15,7 +15,6 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with Util.Http.Mimes;
 with Servlet.Rest;
 with Servlet.Core;
 with Security.Permissions;
