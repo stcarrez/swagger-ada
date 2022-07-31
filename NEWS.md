@@ -2,6 +2,7 @@ Version 0.6.0   -
   - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
   - Update the openapi generator to version 6.0.0
   - Add support for text/plain response
+  - Integrate Swagger UI v4.13.0
 
 Version 0.5.1   - Feb 2022
   - Fix #6: Issues in README.md
