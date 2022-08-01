@@ -89,7 +89,7 @@ install-data::
 	${CP} -rp web $(DESTDIR)${prefix}/share/openapi-ada/web
 	${MKDIR} -p $(DESTDIR)${prefix}/bin
 	$(INSTALL) scripts/openapi-generator $(DESTDIR)$(prefix)/bin/openapi-generator
-	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/openapi-ada
+	$(CP) share/openapi-ada/openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/openapi-ada
 
 $(eval $(call ada_library,$(NAME)))
 
