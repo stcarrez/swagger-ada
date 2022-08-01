@@ -43,8 +43,6 @@ disabled = true
 [[actions]]
 type = "post-fetch"
 command = ["mkdir", "bin"]
-
-type = "post-fetch"
 command = ["cp", "openapi-generator.sh", "bin/openapi-generator"]
 
 [environment]
