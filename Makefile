@@ -35,7 +35,7 @@ else
 setup::
 endif
 
-SWAGGER=java -jar openapi-generator-cli.jar
+SWAGGER=./scripts/openapi-generator
 OPENAPI_OPTIONS=--enable-post-process-file
 
 generate:
@@ -88,7 +88,7 @@ install-data::
 	${MKDIR} -p $(DESTDIR)${prefix}/share/openapi-ada
 	${CP} -rp web $(DESTDIR)${prefix}/share/openapi-ada/web
 	${MKDIR} -p $(DESTDIR)${prefix}/bin
-	$(INSTALL) openapi-generator.sh $(DESTDIR)$(prefix)/bin/openapi-generator
+	$(INSTALL) scripts/openapi-generator $(DESTDIR)$(prefix)/bin/openapi-generator
 	$(CP) openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/openapi-ada
 
 $(eval $(call ada_library,$(NAME)))

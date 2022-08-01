@@ -40,10 +40,5 @@ OPENAPI_LIBRARY_TYPE = ["relocatable", "static", "static-pic"]
 [configuration]
 disabled = true
 
-[[actions]]
-type = "post-fetch"
-command = ["mkdir", "bin"]
-command = ["cp", "openapi-generator.sh", "bin/openapi-generator"]
-
 [environment]
-PATH.prepend = "${CRATE_ROOT}/bin"
+PATH.prepend = "${CRATE_ROOT}/scripts"
