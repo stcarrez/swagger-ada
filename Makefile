@@ -147,5 +147,5 @@ endif
 
 $(eval $(call alire_publish,alire.toml,op/openapi,openapi-$(VERSION).toml))
 ifeq ($(HAVE_SERVER),yes)
-$(eval $(call alire_publish,alire.toml,op/openapi_server,openapi_server-$(VERSION).toml))
+$(eval $(call alire_publish,alire-server.toml,op/openapi_server,openapi_server-$(VERSION).toml))
 endif
