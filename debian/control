@@ -1,4 +1,4 @@
-Source: libswagger
+Source: libopenapi
 Priority: optional
 Section: libdevel
 Maintainer: Stephane Carrez <Stephane.Carrez@gmail.com>
@@ -19,7 +19,7 @@ Homepage: https://github.com/stcarrez/swagger-ada/
 Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-9
 Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-9
 
-Package: libswagger0.5.0
+Package: libopenapi0.6.0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -31,7 +31,7 @@ Description: OpenAPI Ada Client Support (runtime)
  .
  This package contains the runtime client libraries.
 
-Package: libswagger-server0.5.0
+Package: libopenapi-server0.6.0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -43,7 +43,7 @@ Description: OpenAPI Ada Server Support (runtime)
  .
  This package contains the runtime server libraries.
 
-Package: libswagger3-dev
+Package: libopenapi3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
@@ -55,7 +55,7 @@ Description: OpenAPI Ada Client Support (development)
  .
  This package contains the development files for OpenAPI Ada clients.
 
-Package: libswagger-generator3-dev
+Package: libopenapi-generator3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, openjdk-11-jre
@@ -63,7 +63,7 @@ Description: OpenAPI Ada Generator (development)
  This is the OpenAPI Code gnerator that is capable of generating
  Ada client and server support with the OpenAPI Ada library.
 
-Package: libswagger-server3-dev
+Package: libopenapi-server3-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}

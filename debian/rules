@@ -36,38 +36,38 @@ override_dh_auto_test::
 
 override_dh_auto_install::
 
-version=0.4.0
+version=0.6.0
 aliversion=3
 
-swagger_LIB_PKG = libswagger${version}
-swagger_DEV_PKG = libswagger${aliversion}-dev
+openapi_LIB_PKG = libopenapi${version}
+openapi_DEV_PKG = libopenapi${aliversion}-dev
 
-swagger_generator_DEV_PKG = libswagger-generator${aliversion}-dev
+openapi_generator_DEV_PKG = libopenapi-generator${aliversion}-dev
 
-swagger_server_LIB_PKG = libswagger-server${soversion}
-swagger_server_DEV_PKG = libswagger-server${aliversion}-dev
+openapi_server_LIB_PKG = libopenapi-server${soversion}
+openapi_server_DEV_PKG = libopenapi-server${aliversion}-dev
 
 override_dh_install::
 	# Files installed in the web/ directory are part of the binary
 	# server package.
 	$(MAKE) prefix=$(CURDIR)/debian/tmp/usr install
-	dh_installdirs --package=$(swagger_generator_DEV_PKG) \
-	   usr/share/swagger-ada
-	dh_install --package=$(swagger_generator_DEV_PKG) \
-	   usr/share/swagger-ada/openapi-generator-cli.jar usr/share/swagger-ada/
-	dh_install --package=$(swagger_generator_DEV_PKG) \
+	dh_installdirs --package=$(openapi_generator_DEV_PKG) \
+	   usr/share/openapi-ada
+	dh_install --package=$(openapi_generator_DEV_PKG) \
+	   usr/share/openapi-ada/openapi-generator-cli.jar usr/share/openapi-ada/
+	dh_install --package=$(openapi_generator_DEV_PKG) \
 	   usr/bin/openapi-generator usr/bin
-	dh_installdirs --package=$(swagger_server_DEV_PKG) \
-	   usr/share/swagger-ada/web
-	dh_installdirs --package=$(swagger_server_DEV_PKG) \
-	   usr/share/swagger-ada/web/ui
-	dh_installdirs --package=$(swagger_DEV_PKG) \
-	   usr/share/swagger-ada
+	dh_installdirs --package=$(openapi_server_DEV_PKG) \
+	   usr/share/openapi-ada/web
+	dh_installdirs --package=$(openapi_server_DEV_PKG) \
+	   usr/share/openapi-ada/web/ui
+	dh_installdirs --package=$(openapi_DEV_PKG) \
+	   usr/share/openapi-ada
 	files=`cd $(CURDIR)/web && find . -type f`; \
 	for i in $$files; do \
 		dir=`dirname $$i`; \
-		dh_install --package=$(swagger_server_DEV_PKG) \
-		   usr/share/swagger-ada/web/$$i usr/share/swagger-ada/web/$$dir ; \
+		dh_install --package=$(openapi_server_DEV_PKG) \
+		   usr/share/openapi-ada/web/$$i usr/share/openapi-ada/web/$$dir ; \
 	done
 	rm -rf $(CURDIR)/debian/tmp
 

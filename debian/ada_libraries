@@ -1,5 +1,5 @@
-MODE=distrib SWAGGER_LIBRARY_TYPE=relocatable
-swagger.gpr
+MODE=distrib OPENAPI_LIBRARY_TYPE=relocatable
+openapi.gpr
 
-MODE=distrib SWAGGER_LIBRARY_TYPE=relocatable
-swagger_server.gpr
+MODE=distrib OPENAPI_LIBRARY_TYPE=relocatable
+openapi_server.gpr
