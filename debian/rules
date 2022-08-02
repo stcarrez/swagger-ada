@@ -10,8 +10,8 @@ $(foreach line,$(shell sed -n '\
   s/^ gnat, gnat-\([0-9.]\+\),$$/ \
     GNAT_VERSION:=\1 \
   /p;\
-  s/^Package: libopenapi\([0-9.]\+\)$$/ \
-    soname:=libopenapi.so.\1 \
+  s/^Package: libswagger\([0-9.]\+\)$$/ \
+    soname:=libswagger.so.\1 \
   /p;\
   ' debian/control),$(eval $(line)))
 
@@ -36,13 +36,16 @@ override_dh_auto_test::
 
 override_dh_auto_install::
 
-swagger_LIB_PKG = libswagger0.3.0
-swagger_DEV_PKG = libswagger2-dev
+version=0.4.0
+aliversion=3
 
-swagger_generator_DEV_PKG = libswagger-generator2-dev
+swagger_LIB_PKG = libswagger${version}
+swagger_DEV_PKG = libswagger${aliversion}-dev
 
-swagger_server_LIB_PKG = libswagger-server0.3.0
-swagger_server_DEV_PKG = libswagger-server2-dev
+swagger_generator_DEV_PKG = libswagger-generator${aliversion}-dev
+
+swagger_server_LIB_PKG = libswagger-server${soversion}
+swagger_server_DEV_PKG = libswagger-server${aliversion}-dev
 
 override_dh_install::
 	# Files installed in the web/ directory are part of the binary
@@ -54,16 +57,16 @@ override_dh_install::
 	   usr/share/swagger-ada/openapi-generator-cli.jar usr/share/swagger-ada/
 	dh_install --package=$(swagger_generator_DEV_PKG) \
 	   usr/bin/openapi-generator usr/bin
-	dh_installdirs --package=$(swagger_server_LIB_PKG) \
+	dh_installdirs --package=$(swagger_server_DEV_PKG) \
 	   usr/share/swagger-ada/web
-	dh_installdirs --package=$(swagger_server_LIB_PKG) \
+	dh_installdirs --package=$(swagger_server_DEV_PKG) \
 	   usr/share/swagger-ada/web/ui
 	dh_installdirs --package=$(swagger_DEV_PKG) \
 	   usr/share/swagger-ada
 	files=`cd $(CURDIR)/web && find . -type f`; \
 	for i in $$files; do \
 		dir=`dirname $$i`; \
-		dh_install --package=$(swagger_server_LIB_PKG) \
+		dh_install --package=$(swagger_server_DEV_PKG) \
 		   usr/share/swagger-ada/web/$$i usr/share/swagger-ada/web/$$dir ; \
 	done
 	rm -rf $(CURDIR)/debian/tmp
