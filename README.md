@@ -2,11 +2,11 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
 [![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Download](https://img.shields.io/badge/download-0.5.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.5.0.tar.gz)
+[![Download](https://img.shields.io/badge/download-0.6.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.6.0.tar.gz)
 [![codecov](https://codecov.io/gh/stcarrez/swagger-ada/branch/master/graph/badge.svg)](https://codecov.io/gh/stcarrez/swagger-ada)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 [![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.5.0.svg)
+![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.6.0.svg)
 
 [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
@@ -19,7 +19,7 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
-## Version 0.6.0   - Under development
+## Version 0.6.0   - Aug 2022
   - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
   - Update the openapi generator to version 6.0.0
   - Add support for text/plain response
@@ -28,10 +28,6 @@ specific operations or types.
   - Add support for binary responses
   - Add support for Ada enum generation for OpenAPI enums
   - Integrate Swagger UI v4.13.0
-
-## Version 0.5.1   - Feb 2022
-  - Fix #6: Issues in README.md
-  - Fix #8: Missing swagger-servers-config.ads when compiling with alire
 
 [List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
 
