@@ -4,20 +4,20 @@ Section: libdevel
 Maintainer: Stephane Carrez <Stephane.Carrez@gmail.com>
 Build-Depends: debhelper (>= 10), autotools-dev,
  dh-ada-library,
- gnat, gnat-9,
+ gnat, gnat-10,
 # This line is parsed by debian/rules.
  gprbuild (>= 2015-2),
 # 2015-2 is compatible with gnat-6
- libxmlada-sax9-dev,
- libservletada3-dev,
- libservletada-unit3-dev,
- libutilada-xml3-dev,
- libutilada-aws3-dev,
- libutilada-curl3-dev
+ libxmlada-sax10-dev,
+ libservletada4-dev,
+ libservletada-unit4-dev,
+ libutilada-xml4-dev,
+ libutilada-aws4-dev,
+ libutilada-curl4-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/stcarrez/swagger-ada/
-Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-9
-Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-9
+Vcs-Git: https://github.com/stcarrez/swagger-ada.git -p debian-gnat-10
+Vcs-Browser: https://github.com/stcarrez/swagger-ada/tree/debian-gnat-10
 
 Package: libopenapi0.6.0
 Section: libs
@@ -43,7 +43,7 @@ Description: OpenAPI Ada Server Support (runtime)
  .
  This package contains the runtime server libraries.
 
-Package: libopenapi3-dev
+Package: libopenapi4-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}
@@ -55,7 +55,7 @@ Description: OpenAPI Ada Client Support (development)
  .
  This package contains the development files for OpenAPI Ada clients.
 
-Package: libopenapi-generator3-dev
+Package: libopenapi-generator4-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, openjdk-11-jre
@@ -63,7 +63,7 @@ Description: OpenAPI Ada Generator (development)
  This is the OpenAPI Code gnerator that is capable of generating
  Ada client and server support with the OpenAPI Ada library.
 
-Package: libopenapi-server3-dev
+Package: libopenapi-server4-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, ${ada:Depends}

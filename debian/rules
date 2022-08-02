@@ -37,7 +37,7 @@ override_dh_auto_test::
 override_dh_auto_install::
 
 version=0.6.0
-aliversion=3
+aliversion=4
 
 openapi_LIB_PKG = libopenapi${version}
 openapi_DEV_PKG = libopenapi${aliversion}-dev
