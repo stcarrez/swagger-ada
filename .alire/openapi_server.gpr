@@ -5,7 +5,7 @@ with "security";
 with "openapi";
 library project Openapi_Server is
 
-   Version := "1.0.0";
+   Version := "0.6.0";
    Library_Dir := "lib";
    Library_Type : Openapi_Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
 
