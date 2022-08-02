@@ -71,3 +71,5 @@ override_dh_install::
 	done
 	rm -rf $(CURDIR)/debian/tmp
 
+override_dh_strip_nondeterminism:
+	true
