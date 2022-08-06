@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
 [![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Download](https://img.shields.io/badge/download-0.6.0-brightgreen.svg)](http://download.vacs.fr/swagger-ada/swagger-ada-0.6.0.tar.gz)
+[![Download](https://img.shields.io/badge/download-0.6.0-brightgreen.svg)](http://download.vacs.fr/openapi-ada/openapi-ada-0.6.0.tar.gz)
 [![codecov](https://codecov.io/gh/stcarrez/swagger-ada/branch/master/graph/badge.svg)](https://codecov.io/gh/stcarrez/swagger-ada)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 [![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
