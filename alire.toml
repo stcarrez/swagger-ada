@@ -32,7 +32,7 @@ utilada_xml = "^2.5.0"
 security = "^1.4.1"
 
 [gpr-externals]
-BUILD = ["distrib", "debug", "optimize", "profile", "coverage"]
+OPENAPI_BUILD = ["distrib", "debug", "optimize", "profile", "coverage"]
 OPENAPI_LIBRARY_TYPE = ["relocatable", "static", "static-pic"]
 
 [configuration]

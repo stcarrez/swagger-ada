@@ -34,7 +34,7 @@ servletada = "^1.6.0"
 openapi = "^0.6.0"
 
 [gpr-externals]
-BUILD = ["distrib", "debug", "optimize", "profile", "coverage"]
+OPENAPI_BUILD = ["distrib", "debug", "optimize", "profile", "coverage"]
 OPENAPI_LIBRARY_TYPE = ["relocatable", "static", "static-pic"]
 
 [configuration]
