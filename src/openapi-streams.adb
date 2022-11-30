@@ -146,11 +146,11 @@ package body OpenAPI.Streams is
       else
          Deserialize (From, Name, Item);
       end if;
-      if Util.Beans.Objects.Is_Null (Item) then
-         Value := (Is_Null => True, Value => <>);
-      else
-         Value := (Is_Null => False, Value => Util.Beans.Objects.To_Boolean (Item));
-      end if;
+      Value :=
+        (if Util.Beans.Objects.Is_Null (Item) then
+           (Is_Null => True, Value => <>)
+         else (Is_Null => False,
+            Value      => Util.Beans.Objects.To_Boolean (Item)));
    end Deserialize;
 
    --  ------------------------------
@@ -179,11 +179,11 @@ package body OpenAPI.Streams is
       else
          Deserialize (From, Name, Item);
       end if;
-      if Util.Beans.Objects.Is_Null (Item) then
-         Value := (Is_Null => True, Value => 0);
-      else
-         Value := (Is_Null => False, Value => Util.Beans.Objects.To_Integer (Item));
-      end if;
+      Value :=
+        (if Util.Beans.Objects.Is_Null (Item) then
+           (Is_Null => True, Value => 0)
+         else (Is_Null => False,
+            Value      => Util.Beans.Objects.To_Integer (Item)));
    end Deserialize;
 
    --  ------------------------------
@@ -212,11 +212,11 @@ package body OpenAPI.Streams is
       else
          Deserialize (From, Name, Item);
       end if;
-      if Util.Beans.Objects.Is_Null (Item) then
-         Value := (Is_Null => True, Value => 0);
-      else
-         Value := (Is_Null => False, Value => Util.Beans.Objects.To_Long_Long_Integer (Item));
-      end if;
+      Value :=
+        (if Util.Beans.Objects.Is_Null (Item) then
+           (Is_Null => True, Value => 0)
+         else (Is_Null => False,
+            Value      => Util.Beans.Objects.To_Long_Long_Integer (Item)));
    end Deserialize;
 
    --  ------------------------------
@@ -258,11 +258,9 @@ package body OpenAPI.Streams is
                           Name  : in String;
                           Value : out Value_Type) is
    begin
-      if Name'Length = 0 then
-         Value := From;
-      else
-         Value := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      Value :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
@@ -271,16 +269,12 @@ package body OpenAPI.Streams is
                           Value : out Value_Array_Type) is
       List : Util.Beans.Objects.Object;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
-      if Util.Beans.Objects.Is_Array (List) then
-         Value.A := List;
-      else
-         Value.A := Util.Beans.Objects.Null_Object;
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
+      Value.A :=
+        (if Util.Beans.Objects.Is_Array (List) then List
+         else Util.Beans.Objects.Null_Object);
    end Deserialize;
 
    --  Extract an integer value stored under the given name.
@@ -289,11 +283,9 @@ package body OpenAPI.Streams is
                           Value : out Ada.Calendar.Time) is
       Time : OpenAPI.Value_Type;
    begin
-      if Name'Length = 0 then
-         Time := From;
-      else
-         Time := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      Time :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       declare
          T : constant String := Util.Beans.Objects.To_String (Time);
       begin
@@ -306,11 +298,9 @@ package body OpenAPI.Streams is
                           Value : out Nullable_Date) is
       Time : OpenAPI.Value_Type;
    begin
-      if Name'Length = 0 then
-         Time := From;
-      else
-         Time := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      Time :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Is_Null := Util.Beans.Objects.Is_Null (Time);
       if not Value.Is_Null then
          declare
@@ -327,11 +317,9 @@ package body OpenAPI.Streams is
       use Util.Beans.Objects;
       List : Util.Beans.Objects.Object;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Clear;
       if Is_Array (List) then
          for I in 1 .. Get_Count (List) loop
@@ -347,20 +335,17 @@ package body OpenAPI.Streams is
       List  : Util.Beans.Objects.Object;
       Item  : Util.Beans.Objects.Object;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Clear;
       if Is_Array (List) then
          for I in 1 .. Get_Count (List) loop
             Item := Get_Value (List, I);
-            if Util.Beans.Objects.Is_Null (Item) then
-               Value.Append ((Is_Null => True, Value => <>));
-            else
-               Value.Append ((Is_Null => False, Value => To_Unbounded_String (Item)));
-            end if;
+            Value.Append
+              ((if Util.Beans.Objects.Is_Null (Item) then
+                  (Is_Null => True, Value => <>)
+                else (Is_Null => False, Value => To_Unbounded_String (Item))));
          end loop;
       end if;
    end Deserialize;
@@ -379,11 +364,9 @@ package body OpenAPI.Streams is
          Value.Include (Name, Util.Beans.Objects.To_Integer (Item));
       end Process;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Clear;
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
@@ -407,11 +390,9 @@ package body OpenAPI.Streams is
          end if;
       end Process;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Clear;
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;
@@ -430,11 +411,9 @@ package body OpenAPI.Streams is
          Value.Include (Name, Item);
       end Process;
    begin
-      if Name'Length = 0 then
-         List := From;
-      else
-         List := Util.Beans.Objects.Get_Value (From, Name);
-      end if;
+      List :=
+        (if Name'Length = 0 then From
+         else Util.Beans.Objects.Get_Value (From, Name));
       Value.Clear;
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
    end Deserialize;

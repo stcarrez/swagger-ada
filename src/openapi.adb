@@ -24,11 +24,10 @@ package body OpenAPI is
    function To_String (Value : in Long) return String is
       Result : constant String := Long'Image (Value);
    begin
-      if Result (Result'First) = ' ' then
-         return Result (Result'First + 1 .. Result'Last);
-      else
-         return Result;
-      end if;
+      return
+        (if Result (Result'First) = ' ' then
+           Result (Result'First + 1 .. Result'Last)
+         else Result);
    end To_String;
 
    function Has_Element (Pos : in Value_Cursor) return Boolean is

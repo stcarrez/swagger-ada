@@ -168,11 +168,10 @@ package body OpenAPI.Clients is
    --  ------------------------------
    function To_String (URI : in URI_Type) return String is
    begin
-      if Length (URI.Query) > 0 then
-         return To_String (URI.URI) & "?" & To_String (URI.Query);
-      else
-         return To_String (URI.URI);
-      end if;
+      return
+        (if Length (URI.Query) > 0 then
+           To_String (URI.URI) & "?" & To_String (URI.Query)
+         else To_String (URI.URI));
    end To_String;
 
    --  ------------------------------
