@@ -1,22 +1,23 @@
 # OpenAPI Ada Library
 
-[![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Test Status](https://img.shields.io/jenkins/t/http/jenkins.vacs.fr/Bionic-Ada-Swagger.svg)](https://jenkins.vacs.fr/job/Bionic-Ada-Swagger/)
-[![Download](https://img.shields.io/badge/download-0.6.0-brightgreen.svg)](http://download.vacs.fr/openapi-ada/openapi-ada-0.6.0.tar.gz)
-[![codecov](https://codecov.io/gh/stcarrez/swagger-ada/branch/master/graph/badge.svg)](https://codecov.io/gh/stcarrez/swagger-ada)
+[![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/openapi.json)](https://alire.ada.dev/crates/openapi)
+[![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/openapi_server.json)](https://alire.ada.dev/crates/openapi_server)
+[![Build Status](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/build.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/summary)
+[![Test Status](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/tests.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/xunits)
+[![Coverage](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/coverage.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/summary)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 [![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.6.0.svg)
+[![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.6.0.svg)](Commits)
 
-[OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
+[OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
-given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
+given an [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
 
-The Ada client support has been integrated in [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator).
+The Ada client support has been integrated in [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator).
 
 The OpenAPI Ada library is a small support library for the Ada code generator
 provided by OpenAPI Generator.  The library provides support to serialize the data,
-make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
+make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
 ## Version 0.6.0   - Aug 2022
@@ -29,7 +30,14 @@ specific operations or types.
   - Add support for Ada enum generation for OpenAPI enums
   - Integrate Swagger UI v4.13.0
 
-[List all versions](https://github.com/stcarrez/swagger-ada/blob/master/NEWS.md)
+[List all versions](https://gitlab.com/stcarrez/swagger-ada/blob/master/NEWS.md)
+
+## Build with Alire
+
+```
+alr with openapi
+alr with openapi_server
+```
 
 ## Build and installation
 
@@ -37,15 +45,15 @@ The OpenAPI Ada library provides support for client and server.  The client part
 less constraints than the server part which needs more components.  For both parts,
 before building this library, you may need to install the following projects:
 
-* Ada Util      (https://github.com/stcarrez/ada-util)
-* Ada Security  (https://github.com/stcarrez/ada-security)
+* Ada Util      (https://gitlab.com/stcarrez/ada-util)
+* Ada Security  (https://gitlab.com/stcarrez/ada-security)
 * AWS      (https://libre.adacore.com/libre/tools/aws/)
 * XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
 
 If you also need to server part, you must also install the following components:
 
-* Ada EL        (https://github.com/stcarrez/ada-el)
-* Ada Servlet   (https://github.com/stcarrez/ada-servlet)
+* Ada EL        (https://gitlab.com/stcarrez/ada-el)
+* Ada Servlet   (https://gitlab.com/stcarrez/ada-servlet)
 
 Then, to build OpenAPI Ada library, configure as follows:
 ```
@@ -64,7 +72,7 @@ For the installation, use the following command:
 make install
 ```
 
-The git repository comes with a pre-compiled [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator)
+The git repository comes with a pre-compiled [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator)
 that will be installed in `/usr/local/share/openapi-ada/openapi-generator-cli.jar`.  To help in launching the
 generator, a script is installed in `/usr/local/bin/openapi-generator`.  You must have a Java JRE installed
 to be able to run the generator.
@@ -266,8 +274,8 @@ end Todos.Clients;
 
 ### Initialization
 
-The HTTP/REST support is provided by [Ada Util](https://github.com/stcarrez/ada-util)
-and encapsulated by [OpenAPI Ada](https://github.com/stcarrez/swagger-ada).  This support
+The HTTP/REST support is provided by [Ada Util](https://gitlab.com/stcarrez/ada-util)
+and encapsulated by [OpenAPI Ada](https://gitlab.com/stcarrez/swagger-ada).  This support
 is either based on Curl or on [AWS](https://libre.adacore.com/libre/tools/aws/).
 The OpenAPI code generator uses Curl by default and this can be changed when running
 the `openapi-generator` tool and changing the following option:
@@ -357,6 +365,6 @@ end Print;
 
 The OpenAPI Ada sources as well as a wiki documentation is provided on:
 
-- [Tutorial](https://github.com/stcarrez/swagger-ada/blob/master/docs/Tutorial.md)
+- [Tutorial](https://gitlab.com/stcarrez/swagger-ada/blob/master/docs/Tutorial.md)
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 
