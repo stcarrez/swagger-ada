@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-server -- Rest server support
---  Copyright (C) 2017, 2020, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -110,7 +110,7 @@ package body OpenAPI.Servers is
                                   Name  : in String;
                                   Value : out UString_Vectors.Vector) is
    begin
-      Value.Append (Req.Get_Parameter (Name));
+      Value.Append (To_UString (Req.Get_Parameter (Name)));
    end Get_Query_Parameter;
 
    procedure Get_Query_Parameter (Req   : in Request'Class;

@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-streams-forms -- x-www-form-urlencoded streams
---  Copyright (C) 2018, 2022 Stephane Carrez
+--  Copyright (C) 2018, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -172,6 +172,14 @@ package body OpenAPI.Streams.Forms is
    procedure Write_Long_Entity (Stream : in out Output_Stream;
                                 Name   : in String;
                                 Value  : in Long_Long_Integer) is
+   begin
+      null;
+   end Write_Long_Entity;
+
+   overriding
+   procedure Write_Long_Entity (Stream : in out Output_Stream;
+                                Name   : in String;
+                                Value  : in Long_Long_Float) is
    begin
       null;
    end Write_Long_Entity;

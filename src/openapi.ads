@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi -- Support library for OpenAPI code generator
---  Copyright (C) 2017, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,6 +57,12 @@ package OpenAPI is
    subtype UString is Ada.Strings.Unbounded.Unbounded_String;
    subtype Nullable_UString is Util.Nullables.Nullable_String;
 
+   package UString_Vectors is
+     new Ada.Containers.Vectors (Index_Type   => Positive,
+                                 Element_Type => UString,
+                                 "="          => Ada.Strings.Unbounded."=");
+   subtype UString_Vector is UString_Vectors.Vector;
+
    function To_String (S : in UString) return String
      renames Ada.Strings.Unbounded.To_String;
 
@@ -69,6 +75,7 @@ package OpenAPI is
    subtype Datetime is Ada.Calendar.Time;
 
    subtype Vector is Util.Beans.Objects.Vectors.Vector;
+   subtype Object_Vector is Util.Beans.Objects.Vectors.Vector;
 
    subtype Long is Long_Long_Integer;
    subtype Nullable_Long is Util.Nullables.Nullable_Long;
@@ -79,12 +86,16 @@ package OpenAPI is
    subtype Blob_Ref is Util.Blobs.Blob_Ref;
    subtype File_Part_Type is Util.Blobs.Blob_Ref;
 
-   subtype Number is Natural;
+   subtype Number is Long_Long_Float;
+   package Number_Vectors is
+     new Ada.Containers.Vectors (Index_Type   => Positive,
+                                 Element_Type => Number);
+   subtype Number_Vector is Number_Vectors.Vector;
 
    subtype Object is Util.Beans.Objects.Object;
    subtype Value_Type is Util.Beans.Objects.Object;
 
-   package UString_Vectors renames Util.Strings.Vectors;
+   package String_Vectors renames Util.Strings.Vectors;
 
    subtype Object_Map is Util.Beans.Objects.Maps.Map;
 

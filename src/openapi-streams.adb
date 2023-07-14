@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-streams -- Stream operations
---  Copyright (C) 2017, 2020, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +28,17 @@ package body OpenAPI.Streams is
    --  ------------------------------
    --  Serialize a list of strings in the stream.
    --  ------------------------------
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in OpenAPI.String_Vectors.Vector) is
+   begin
+      Stream.Start_Array (Name);
+      for S of Value loop
+         Stream.Write_Entity ("", S);
+      end loop;
+      Stream.End_Array (Name);
+   end Serialize;
+
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
                         Value  : in OpenAPI.UString_Vectors.Vector) is
@@ -115,6 +126,35 @@ package body OpenAPI.Streams is
       if Name'Length > 0 then
          Stream.End_Entity (Name);
       end if;
+   end Serialize;
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Object_Vector) is
+   begin
+      Stream.Start_Array (Name);
+      for S of Value loop
+         Stream.Write_Entity ("", S);
+      end loop;
+      Stream.End_Array (Name);
+   end Serialize;
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in OpenAPI.Number) is
+   begin
+      Stream.Write_Long_Entity (Name, Value);
+   end Serialize;
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in OpenAPI.Number_Vectors.Vector) is
+   begin
+      Stream.Start_Array (Name);
+      for S of Value loop
+         Stream.Write_Long_Entity ("", S);
+      end loop;
+      Stream.End_Array (Name);
    end Serialize;
 
    --  ------------------------------
@@ -252,6 +292,22 @@ package body OpenAPI.Streams is
    end Deserialize;
 
    --  ------------------------------
+   --  Extract an integer value stored under the given name.
+   --  ------------------------------
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Long_Long_Float) is
+      Item : OpenAPI.Value_Type;
+   begin
+      if Name = "" then
+         Item := From;
+      else
+         Deserialize (From, Name, Item);
+      end if;
+      Value := Util.Beans.Objects.To_Long_Long_Float (Item);
+   end Deserialize;
+
+   --  ------------------------------
    --  Extract a value stored under the given name.
    --  ------------------------------
    procedure Deserialize (From  : in OpenAPI.Value_Type;
@@ -323,7 +379,7 @@ package body OpenAPI.Streams is
 
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
-                          Value : out UString_Vectors.Vector) is
+                          Value : out String_Vectors.Vector) is
       use Util.Beans.Objects;
       List : Util.Beans.Objects.Object;
    begin
@@ -336,6 +392,25 @@ package body OpenAPI.Streams is
       if Is_Array (List) then
          for I in 1 .. Get_Count (List) loop
             Value.Append (To_String (Get_Value (List, I)));
+         end loop;
+      end if;
+   end Deserialize;
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out UString_Vectors.Vector) is
+      use Util.Beans.Objects;
+      List : Util.Beans.Objects.Object;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      if Is_Array (List) then
+         for I in 1 .. Get_Count (List) loop
+            Value.Append (To_Unbounded_String (Get_Value (List, I)));
          end loop;
       end if;
    end Deserialize;
@@ -437,6 +512,46 @@ package body OpenAPI.Streams is
       end if;
       Value.Clear;
       Util.Beans.Objects.Maps.Iterate (List, Process'Access);
+   end Deserialize;
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Object_Vector) is
+      use Util.Beans.Objects;
+      List  : Util.Beans.Objects.Object;
+      Item  : Util.Beans.Objects.Object;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      if Is_Array (List) then
+         for I in 1 .. Get_Count (List) loop
+            Item := Get_Value (List, I);
+            Value.Append (Item);
+         end loop;
+      end if;
+   end Deserialize;
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Number_Vectors.Vector) is
+      use Util.Beans.Objects;
+      List : Util.Beans.Objects.Object;
+   begin
+      if Name'Length = 0 then
+         List := From;
+      else
+         List := Util.Beans.Objects.Get_Value (From, Name);
+      end if;
+      Value.Clear;
+      if Is_Array (List) then
+         for I in 1 .. Get_Count (List) loop
+            Value.Append (To_Long_Long_Float (Get_Value (List, I)));
+         end loop;
+      end if;
    end Deserialize;
 
    procedure Deserialize (From  : in OpenAPI.Value_Type;

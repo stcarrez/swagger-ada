@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-streams -- Stream operations
---  Copyright (C) 2017, 2020, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,6 +31,10 @@ package OpenAPI.Streams is
                     Data   : in Util.Blobs.Blob_Ref);
 
    --  Serialize a list of strings in the stream.
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in OpenAPI.String_Vectors.Vector);
+
    procedure Serialize (Stream : in out Output_Stream'Class;
                         Name   : in String;
                         Value  : in OpenAPI.UString_Vectors.Vector);
@@ -67,6 +71,17 @@ package OpenAPI.Streams is
                         Name   : in String;
                         Value  : in Object_Map);
 
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Object_Vector);
+
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in Number);
+   procedure Serialize (Stream : in out Output_Stream'Class;
+                        Name   : in String;
+                        Value  : in OpenAPI.Number_Vectors.Vector);
+
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
@@ -101,6 +116,13 @@ package OpenAPI.Streams is
                           Name  : in String;
                           Value : out Nullable_UString);
 
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Number);
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Number_Vectors.Vector);
+
    --  Extract an integer value stored under the given name.
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
@@ -122,6 +144,10 @@ package OpenAPI.Streams is
 
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
+                          Value : out String_Vectors.Vector);
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
                           Value : out UString_Vectors.Vector);
 
    procedure Deserialize (From  : in OpenAPI.Value_Type;
@@ -139,6 +165,10 @@ package OpenAPI.Streams is
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
                           Value : out Object_Map);
+
+   procedure Deserialize (From  : in OpenAPI.Value_Type;
+                          Name  : in String;
+                          Value : out Object_Vector);
 
    procedure Deserialize (From  : in OpenAPI.Value_Type;
                           Name  : in String;
