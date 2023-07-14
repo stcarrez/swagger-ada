@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-credentials-oauth -- OAuth2 client credentials
---  Copyright (C) 2018, 2022 Stephane Carrez
+--  Copyright (C) 2018, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ package body OpenAPI.Credentials.OAuth is
                               Into       : in out Util.Http.Clients.Client'Class) is
    begin
       Into.Set_Header (Name  => "Authorization",
-                       Value => "Bearer " & Credential.Token.Get_Name);
+                       Value => Credential.Token.Get_Authorization);
    end Set_Credentials;
 
    --  ------------------------------
@@ -52,5 +52,14 @@ package body OpenAPI.Credentials.OAuth is
    begin
       Credential.Refresh_Token (To_String (Credential.Scope), Credential.Token);
    end Refresh_Token;
+
+   --  ------------------------------
+   --  Set the bearer token to be used for the authentication.
+   --  ------------------------------
+   procedure Bearer_Token (Credential : in out Oauth2_Credential_Type;
+                           Token      : in String) is
+   begin
+      Credential.Token := Security.OAuth.Clients.Create (Token);
+   end Bearer_Token;
 
 end OpenAPI.Credentials.OAuth;
