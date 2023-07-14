@@ -1,3 +1,7 @@
+Version 0.7.0   - Under development
+  - Add support for OpenAPI Number and array of Number
+  - Add support for Bearer API Key authorization
+
 Version 0.6.0   - Aug 2022
   - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
   - Update the openapi generator to version 6.0.0

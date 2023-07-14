@@ -20,6 +20,10 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+## Version 0.7.0   - Under development
+  - Add support for OpenAPI Number and array of Number
+  - Add support for Bearer API Key authorization
+
 ## Version 0.6.0   - Aug 2022
   - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
   - Update the openapi generator to version 6.0.0
@@ -30,7 +34,7 @@ specific operations or types.
   - Add support for Ada enum generation for OpenAPI enums
   - Integrate Swagger UI v4.13.0
 
-[List all versions](https://gitlab.com/stcarrez/swagger-ada/blob/master/NEWS.md)
+[List all versions](https://gitlab.com/stcarrez/openapi-ada/blob/master/NEWS.md)
 
 ## Build with Alire
 
@@ -275,7 +279,7 @@ end Todos.Clients;
 ### Initialization
 
 The HTTP/REST support is provided by [Ada Util](https://gitlab.com/stcarrez/ada-util)
-and encapsulated by [OpenAPI Ada](https://gitlab.com/stcarrez/swagger-ada).  This support
+and encapsulated by [OpenAPI Ada](https://gitlab.com/stcarrez/openapi-ada).  This support
 is either based on Curl or on [AWS](https://libre.adacore.com/libre/tools/aws/).
 The OpenAPI code generator uses Curl by default and this can be changed when running
 the `openapi-generator` tool and changing the following option:
@@ -365,6 +369,6 @@ end Print;
 
 The OpenAPI Ada sources as well as a wiki documentation is provided on:
 
-- [Tutorial](https://gitlab.com/stcarrez/swagger-ada/blob/master/docs/Tutorial.md)
+- [Tutorial](https://gitlab.com/stcarrez/openapi-ada/blob/master/docs/Tutorial.md)
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 
