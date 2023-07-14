@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2019, 2020, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2019, 2020, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -448,7 +448,6 @@ package body OpenAPI.Clients is
          Request.Buffer.Initialize (Size => 1000000);
          Json.Initialize (Request.Buffer'Unchecked_Access);
          Request.Data.Start_Document;
-         Request.Data.Start_Entity ("");
       end if;
    end Initialize;
 
