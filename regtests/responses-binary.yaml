@@ -104,5 +104,8 @@ components:
            format: int64
         name:
            type: string
+      required:
+        - name
+        - count
       x-ada-type-name: "External.Stat_Type"
       x-ada-vector-type-name: "External.Stat_Vector"
