@@ -151,12 +151,14 @@
         "properties" : {
           "count" : {
             "format" : "int64",
-            "type" : "integer"
+            "type" : "integer",
+            "x-ada-serialize-op" : "Write_Entity"
           },
           "name" : {
             "type" : "string"
           }
         },
+        "required" : [ "count", "name" ],
         "type" : "object",
         "x-ada-type-name" : "External.Stat_Type",
         "x-ada-vector-type-name" : "External.Stat_Vector"

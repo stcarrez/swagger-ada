@@ -214,4 +214,14 @@ package body TestAPI.Servers is
        end if;
    end Test_Text_Response;
 
+   overriding
+   procedure Test_Int
+     (Server  : in out Server_Type;
+      Options : in     Swagger.Nullable_UString;
+      Result  :    out TestAPI.Models.IntStruct_Type;
+      Context : in out Swagger.Servers.Context_Type) is
+   begin
+      Result := (Long_Int => 123456789, Short_Int => 12, Short_Int_2 => 34, Float_A => 3.14, Float_B => 0.31);
+   end Test_Int;
+
 end TestAPI.Servers;

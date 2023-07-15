@@ -112,6 +112,13 @@ package TestAPI.Servers is
        Result  : out Swagger.UString;
        Context : in out Swagger.Servers.Context_Type);
 
+   overriding
+   procedure Test_Int
+     (Server  : in out Server_Type;
+      Options : in     Swagger.Nullable_UString;
+      Result  :    out TestAPI.Models.IntStruct_Type;
+      Context : in out Swagger.Servers.Context_Type);
+
    package Server_Impl is
       new TestAPI.Skeletons.Shared_Instance (Server_Type);
 

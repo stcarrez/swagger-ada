@@ -10,9 +10,9 @@ with "utilada_sys";
 with "utilada_xml";
 with "utilada_http";
 with "security";
-with "Swagger";
+with "swagger";
 with "servletada";
-with "Swagger_server";
+with "swagger_server";
 project TestBinary is
 
     Mains := ("testbinary-server.adb");
