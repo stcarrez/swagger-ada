@@ -21,6 +21,7 @@ with Util.Serialize.IO.XML;
 with Util.Serialize.IO.Form;
 with Util.Strings;
 with Util.Log.Loggers;
+with Util.Http.Headers;
 with Util.Http.Mimes;
 with OpenAPI.Streams.Forms;
 package body OpenAPI.Clients is
@@ -32,6 +33,7 @@ package body OpenAPI.Clients is
 
    type Form_Output_Stream_Access is access all OpenAPI.Streams.Forms.Output_Stream'Class;
    type Json_Output_Stream_Access is access all Util.Serialize.IO.JSON.Output_Stream'Class;
+   type Xml_Output_Stream_Access is access all Util.Serialize.IO.XML.Output_Stream'Class;
 
    function Stream (Req : in Request_Type) return Stream_Accessor is
    begin
@@ -254,68 +256,7 @@ package body OpenAPI.Clients is
          Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
-      declare
-         Content_Type : constant String := Client.Response.Get_Header ("Content-Type");
-      begin
-         if Util.Http.Mimes.Is_Mime (Content_Type, Mime_Json.all) then
-            declare
-               Parser  : Util.Serialize.IO.JSON.Parser;
-               Mapper  : Util.Beans.Objects.Readers.Reader;
-               Content : constant String := Client.Response.Get_Body;
-            begin
-               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-                  Log.Debug ("{0}", Content);
-               end if;
-
-               Parser.Parse_String (Content, Mapper);
-               Reply := Mapper.Get_Root;
-            end;
-         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Xml.all)
-           or else Content_Type = "text/xml"
-         then
-            declare
-               Parser  : Util.Serialize.IO.XML.Parser;
-               Mapper  : Util.Beans.Objects.Readers.Reader;
-               Content : constant String := Client.Response.Get_Body;
-            begin
-               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-                  Log.Debug ("{0}", Content);
-               end if;
-
-               Parser.Parse_String (Content, Mapper);
-               Reply := Mapper.Get_Root;
-            end;
-         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Form.all) then
-            declare
-               Parser  : Util.Serialize.IO.Form.Parser;
-               Mapper  : Util.Beans.Objects.Readers.Reader;
-               Content : constant String := Client.Response.Get_Body;
-            begin
-               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-                  Log.Debug ("{0}", Content);
-               end if;
-
-               Parser.Parse_String (Content, Mapper);
-               Reply := Mapper.Get_Root;
-            end;
-         elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Text.all) then
-            declare
-               Content : constant String := Client.Response.Get_Body;
-            begin
-               if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-                  Log.Debug ("{0}", Content);
-               end if;
-
-               Reply := Util.Beans.Objects.To_Object (Content);
-            end;
-         else
-            declare
-               Content : constant Util.Blobs.Blob_Ref := Client.Response.Get_Body;
-            begin
-               Reply := Util.Beans.Objects.To_Object (Content);
-            end;
-         end if;
-      end;
+      Client_Type'Class (Client).Extract (Client.Response, Reply);
    end Call;
 
    procedure Call (Client    : in out Client_Type;
@@ -323,8 +264,6 @@ package body OpenAPI.Clients is
                    URI       : in URI_Type'Class;
                    Request   : in Request_Type'Class;
                    Reply     : out Value_Type) is
-      Parser   : Util.Serialize.IO.JSON.Parser;
-      Mapper   : Util.Beans.Objects.Readers.Reader;
       Path     : constant String := To_String (Client.Server) & To_String (URI);
    begin
       Request.Data.End_Document;
@@ -369,13 +308,77 @@ package body OpenAPI.Clients is
          Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
-      --  Todo check Response.Get_Header ("Content-Type")
-      Parser.Parse_String (Client.Response.Get_Body, Mapper);
-      if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
-         Log.Debug ("{0}", Client.Response.Get_Body);
-      end if;
-      Reply := Mapper.Get_Root;
+      Client_Type'Class (Client).Extract (Client.Response, Reply);
    end Call;
+
+   --  ------------------------------
+   --  Extract the from response a value in the generic Value_Type representation.
+   --  The value is deserialized according to the response Content-Type.
+   --  ------------------------------
+   procedure Extract (Client   : in out Client_Type;
+                      Response : in Util.Http.Clients.Response'Class;
+                      Reply    : out Value_Type) is
+      Content_Type : constant String := Response.Get_Header (Util.Http.Headers.Content_Type);
+   begin
+      if Util.Http.Mimes.Is_Mime (Content_Type, Mime_Json.all) then
+         declare
+            Parser  : Util.Serialize.IO.JSON.Parser;
+            Mapper  : Util.Beans.Objects.Readers.Reader;
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Parser.Parse_String (Content, Mapper);
+            Reply := Mapper.Get_Root;
+         end;
+      elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Xml.all)
+        or else Content_Type = "text/xml"
+      then
+         declare
+            Parser  : Util.Serialize.IO.XML.Parser;
+            Mapper  : Util.Beans.Objects.Readers.Reader;
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Parser.Parse_String (Content, Mapper);
+            Reply := Mapper.Get_Root;
+         end;
+      elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Form.all) then
+         declare
+            Parser  : Util.Serialize.IO.Form.Parser;
+            Mapper  : Util.Beans.Objects.Readers.Reader;
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Parser.Parse_String (Content, Mapper);
+            Reply := Mapper.Get_Root;
+         end;
+      elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Text.all) then
+         declare
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Reply := Util.Beans.Objects.To_Object (Content);
+         end;
+      else
+         declare
+            Content : constant Util.Blobs.Blob_Ref := Response.Get_Body;
+         begin
+            Reply := Util.Beans.Objects.To_Object (Content);
+         end;
+      end if;
+   end Extract;
 
    --  ------------------------------
    --  Set the Accept header according to what the operation supports and what is
@@ -401,8 +404,50 @@ package body OpenAPI.Clients is
    procedure Error (Client   : in out Client_Type;
                     Status   : in Natural;
                     Response : in Util.Http.Clients.Response'Class) is
-      pragma Unreferenced (Client, Response);
+      Content_Type : constant String := Response.Get_Header (Util.Http.Headers.Content_Type);
+      Mapper       : Util.Beans.Objects.Readers.Reader;
    begin
+      if Util.Http.Mimes.Is_Mime (Content_Type, Mime_Json.all) then
+         declare
+            Parser  : Util.Serialize.IO.JSON.Parser;
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Parser.Parse_String (Content, Mapper);
+            Client.Last_Error := Mapper.Get_Root;
+         end;
+      elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Xml.all) then
+         declare
+            Parser  : Util.Serialize.IO.XML.Parser;
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Parser.Parse_String (Content, Mapper);
+            Client.Last_Error := Mapper.Get_Root;
+         end;
+      elsif Util.Http.Mimes.Is_Mime (Content_Type, Mime_Text.all) then
+         declare
+            Content : constant String := Response.Get_Body;
+         begin
+            if Log.Get_Level >= Util.Log.DEBUG_LEVEL then
+               Log.Debug ("{0}", Content);
+            end if;
+
+            Client.Last_Error := Util.Beans.Objects.To_Object (Content);
+         end;
+      else
+         declare
+            Content : constant Util.Blobs.Blob_Ref := Response.Get_Body;
+         begin
+            Client.Last_Error := Util.Beans.Objects.To_Object (Content);
+         end;
+      end if;
       if Status = 404 then
          raise Not_Found;
       elsif Status = 401 then
@@ -423,31 +468,55 @@ package body OpenAPI.Clients is
    end Get_Status;
 
    --  ------------------------------
+   --  Get the last error response object that was received.
+   --  ------------------------------
+   function Get_Error (Client : in Client_Type) return Value_Type is
+   begin
+      return Client.Last_Error;
+   end Get_Error;
+
+   --  ------------------------------
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    --  ------------------------------
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
                          Mimes   : in Mime_List) is
-      Json  : Json_Output_Stream_Access;
-      Forms : Form_Output_Stream_Access;
       Mime  : constant Mime_Access := Mimes (Mimes'First);
    begin
       Client.Set_Header ("Content-Type", Mime.all);
       if Mime = Util.Http.Mimes.Form'Access then
-         Request.Buffer.Initialize (Size => 1000000);
-         Forms := new OpenAPI.Streams.Forms.Output_Stream;
-         Request.Data := Forms;
-         Forms.Initialize (Request.Buffer'Unchecked_Access);
-         Request.Data.Start_Document;
-
+         declare
+            Forms : Form_Output_Stream_Access;
+         begin
+            Request.Buffer.Initialize (Size => 1000000);
+            Forms := new OpenAPI.Streams.Forms.Output_Stream;
+            Request.Data := Forms;
+            Forms.Initialize (Request.Buffer'Unchecked_Access);
+            Request.Data.Start_Document;
+         end;
       elsif Mime = Util.Http.Mimes.Json'Access then
-         Client.Set_Header ("Content-Type", Mime.all);
-         Json := new Util.Serialize.IO.JSON.Output_Stream;
-         Request.Data := Json;
-         Request.Buffer.Initialize (Size => 1000000);
-         Json.Initialize (Request.Buffer'Unchecked_Access);
-         Request.Data.Start_Document;
+         declare
+            Json  : Json_Output_Stream_Access;
+         begin
+            Client.Set_Header ("Content-Type", Mime.all);
+            Json := new Util.Serialize.IO.JSON.Output_Stream;
+            Request.Data := Json;
+            Request.Buffer.Initialize (Size => 1000000);
+            Json.Initialize (Request.Buffer'Unchecked_Access);
+            Request.Data.Start_Document;
+         end;
+      elsif Mime = Util.Http.Mimes.Xml'Access then
+         declare
+            Xml  : Xml_Output_Stream_Access;
+         begin
+            Client.Set_Header ("Content-Type", Mime.all);
+            Xml := new Util.Serialize.IO.XML.Output_Stream;
+            Request.Data := Xml;
+            Request.Buffer.Initialize (Size => 1000000);
+            Xml.Initialize (Request.Buffer'Unchecked_Access);
+            Request.Data.Start_Document;
+         end;
       end if;
    end Initialize;
 

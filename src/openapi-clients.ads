@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2020, 2022 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2020, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -128,6 +128,12 @@ package OpenAPI.Clients is
                    Request   : in Request_Type'Class;
                    Reply     : out Value_Type);
 
+   --  Extract the from response a value in the generic Value_Type representation.
+   --  The value is deserialized according to the response Content-Type.
+   procedure Extract (Client   : in out Client_Type;
+                      Response : in Util.Http.Clients.Response'Class;
+                      Reply    : out Value_Type);
+
    --  Set the Accept header according to what the operation supports and what is
    --  selected by the client.
    procedure Set_Accept (Client : in out Client_Type;
@@ -141,6 +147,9 @@ package OpenAPI.Clients is
 
    --  Get the HTTP response code status.
    function Get_Status (Client : in Client_Type) return Natural;
+
+   --  Get the last error response object that was received.
+   function Get_Error (Client : in Client_Type) return Value_Type;
 
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
@@ -159,6 +168,7 @@ private
       Server     : UString;
       Credential : access OpenAPI.Credentials.Credential_Type'Class;
       Response   : Util.Http.Clients.Response;
+      Last_Error : Value_Type;
    end record;
 
    type Stream_Accessor (Stream : access OpenAPI.Streams.Output_Stream'Class) is record
