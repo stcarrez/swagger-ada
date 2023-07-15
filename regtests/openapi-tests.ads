@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-tests -- Unit tests for REST clients
---  Copyright (C) 2018, 2022 Stephane Carrez
+--  Copyright (C) 2018, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,5 +50,8 @@ package OpenAPI.Tests is
 
    --  Test API that uses an external data type.
    procedure Test_External_Data (T : in out Test);
+
+   --  Test API that uses a struct with various numbers.
+   procedure Test_Struct_Numbers (T : in out Test);
 
 end OpenAPI.Tests;

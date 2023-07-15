@@ -102,6 +102,7 @@ components:
         count:
            type: integer
            format: int64
+           x-ada-serialize-op: "Write_Entity"
         name:
            type: string
       required:

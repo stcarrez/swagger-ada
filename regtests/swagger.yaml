@@ -310,6 +310,7 @@ paths:
                   $ref: '#/components/schemas/stringsMap'
                 commands:
                   $ref: '#/components/schemas/stringsMap'
+              x-ada-no-vector: true
         description: Requests an orchestrated service instance
         required: true
   /testTextResponse:
@@ -328,6 +329,22 @@ paths:
             text/plain:
               schema:
                 type: string
+  /testInt:
+    get:
+      operationId: testInt
+      parameters:
+        - name: options
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntStruct'
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -387,6 +404,32 @@ components:
       title: Information about a ticket
       xml:
         name: Ticket
+    IntStruct:
+      type: object
+      properties:
+        long_int:
+          type: integer
+          format: int64
+        short_int:
+          type: integer
+          format: int32
+        short_int2:
+          type: integer
+          format: int32
+          nullable: true
+        float_a:
+          type: number
+          format: float
+        float_b:
+          type: number
+          format: double
+      required:
+        - long_int
+        - short_int
+        - short_int2
+        - float_a
+        - float_b
+      x-ada-no-vector: true
     stringsMap:
       type: object
       properties:

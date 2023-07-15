@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-tests -- Unit tests for REST clients
---  Copyright (C) 2018, 2020, 2021, 2022 Stephane Carrez
+--  Copyright (C) 2018, 2020, 2021, 2022, 2023 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,6 +47,8 @@ package body OpenAPI.Tests is
                        Test_Binary_Response'Access);
       Caller.Add_Test (Suite, "Test application/json response",
                        Test_External_Data'Access);
+      Caller.Add_Test (Suite, "Test integer and floats in application/json response",
+                       Test_Struct_Numbers'Access);
    end Add_Tests;
 
    overriding
@@ -264,5 +266,21 @@ package body OpenAPI.Tests is
       Verify_Get_Stats (T, Result, 10, "REJECTED");
 
    end Test_External_Data;
+
+   --  Test API that uses a struct with various numbers.
+   procedure Test_Struct_Numbers (T : in out Test) is
+      Client : TestAPI.Clients.Client_Type;
+      Result : TestAPI.Models.IntStruct_TYpe;
+      Empty  : OpenAPI.Nullable_UString;
+   begin
+      T.Configure (Client);
+      Client.Test_Int (Empty, Result);
+      Util.Tests.Assert_Equals (T, 123456789, Natural (Result.Long_Int),
+                                "Invalid Long_Int");
+      Util.Tests.Assert_Equals (T, 12, Natural (Result.Short_Int),
+                                "Invalid Long_Int");
+      Util.Tests.Assert_Equals (T, 34, Natural (Result.Short_Int_2),
+                                "Invalid Short_Int_2");
+   end Test_Struct_Numbers;
 
 end OpenAPI.Tests;
