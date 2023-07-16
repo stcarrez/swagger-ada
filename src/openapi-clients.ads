@@ -156,6 +156,8 @@ package OpenAPI.Clients is
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class;
                          Mimes   : in Mime_List);
+   procedure Initialize (Client  : in out Client_Type;
+                         Request : in out Request_Type'Class);
 
 private
 

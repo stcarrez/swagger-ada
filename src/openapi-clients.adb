@@ -23,6 +23,7 @@ with Util.Strings;
 with Util.Log.Loggers;
 with Util.Http.Headers;
 with Util.Http.Mimes;
+with Util.Encoders.URI;
 with OpenAPI.Streams.Forms;
 package body OpenAPI.Clients is
 
@@ -97,7 +98,7 @@ package body OpenAPI.Clients is
       end if;
       Append (URI.Query, Name);
       Append (URI.Query, "=");
-      Append (URI.Query, Value);
+      Append (URI.Query, Util.Encoders.URI.Encode (Value));
    end Add_Param;
 
    procedure Add_Param (URI   : in out URI_Type;
@@ -474,6 +475,13 @@ package body OpenAPI.Clients is
    begin
       return Client.Last_Error;
    end Get_Error;
+
+   procedure Initialize (Client  : in out Client_Type;
+                         Request : in out Request_Type'Class) is
+      Mimes : constant Mime_List := (1 => OpenAPI.Mime_Json);
+   begin
+      Client.Initialize (Request, Mimes);
+   end Initialize;
 
    --  ------------------------------
    --  Initialize the request body to prepare for the serialization of data using
