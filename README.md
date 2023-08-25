@@ -20,19 +20,14 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
-## Version 0.7.0   - Under development
+## Version 0.7.0   - Aug 2023
   - Add support for OpenAPI Number and array of Number
   - Add support for Bearer API Key authorization
-
-## Version 0.6.0   - Aug 2022
-  - Rename Swagger package into OpenAPI and provide a Swagger package for compatibility
-  - Update the openapi generator to version 6.0.0
-  - Add support for text/plain response
-  - Add support to use external Ada types in OpenAPI definitions
-  - Add support for multiple response types
-  - Add support for binary responses
-  - Add support for Ada enum generation for OpenAPI enums
-  - Integrate Swagger UI v4.13.0
+  - Update the openapi generator to version 7.0.1
+    - The number type does not work consistently (float and double are not mapped correctly),
+    - The consumes and produces do not allow to really use several mime types for a request or response,
+    - The file and binary types are using an incorrect Ada mapping that is not supported by the Ada library,
+    - Added x-ada-no-vector, x-ada-serialize-op extensions to better control the generated Ada code
 
 [List all versions](https://gitlab.com/stcarrez/openapi-ada/blob/master/NEWS.md)
 
