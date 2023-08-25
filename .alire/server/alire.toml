@@ -25,6 +25,19 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+When using this crate, you must also choose a servlet web container that will handle the requests.
+Two web server implementations are provided:
+
+* [AWS](https://github.com/AdaCore/aws)
+* [EWS](https://github.com/simonjwright/ews)
+
+and you should run one of the following `alr` command depending on your choice:
+
+```
+alr with servletada_aws
+alr with servletada_ews
+```
+
 """
 
 [[depends-on]]
