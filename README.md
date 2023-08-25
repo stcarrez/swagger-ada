@@ -23,10 +23,10 @@ specific operations or types.
 ## Version 0.7.0   - Aug 2023
   - Add support for OpenAPI Number and array of Number
   - Add support for Bearer API Key authorization
-  - Update the openapi generator to version 7.0.1
-    - The number type does not work consistently (float and double are not mapped correctly),
-    - The consumes and produces do not allow to really use several mime types for a request or response,
-    - The file and binary types are using an incorrect Ada mapping that is not supported by the Ada library,
+  - Update the openapi generator to version 7.0.1:
+    - Fixed the number type that did not work consistently (float and double were not mapped correctly),
+    - The consumes and produces now allow to use several mime types for a request or response,
+    - The file and binary types were using an incorrect Ada mapping that was not supported by the Ada library,
     - Added x-ada-no-vector, x-ada-serialize-op extensions to better control the generated Ada code
 
 [List all versions](https://gitlab.com/stcarrez/openapi-ada/blob/master/NEWS.md)
