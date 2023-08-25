@@ -38,6 +38,19 @@ alr with openapi
 alr with openapi_server
 ```
 
+If you want to use the server part (`openapi_server`), you must choose a servlet web container that will handle the requests.
+Two web server implementations are provided:
+
+* [AWS](https://github.com/AdaCore/aws)
+* [EWS](https://github.com/simonjwright/ews)
+
+and you should run one of the following `alr` command depending on your choice:
+
+```
+alr with servletada_aws
+alr with servletada_ews
+```
+
 ## Build and installation
 
 The OpenAPI Ada library provides support for client and server.  The client part has
