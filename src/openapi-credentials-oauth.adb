@@ -56,7 +56,7 @@ package body OpenAPI.Credentials.OAuth is
    --  ------------------------------
    --  Set the bearer token to be used for the authentication.
    --  ------------------------------
-   procedure Bearer_Token (Credential : in out Oauth2_Credential_Type;
+   procedure Bearer_Token (Credential : in out OAuth2_Credential_Type;
                            Token      : in String) is
    begin
       Credential.Token := Security.OAuth.Clients.Create (Token);
