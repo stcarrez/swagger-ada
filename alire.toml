@@ -40,4 +40,4 @@ OPENAPI_LIBRARY_TYPE = ["relocatable", "static", "static-pic"]
 disabled = true
 
 [environment]
-PATH.prepend = "${CRATE_ROOT}/bin"
+PATH.prepend = "${CRATE_ROOT}/scripts"
