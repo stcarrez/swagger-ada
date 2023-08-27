@@ -45,7 +45,7 @@ utilada = "^2.6.0"
 utilada_xml = "^2.6.0"
 security = "^1.5.0"
 servletada = "^1.7.0"
-openapi = "^0.7.0"
+openapi = "0.7.0"
 
 [gpr-externals]
 OPENAPI_BUILD = ["distrib", "debug", "optimize", "profile", "coverage"]
