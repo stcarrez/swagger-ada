@@ -38,6 +38,13 @@ alr with openapi
 alr with openapi_server
 ```
 
+For the HTTP connection, you can either use AWS or Curl and run one of the following commands:
+
+```
+alr with utilada_curl
+alr with utilada_aws
+```
+
 If you want to use the server part (`openapi_server`), you must choose a servlet web container that will handle the requests.
 Two web server implementations are provided:
 
