@@ -25,6 +25,22 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
+## Alire setup
+
+```
+alr with openapi
+```
+
+For the HTTP connection, you can either use AWS or Curl and run one of the following commands:
+
+```
+alr with utilada_curl
+alr with utilada_aws
+```
+
+## Generation
+
+
 """
 
 [[depends-on]]
