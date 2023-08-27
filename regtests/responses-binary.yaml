@@ -83,6 +83,42 @@ paths:
                   $ref: '#/components/schemas/Stat'
         '404':
           description: Invalid status value
+  /object:
+    get:
+      summary: Get an object
+      description: |
+        Get an object
+      operationId: do_get_object
+      parameters:
+        - name: status
+          in: query
+          description: The image status
+          required: false
+          schema:
+            $ref: '#/components/schemas/Status'
+        - name: owner
+          in: query
+          description: The owner
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                description: Request limit per hour.
+          content:
+            application/json:
+              schema:
+                type: object
+            application/xml:
+              schema:
+                type: object
+        '404':
+          description: Invalid status value
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
