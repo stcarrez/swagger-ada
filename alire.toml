@@ -22,7 +22,7 @@ The Ada client support has been integrated in [OpenAPI Generator](https://github
 
 The OpenAPI Ada library is a small support library for the Ada code generator
 provided by OpenAPI Generator.  The library provides support to serialize the data,
-make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
+make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification)
 specific operations or types.
 
 ## Alire setup
@@ -31,7 +31,7 @@ specific operations or types.
 alr with openapi
 ```
 
-For the HTTP connection, you can either use AWS or Curl and run one of the following commands:
+For the HTTP connection, you can either use AWS or CURL and run one of the following commands:
 
 ```
 alr with utilada_curl
@@ -40,6 +40,15 @@ alr with utilada_aws
 
 ## Generation
 
+Example of client generation with OpenAPI file `my-api.yaml` and use of CURL support:
+
+```
+  alr exec -- openapi-generate-client -i my-api.yaml \
+       --additional-properties projectName=MyProject \
+       --additional-properties openApiName=OpenAPI \
+       --additional-properties httpSupport=Curl \
+       --model-package MyProject.MyModule -o .
+```
 
 """
 

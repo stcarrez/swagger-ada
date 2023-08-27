@@ -52,7 +52,7 @@ alr with utilada_aws
 alr with openapi_server
 ```
 
-For the server part (`openapi_server`), you must choose a servlet web container that will handle the requests.
+For the server part, you must choose a servlet web container that will handle the requests.
 Two web server implementations are provided:
 
 * [AWS](https://github.com/AdaCore/aws)

@@ -18,14 +18,20 @@ long-description = """
 API client libraries, server stubs and documentation automatically
 given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 
-The Ada client support has been integrated in [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator).
+The Ada server support has been integrated in [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator).
 
 The OpenAPI Ada library is a small support library for the Ada code generator
 provided by OpenAPI Generator.  The library provides support to serialize the data,
 make HTTP requests and support the [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 specific operations or types.
 
-When using this crate, you must also choose a servlet web container that will handle the requests.
+## Alire setup
+
+```
+alr with openapi_server
+```
+
+For the server part, you must choose a servlet web container that will handle the requests.
 Two web server implementations are provided:
 
 * [AWS](https://github.com/AdaCore/aws)
@@ -36,6 +42,18 @@ and you should run one of the following `alr` command depending on your choice:
 ```
 alr with servletada_aws
 alr with servletada_ews
+```
+
+## Generation
+
+Example of server generation with OpenAPI file `my-api.yaml` and use of CURL support:
+
+```
+  alr exec -- openapi-generate-server -i my-api.yaml \
+       --additional-properties projectName=MyProject \
+       --additional-properties openApiName=OpenAPI \
+       --additional-properties httpSupport=Curl \
+       --model-package MyProject.MyModule -o .
 ```
 
 """
