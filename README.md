@@ -13,11 +13,11 @@
 API client libraries, server stubs and documentation automatically
 given an [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
 
-The Ada client support has been integrated in [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator).
+The Ada client and server support has been integrated in [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator).
 
 The OpenAPI Ada library is a small support library for the Ada code generator
 provided by OpenAPI Generator.  The library provides support to serialize the data,
-make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification).
+make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification)
 specific operations or types.
 
 ## Version 0.7.0   - Aug 2023
@@ -33,9 +33,10 @@ specific operations or types.
 
 ## Build with Alire
 
+### OpenAPI Client
+
 ```
 alr with openapi
-alr with openapi_server
 ```
 
 For the HTTP connection, you can either use AWS or Curl and run one of the following commands:
@@ -45,7 +46,13 @@ alr with utilada_curl
 alr with utilada_aws
 ```
 
-If you want to use the server part (`openapi_server`), you must choose a servlet web container that will handle the requests.
+### OpenAPI Server
+
+```
+alr with openapi_server
+```
+
+For the server part (`openapi_server`), you must choose a servlet web container that will handle the requests.
 Two web server implementations are provided:
 
 * [AWS](https://github.com/AdaCore/aws)
@@ -75,6 +82,7 @@ If you also need to server part, you must also install the following components:
 * Ada Servlet   (https://gitlab.com/stcarrez/ada-servlet)
 
 Then, to build OpenAPI Ada library, configure as follows:
+
 ```
 ./configure
 make
@@ -113,7 +121,7 @@ sudo docker pull ciceron/openapi-ada
 
 The command to generate an Ada REST client is the following:
 ```
-  openapi-generator generate --generator-name ada -i my-api.yaml \
+  alr exec -- openapi-generate-client -i my-api.yaml \
        --additional-properties projectName=MyProject \
        --additional-properties openApiName=OpenAPI \
        --additional-properties httpSupport=Curl \
