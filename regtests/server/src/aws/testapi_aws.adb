@@ -1,7 +1,7 @@
 with Servlet.Server.Web;
-with Testapi.Server;
-procedure Testapi_Aws is
-   Container : Servlet.Server.Web.Aws_Container;
+with TestAPI.Server;
+procedure TestAPI_AWS is
+   Container : Servlet.Server.Web.AWS_Container;
 begin
-   Testapi.Server (Container);
-end Testapi_Aws;
+   TestAPI.Server (Container);
+end TestAPI_AWS;

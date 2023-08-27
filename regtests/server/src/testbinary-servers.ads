@@ -35,6 +35,14 @@ package TestBinary.Servers is
       Result  :    out External.Stat_Vector;
       Context : in out Swagger.Servers.Context_Type);
 
+   --  Get an object
+   overriding procedure Do_Get_Object
+     (Server  : in out Server_Type;
+      Status  : in     Status_Type;
+      Owner   : in     Swagger.Nullable_UString;
+      Result  :    out Swagger.Object;
+      Context : in out Swagger.Servers.Context_Type);
+
    package Server_Impl is new TestBinary.Skeletons.Shared_Instance
      (Server_Type);
 

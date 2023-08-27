@@ -10,6 +10,7 @@
 --  Then, you can drop this edit note comment.
 --  ------------ EDIT NOTE ------------
 with Util.Blobs;
+with Util.Beans.Objects;
 with Ada.Strings.Unbounded;
 package body TestBinary.Servers is
 
@@ -46,6 +47,17 @@ package body TestBinary.Servers is
 
       end case;
    end Do_Get_Image;
+
+   --  Get an object
+   overriding procedure Do_Get_Object
+     (Server  : in out Server_Type;
+      Status  : in     Status_Type;
+      Owner   : in     Swagger.Nullable_UString;
+      Result  :    out Swagger.Object;
+      Context : in out Swagger.Servers.Context_Type) is
+   begin
+      Result := Util.Beans.Objects.To_Object (String '("hello"));
+   end Do_Get_Object;
 
    --  Get some stat from external struct
    overriding procedure Do_Get_Stats

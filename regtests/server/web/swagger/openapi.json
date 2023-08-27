@@ -135,6 +135,64 @@
         },
         "summary" : "Get some stat from external struct"
       }
+    },
+    "/object" : {
+      "get" : {
+        "description" : "Get an object\n",
+        "operationId" : "do_get_object",
+        "parameters" : [ {
+          "description" : "The image status",
+          "explode" : true,
+          "in" : "query",
+          "name" : "status",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/Status"
+          },
+          "style" : "form"
+        }, {
+          "description" : "The owner",
+          "explode" : true,
+          "in" : "query",
+          "name" : "owner",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "successful operation",
+            "headers" : {
+              "X-RateLimit-Limit" : {
+                "explode" : false,
+                "schema" : {
+                  "description" : "Request limit per hour.",
+                  "type" : "integer"
+                },
+                "style" : "simple"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Invalid status value"
+          }
+        },
+        "summary" : "Get an object"
+      }
     }
   },
   "components" : {

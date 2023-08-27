@@ -1,5 +1,7 @@
 README.md
 config.gpr
+src/aws/testbinary_aws.adb
+src/ews/testbinary_ews.adb
 src/model/testbinary-models.adb
 src/model/testbinary-models.ads
 src/server/testbinary-skeletons.adb
