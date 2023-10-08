@@ -7,7 +7,7 @@
 [![Coverage](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/coverage.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/summary)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 [![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
-[![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.6.0.svg)](Commits)
+[![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.7.0.svg)](Commits)
 
 [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
