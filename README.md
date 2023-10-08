@@ -395,3 +395,10 @@ The OpenAPI Ada sources as well as a wiki documentation is provided on:
 - [Tutorial](https://gitlab.com/stcarrez/openapi-ada/blob/master/docs/Tutorial.md)
 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada)
 
+## Examples
+
+- [Todo API - OpenAPI Ada Server](https://github.com/stcarrez/swagger-ada-todo)
+- [Ada OpenAI](https://gitlab.com/stcarrez/ada-openai)
+- [OpenAI Image Generation](https://gitlab.com/stcarrez/openai-image)
+- [OpenAI Chat](https://gitlab.com/stcarrez/openai-chat)
+- [OpenAI Completion](https://gitlab.com/stcarrez/openai-completion)
