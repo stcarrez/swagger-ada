@@ -1,5 +1,8 @@
-
 NAME=openapi
+
+MAKE_ARGS += -XOPENAPI_BUILD=$(BUILD)
+PANDOC := $(shell which pandoc)
+DYNAMO := $(shell which dynamo)
 
 -include Makefile.conf
 
@@ -23,7 +26,7 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 include Makefile.defaults
 
 build-test::  setup
-	$(GNATMAKE) $(GPRFLAGS) -p -P$(NAME)_tests $(MAKE_ARGS)
+	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
 
 ifeq (${HAVE_SERVER},yes)
 setup:: src/server/openapi-servers-config.ads
@@ -95,9 +98,9 @@ install-data::
 
 $(eval $(call ada_library,$(NAME)))
 
-ifeq ($(HAVE_PANDOC),yes)
+ifneq (, ${PANDOC})
 doc::  docs/openapi-book.pdf docs/openapi-book.html
-ifeq ($(HAVE_DYNAMO),yes)
+ifneq (${DYNAMO},)
 	$(DYNAMO) build-doc -markdown wiki
 endif
 
@@ -114,7 +117,7 @@ DOC_OPTIONS=-f markdown -o openapi-book.pdf --listings --number-sections --toc
 HTML_OPTIONS=-f markdown -o openapi-book.html --listings --number-sections --toc --css pandoc.css
 
 docs/openapi-book.pdf: $(OPENAPI_DOC_DEP) force
-ifeq ($(HAVE_DYNAMO),yes)
+ifneq (${DYNAMO},)
 	$(DYNAMO) build-doc -pandoc docs
 endif
 	#cat docs/Model.md docs/ADO_Objects.md > docs/ADO_Model.md
