@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  swagger_harness -- Unit tests
---  Copyright (C) 2017, 2019 Stephane Carrez
+--  openapi_harness -- Unit tests
+--  Copyright (C) 2017, 2019, 2024 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +16,13 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 
-with Swagger.Testsuite;
+with OpenAPI.Testsuite;
 with Util.Tests;
 with Util.Http.Clients.Curl;
 
-procedure Swagger_Harness_Curl is
-   procedure Harness is new Util.Tests.Harness (Swagger.Testsuite.Suite);
+procedure OpenAPI_Harness_Curl is
+   procedure Harness is new Util.Tests.Harness (OpenAPI.Testsuite.Suite);
 begin
    Util.Http.Clients.Curl.Register;
-   Harness ("swagger-tests.xml");
-end Swagger_Harness_Curl;
+   Harness ("openapi-tests.xml");
+end OpenAPI_Harness_Curl;

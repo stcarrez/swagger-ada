@@ -1,0 +1,52 @@
+with "openapi_config";
+with "utilada_sys";
+with "utilada_unit";
+with "utilada_http";
+with "testapi_model";
+with "openapi";
+
+project Openapi_Tests is
+
+   for Languages use ("Ada");
+
+   Mains := ();
+
+   case Utilada_Http.Has_Curl is
+      when "yes" =>
+         Mains := Mains & ("openapi_harness_curl.adb");
+
+      when "no" =>
+         null;
+   end case;
+
+   case Utilada_Http.Has_Aws is
+      when "yes" =>
+         Mains := Mains & ("openapi_harness_aws.adb");
+
+      when "no" =>
+         null;
+   end case;
+
+   for Source_Dirs use ("src", "client/src/client");
+
+   for Main use Mains;
+
+   for Object_Dir use "../" & OpenApi_Config'Object_Dir & "/obj";
+   for Exec_Dir use "../bin";
+
+   package binder is
+      case OpenApi_Config.Mode is
+         when "debug" =>
+            for Default_Switches ("Ada") use ("-E", "-W8");
+
+         when others =>
+            for Default_Switches ("Ada") use ("-E", "-W8");
+
+      end case;
+   end binder;
+
+   package Builder renames OpenApi_Config.Builder;
+   package Compiler renames OpenApi_Config.Compiler;
+   package Linker renames OpenApi_Config.Linker;
+
+end Openapi_Tests;

@@ -1,0 +1,30 @@
+description = "Tests for OpenAPI library to build REST client applications"
+tags = ["rest", "web", "api", "openapi"]
+name = "openapi_tests"
+version = "0.7.1"
+licenses = "Apache-2.0"
+authors = ["Stephane.Carrez@gmail.com"]
+maintainers = ["Stephane.Carrez@gmail.com"]
+maintainers-logins = ["stcarrez"]
+project-files = ["openapi_tests.gpr", "testapi_server.gpr"]
+website = "https://gitlab.com/stcarrez/openapi-ada"
+
+[[depends-on]]
+openapi = "*"
+openapi_server = "*"
+utilada = "^2.6.0"
+utilada_xml = "^2.6.0"
+utilada_curl = "^2.6.0"
+utilada_aws = "^2.6.0"
+utilada_unit = "^2.6.0"
+security = "^1.5.0"
+servletada_aws = "^1.7.0"
+servletada_ews = "^1.7.0"
+
+[configuration]
+disabled = true
+
+[[pins]]
+openapi = { path = '..' }
+openapi_server = { path = '../server' }
+servletada_aws = { path = '../../ada-servlet/aws' }
