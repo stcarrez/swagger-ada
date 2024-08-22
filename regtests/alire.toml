@@ -28,3 +28,4 @@ disabled = true
 openapi = { path = '..' }
 openapi_server = { path = '../server' }
 # servletada_aws = { path = '../../ada-servlet/aws' }
+servletada_aws = { path = 'ada-servlet/aws' }

@@ -9,8 +9,6 @@ CHANGES
 ChangeLog
 .settings
 Makefile.conf
-testapi_server.gpr
-testapi_model.gpr
 swagger-tests.xml
 bin
 obj/
