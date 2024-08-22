@@ -1,0 +1,6 @@
+with "openapi_server";
+abstract project swagger_server is
+
+   for Source_Dirs use ();
+
+end swagger_server;

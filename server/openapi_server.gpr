@@ -5,17 +5,17 @@ with "security";
 with "openapi";
 library project Openapi_Server is
 
-   Version := "0.6.0";
+   Version := OpenAPI.Version;
    Library_Dir := "lib";
    Library_Type : Openapi_Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
 
-   for Source_Dirs use ("../../src/server", ".");
+   for Source_Dirs use ("src");
    for Library_Name use "openapi_server";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
 
-   for Library_Dir use "../../lib/openapi_server/" & Project'Library_Kind;
-   for Object_Dir use "../../obj/openapi_server/" & Project'Library_Kind;
+   for Library_Dir use "../lib/openapi_server/" & Project'Library_Kind;
+   for Object_Dir use "../obj/openapi_server/" & Project'Library_Kind;
 
    package Builder  renames Openapi_Config.Builder;
    package Compiler renames Openapi_Config.Compiler;
