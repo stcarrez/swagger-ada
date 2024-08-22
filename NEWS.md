@@ -1,3 +1,7 @@
+Version 0.8.0   - Under development
+  - Cleanup build environment to drop configure
+  - Integrate swagger-ui-5.17.14
+
 Version 0.7.0   - Aug 2023
   - Add support for OpenAPI Number and array of Number
   - Add support for Bearer API Key authorization
