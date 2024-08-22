@@ -115,20 +115,20 @@ docs/openapi-book.html: docs/openapi-book.pdf force
 endif
 
 install::
-	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
           $(STATIC_MAKE_ARGS) swagger.gpr
 
 uninstall::
-	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
+	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
 
 $(eval $(call ada_library,openapi_server,server))
 
 install::
-	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
           $(STATIC_MAKE_ARGS) swagger_server.gpr
 
 uninstall::
-	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
+	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
 
 $(eval $(call alire_publish,.,op/openapi,openapi-$(VERSION).toml))
 $(eval $(call alire_publish,.alire/server,op/openapi_server,openapi_server-$(VERSION).toml))
