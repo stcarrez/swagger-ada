@@ -1,0 +1,37 @@
+with "openapi_config";
+with "utilada_sys";
+with "utilada_unit";
+with "utilada_http";
+with "servletada";
+with "security";
+with "openapi";
+with "openapi_server";
+with "testapi_model";
+with "servletada_aws";
+with "servletada_ews";
+with "gnatcoll";
+
+project TestAPI_Server is
+
+   for Main use ();
+   for Source_Dirs use ("server/src", "server/src/server");
+   for Object_Dir use "../" & OpenAPI_Config'Exec_Dir & "/obj";
+   for Excluded_Source_Files use ("testapi.ads", "testbinary.ads");
+   for Exec_Dir use "../bin";
+   
+   for Main use Project'Main & ("testapi_aws.adb");
+   for Source_Dirs use Project'Source_Dirs & ("server/src/aws");
+
+   for Main use Project'Main & ("testapi_ews.adb");
+   for Source_Dirs use Project'Source_Dirs & ("server/src/ews");
+
+   package Binder renames OpenAPI_Config.Binder;
+   package Builder renames OpenAPI_Config.Builder;
+   package Compiler is
+      --  Disable some comment style checks to avoid several warnings in generated files.
+      for Default_Switches ("Ada") use OpenAPI_Config.Compiler'Default_Switches ("Ada") & ("-gnatyN", "-gnatwU");
+   end compiler;
+   package Linker renames OpenAPI_Config.Linker;
+
+end TestAPI_Server;
+

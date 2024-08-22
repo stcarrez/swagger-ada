@@ -1,0 +1,28 @@
+with "openapi_config";
+with "utilada_sys";
+with "utilada_unit";
+with "utilada_http";
+with "openapi";
+with "gnatcoll";
+
+library project TestAPI_Model is
+
+   Version := "0.7.1";
+   Library_Type : OpenApi_Config.Library_Type_Type := external ("OPENAPI_LIBRARY_TYPE", "static");
+
+   for Library_Name use "testapi";
+   for Library_Kind use Library_Type;
+   for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
+   for Excluded_Source_Files use ("testapi-client.adb", "testbinary-client.adb");
+
+   for Source_Dirs use ("model", "client/src/model", "client/src");
+   for Object_Dir use "../obj/testapi_model/" & Project'Library_Kind;
+   for Library_Dir use "../lib/testapi_model/" & Project'Library_Kind;
+
+   package Builder renames OpenApi_Config.Builder;
+   package Compiler renames OpenApi_Config.Compiler;
+   package Binder is
+       for Default_Switches ("Ada") use OpenApi_Config.Binder'Default_Switches ("Ada") & ("-a");
+   end Binder;
+
+end TestAPI_Model;
