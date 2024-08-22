@@ -1,8 +1,10 @@
 NAME=openapi
+VERSION=0.7.1
+
+DIST_DIR=openapi-ada-$(VERSION)
+DIST_FILE=openapi-ada-$(VERSION).tar.gz
 
 MAKE_ARGS += -XOPENAPI_BUILD=$(BUILD)
-PANDOC := $(shell which pandoc)
-DYNAMO := $(shell which dynamo)
 
 -include Makefile.conf
 
@@ -25,18 +27,8 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 
 include Makefile.defaults
 
-build-test::  setup
+build-test::  lib-setup
 	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
-
-ifeq (${HAVE_SERVER},yes)
-setup:: src/server/openapi-servers-config.ads
-
-src/server/openapi-servers-config.ads: Makefile src/server/openapi-servers-config.gpb
-	gnatprep -DWEB_DIR=\"${prefix}/share/openapi-ada/web\" \
-		src/server/openapi-servers-config.gpb $@
-else
-setup::
-endif
 
 SWAGGER=./scripts/openapi-generator
 OPENAPI_OPTIONS=--enable-post-process-file
@@ -57,46 +49,40 @@ generate:
 
 # Build and run the unit tests
 test:	build-test
-ifeq (${HAVE_EWS},yes)
 	bin/testapi_ews > testapi-server-ews.log & \
         SERVER_PID=$$!; \
         sleep 1; \
-	(test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -l $(NAME):AWS:EWS -p AWS_EWS -config tests.properties -xml openapi-aws-ews-aunit.xml) ;\
-	(test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -l $(NAME):CURL:EWS -p CURL_EWS -config tests.properties -xml openapi-curl-ews-aunit.xml) ;\
+	(test ! -f bin/openapi_harness_aws || \
+          bin/openapi_harness_aws -l $(NAME):AWS:EWS -p AWS_EWS -config tests.properties -xml openapi-aws-ews-aunit.xml) ;\
+	(test ! -f bin/openapi_harness_curl || \
+          bin/openapi_harness_curl -l $(NAME):CURL:EWS -p CURL_EWS -config tests.properties -xml openapi-curl-ews-aunit.xml) ;\
         kill $$SERVER_PID
-endif
-ifeq (${HAVE_AWS},yes)
 	bin/testapi_aws > testapi-server-aws.log & \
         SERVER_PID=$$!; \
         sleep 1; \
-	(test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -l $(NAME):AWS:AWS -p AWS_AWS -config tests.properties -xml openapi-aws-aws-aunit.xml) ;\
-	(test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -l $(NAME):CURL:AWS -p CURL_AWS -config tests.properties -xml openapi-curl-aws-aunit.xml) ;\
+	(test ! -f bin/openapi_harness_aws || \
+          bin/openapi_harness_aws -l $(NAME):AWS:AWS -p AWS_AWS -config tests.properties -xml openapi-aws-aws-aunit.xml) ;\
+	(test ! -f bin/openapi_harness_curl || \
+          bin/openapi_harness_curl -l $(NAME):CURL:AWS -p CURL_AWS -config tests.properties -xml openapi-curl-aws-aunit.xml) ;\
         kill $$SERVER_PID
-endif
-ifeq (${HAVE_SERVER},no)
-	test ! -f bin/swagger_harness_aws || \
-          bin/swagger_harness_aws -p AWS -config tests-client.properties -xml openapi-aws-aunit.xml
-	test ! -f bin/swagger_harness_curl || \
-          bin/swagger_harness_curl -p CURL -config tests-client.properties -xml openapi-curl-aunit.xml
-endif
+	test ! -f bin/openapi_harness_aws || \
+          bin/openapi_harness_aws -p AWS -config tests-client.properties -xml openapi-aws-aunit.xml
+	test ! -f bin/openapi_harness_curl || \
+          bin/openapi_harness_curl -p CURL -config tests-client.properties -xml openapi-curl-aunit.xml
 
 install:: install-data
 
 install-data::
 	rm -rf $(DESTDIR)${prefix}/share/openapi-ada
 	${MKDIR} -p $(DESTDIR)${prefix}/share/openapi-ada
-	${CP} -rp web $(DESTDIR)${prefix}/share/openapi-ada/web
+	${CP} -rp server/web $(DESTDIR)${prefix}/share/openapi-ada/web
 	${MKDIR} -p $(DESTDIR)${prefix}/bin
 	$(INSTALL) scripts/openapi-generator $(DESTDIR)$(prefix)/bin/openapi-generator
 	$(INSTALL) scripts/openapi-generate-client $(DESTDIR)$(prefix)/bin/openapi-generate-client
 	$(INSTALL) scripts/openapi-generate-server $(DESTDIR)$(prefix)/bin/openapi-generate-server
 	$(CP) share/openapi-ada/openapi-generator-cli.jar $(DESTDIR)$(prefix)/share/openapi-ada
 
-$(eval $(call ada_library,$(NAME)))
+$(eval $(call ada_library,$(NAME),.))
 
 ifneq (, ${PANDOC})
 doc::  docs/openapi-book.pdf docs/openapi-book.html
@@ -135,11 +121,7 @@ install::
 uninstall::
 	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
 
-ifeq ($(HAVE_SERVER),yes)
-$(eval $(call ada_library,openapi_server))
-
-build-test::
-	$(GNATMAKE) $(GPRFLAGS) -p -Ptestapi_server $(MAKE_ARGS)
+$(eval $(call ada_library,openapi_server,server))
 
 install::
 	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
@@ -148,9 +130,5 @@ install::
 uninstall::
 	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
 
-endif
-
 $(eval $(call alire_publish,.,op/openapi,openapi-$(VERSION).toml))
-ifeq ($(HAVE_SERVER),yes)
 $(eval $(call alire_publish,.alire/server,op/openapi_server,openapi_server-$(VERSION).toml))
-endif
