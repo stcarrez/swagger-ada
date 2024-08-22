@@ -125,7 +125,7 @@ $(eval $(call ada_library,openapi_server,server))
 
 install::
 	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
-          $(STATIC_MAKE_ARGS) swagger_server.gpr
+          $(STATIC_MAKE_ARGS) server/swagger_server.gpr
 
 uninstall::
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
