@@ -1,7 +1,6 @@
 *~
 *.log
 *.map
-autom4te.cache
 CHANGES
 *.cproject
 *.gb_project
