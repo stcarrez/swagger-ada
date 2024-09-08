@@ -2,6 +2,7 @@
 NAME=openapi.cov
 alr exec -- lcov --quiet --base-directory . --directory . \
    --no-external \
+   --exclude '*/<unknown>' \
    --exclude '*/b__*.adb' \
    --exclude '*/samples/*' \
    --exclude '*/regtests*'  -c -o $NAME
