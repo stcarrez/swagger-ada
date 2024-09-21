@@ -11,9 +11,9 @@ procedure TestBinary.Server (Server : in out Servlet.Server.Container'Class) is
 
    CONFIG_PATH : constant String := "testbinary.properties";
 
-   Port : Natural                          := 8_080;
-   App  : aliased Swagger.Servers.Applications.Application_Type;
-   Log  : constant Util.Log.Loggers.Logger :=
+   Port   : Natural                          := 8_080;
+   App    : aliased Swagger.Servers.Applications.Application_Type;
+   Log    : constant Util.Log.Loggers.Logger :=
      Util.Log.Loggers.Create ("TestBinary.Server");
    Props  : Util.Properties.Manager;
    Config : Servlet.Server.Configuration;

@@ -24,10 +24,10 @@ procedure TestAPI.Client is
 
    procedure Usage;
 
-   Server : constant Swagger.UString :=
+   Server    : constant Swagger.UString :=
      Swagger.To_UString ("http://localhost:8080/v2");
-   Arg_Count : constant Natural := Ada.Command_Line.Argument_Count;
-   Arg       : Positive         := 1;
+   Arg_Count : constant Natural         := Ada.Command_Line.Argument_Count;
+   Arg       : Positive                 := 1;
 
    procedure Usage is
    begin
