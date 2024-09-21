@@ -1,5 +1,5 @@
 NAME=openapi
-VERSION=0.7.1
+VERSION=0.8.0
 
 DIST_DIR=openapi-ada-$(VERSION)
 DIST_FILE=openapi-ada-$(VERSION).tar.gz
@@ -131,4 +131,4 @@ uninstall::
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
 
 $(eval $(call alire_publish,.,op/openapi,openapi-$(VERSION).toml))
-$(eval $(call alire_publish,.alire/server,op/openapi_server,openapi_server-$(VERSION).toml))
+$(eval $(call alire_publish,server,op/openapi_server,openapi_server-$(VERSION).toml))
