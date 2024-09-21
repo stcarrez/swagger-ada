@@ -74,3 +74,6 @@ command = ["gnatprep", "-DWEB_DIR=\"$(CRATE_ROOT)\"",
   "src/openapi-servers-config.gpb",
   "src/openapi-servers-config.ads"
 ]
+
+[[pins]]
+openapi = { path='..' }
