@@ -30,20 +30,20 @@ include Makefile.defaults
 build-test::  lib-setup
 	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
 
-SWAGGER=./scripts/openapi-generator
+OPENAPI=./scripts/openapi-generator
 OPENAPI_OPTIONS=--enable-post-process-file
 
 generate:
-	$(SWAGGER) generate --enable-post-process-file --generator-name ada -i regtests/swagger.yaml \
+	$(OPENAPI) generate --enable-post-process-file --generator-name ada -i regtests/swagger.yaml \
             --additional-properties projectName=TestAPI $(OPENAPI_OPTIONS) \
             --model-package TestAPI -o regtests/client
-	$(SWAGGER) generate --enable-post-process-file --generator-name ada -i regtests/responses-binary.yaml \
+	$(OPENAPI) generate --enable-post-process-file --generator-name ada -i regtests/responses-binary.yaml \
             --additional-properties projectName=TestBinary $(OPENAPI_OPTIONS) \
             --model-package TestBinary -o regtests/client
-	$(SWAGGER) generate --generator-name ada-server -i regtests/swagger.yaml \
+	$(OPENAPI) generate --generator-name ada-server -i regtests/swagger.yaml \
             --additional-properties projectName=TestAPI $(OPENAPI_OPTIONS) \
             --model-package TestAPI -o regtests/server
-	$(SWAGGER) generate --generator-name ada-server -i regtests/responses-binary.yaml \
+	$(OPENAPI) generate --generator-name ada-server -i regtests/responses-binary.yaml \
             --additional-properties projectName=TestBinary $(OPENAPI_OPTIONS) \
             --model-package TestBinary -o regtests/server
 
