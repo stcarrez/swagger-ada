@@ -1,3 +1,0 @@
-[submodule "regtests/ada-servlet"]
-	path = regtests/ada-servlet
-	url = https://gitlab.com/stcarrez/ada-servlet.git
