@@ -23,6 +23,7 @@ specific operations or types.
 ## Version 0.8.0   - Under development
   - Cleanup build environment to drop configure
   - Integrate swagger-ui-5.17.14
+  - Update the openapi generator to version 7.9.0
 
 ## Version 0.7.0   - Aug 2023
   - Add support for OpenAPI Number and array of Number
