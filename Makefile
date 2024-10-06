@@ -8,6 +8,8 @@ MAKE_ARGS += -XOPENAPI_BUILD=$(BUILD)
 
 -include Makefile.conf
 
+HAVE_SERVER?=yes
+
 STATIC_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=static
 SHARED_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=relocatable
 SHARED_MAKE_ARGS += -XSERVLETADA_CORE_BUILD=relocatable
@@ -28,7 +30,11 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 include Makefile.defaults
 
 build-test::  lib-setup
+ifeq ($(HAVE_ALIRE),yes)
 	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
+else
+	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) -Popenapi_tests.gpr
+endif
 
 OPENAPI=./scripts/openapi-generator
 OPENAPI_OPTIONS=--enable-post-process-file
@@ -121,6 +127,7 @@ install::
 uninstall::
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
 
+ifeq ($(HAVE_SERVER),yes)
 $(eval $(call ada_library,openapi_server,server))
 
 install::
@@ -129,6 +136,10 @@ install::
 
 uninstall::
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
+endif
 
 $(eval $(call alire_publish,.,op/openapi,openapi-$(VERSION).toml))
 $(eval $(call alire_publish,server,op/openapi_server,openapi_server-$(VERSION).toml))
+
+setup:: 
+	echo "HAVE_SERVER=$(HAVE_SERVER)" >> Makefile.conf
