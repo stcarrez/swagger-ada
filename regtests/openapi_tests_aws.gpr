@@ -1,35 +1,17 @@
 with "openapi_config";
 with "utilada_sys";
 with "utilada_unit";
-with "utilada_http";
+with "utilada_aws";
 with "testapi_model";
 with "openapi";
 
-project Openapi_Tests is
+project Openapi_Tests_Aws is
 
    for Languages use ("Ada");
 
-   Mains := ();
-
-   case Utilada_Http.Has_Curl is
-      when "yes" =>
-         Mains := Mains & ("openapi_harness_curl.adb");
-
-      when "no" =>
-         null;
-   end case;
-
-   case Utilada_Http.Has_Aws is
-      when "yes" =>
-         Mains := Mains & ("openapi_harness_aws.adb");
-
-      when "no" =>
-         null;
-   end case;
-
    for Source_Dirs use ("src", "client/src/client");
 
-   for Main use Mains;
+   for Main use ("openapi_harness_aws.adb");
 
    for Object_Dir use "../" & OpenApi_Config'Object_Dir & "/obj/regtests";
    for Exec_Dir use "../bin";
@@ -49,4 +31,4 @@ project Openapi_Tests is
    package Compiler renames OpenApi_Config.Compiler;
    package Linker renames OpenApi_Config.Linker;
 
-end Openapi_Tests;
+end Openapi_Tests_Aws;

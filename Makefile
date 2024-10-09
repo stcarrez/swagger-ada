@@ -9,6 +9,9 @@ MAKE_ARGS += -XOPENAPI_BUILD=$(BUILD)
 -include Makefile.conf
 
 HAVE_SERVER?=yes
+HAVE_CURL?=yes
+HAVE_AWS?=yes
+HAVE_EWS?=yes
 
 STATIC_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=static
 SHARED_MAKE_ARGS = $(MAKE_ARGS) -XOPENAPI_LIBRARY_TYPE=relocatable
@@ -29,11 +32,25 @@ SHARED_MAKE_ARGS += -XLIBRARY_TYPE=relocatable
 
 include Makefile.defaults
 
+DEFAULT_ADA_PROJECT_PATH:=$(SRC_ROOT)
+
+ifeq ($(HAVE_SERVER),yes)
+DEFAULT_ADA_PROJECT_PATH:=$(DEFAULT_ADA_PROJECT_PATH):$(SRC_ROOT)/server
+endif
+
+DEFAULT_ADA_PROJECT_PATH:=$(DEFAULT_ADA_PROJECT_PATH):$(ADA_PROJECT_PATH)
+
 build-test::  lib-setup
 ifeq ($(HAVE_ALIRE),yes)
 	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
 else
-	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) -Popenapi_tests.gpr
+ifeq ($(HAVE_AWS),yes)
+	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) -Ptestapi_server_aws.gpr
+	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) -Popenapi_tests_aws.gpr
+endif
+ifeq ($(HAVE_CURL),yes)
+	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) -Popenapi_tests_curl.gpr
+endif
 endif
 
 OPENAPI=./scripts/openapi-generator
@@ -55,6 +72,7 @@ generate:
 
 # Build and run the unit tests
 test:	build-test
+ifeq ($(HAVE_EWS),yes)
 	bin/testapi_ews > testapi-server-ews.log & \
         SERVER_PID=$$!; \
         sleep 1; \
@@ -63,6 +81,8 @@ test:	build-test
 	(test ! -f bin/openapi_harness_curl || \
           bin/openapi_harness_curl -l $(NAME):CURL:EWS -p CURL_EWS -config tests.properties -xml openapi-curl-ews-aunit.xml) ;\
         kill $$SERVER_PID
+endif
+ifeq ($(HAVE_AWS),yes)
 	bin/testapi_aws > testapi-server-aws.log & \
         SERVER_PID=$$!; \
         sleep 1; \
@@ -75,6 +95,7 @@ test:	build-test
           bin/openapi_harness_aws -p AWS -config tests-client.properties -xml openapi-aws-aunit.xml
 	test ! -f bin/openapi_harness_curl || \
           bin/openapi_harness_curl -p CURL -config tests-client.properties -xml openapi-curl-aunit.xml
+endif
 
 install:: install-data
 
@@ -143,3 +164,6 @@ $(eval $(call alire_publish,server,op/openapi_server,openapi_server-$(VERSION).t
 
 setup:: 
 	echo "HAVE_SERVER=$(HAVE_SERVER)" >> Makefile.conf
+	echo "HAVE_CURL=$(HAVE_CURL)" >> Makefile.conf
+	echo "HAVE_AWS=$(HAVE_AWS)" >> Makefile.conf
+	echo "HAVE_EWS=$(HAVE_EWS)" >> Makefile.conf
