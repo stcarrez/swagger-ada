@@ -40,6 +40,8 @@ endif
 
 DEFAULT_ADA_PROJECT_PATH:=$(DEFAULT_ADA_PROJECT_PATH):$(ADA_PROJECT_PATH)
 
+CLEAN_FILES=server/src/openapi-servers-config.ads
+
 build-test::  lib-setup
 ifeq ($(HAVE_ALIRE),yes)
 	cd regtests && $(BUILD_COMMAND) $(GPRFLAGS) $(MAKE_ARGS) 
@@ -149,6 +151,15 @@ uninstall::
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
 
 ifeq ($(HAVE_SERVER),yes)
+ifneq ($(HAVE_ALIRE),yes)
+lib-setup:: server/src/openapi-servers-config.ads
+
+server/src/openapi-servers-config.ads: server/src/openapi-servers-config.gpb
+	$(GNATPREP) -DWEB_DIR=\"$(PREFIX)\" \
+             server/src/openapi-servers-config.gpb \
+             server/src/openapi-servers-config.ads
+endif
+
 $(eval $(call ada_library,openapi_server,server))
 
 install::
