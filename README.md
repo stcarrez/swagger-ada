@@ -25,18 +25,12 @@ specific operations or types.
   - Integrate swagger-ui-5.17.14
   - Update the openapi generator to version 7.9.0
 
-## Version 0.7.0   - Aug 2023
-  - Add support for OpenAPI Number and array of Number
-  - Add support for Bearer API Key authorization
-  - Update the openapi generator to version 7.0.1:
-    - Fixed the number type that did not work consistently (float and double were not mapped correctly),
-    - The consumes and produces now allow to use several mime types for a request or response,
-    - The file and binary types were using an incorrect Ada mapping that was not supported by the Ada library,
-    - Added x-ada-no-vector, x-ada-serialize-op extensions to better control the generated Ada code
-
 [List all versions](https://gitlab.com/stcarrez/openapi-ada/blob/master/NEWS.md)
 
-## Build with Alire
+## Using with Alire
+
+If you are using [Alire](https://alire.ada.dev/) in your project, run the following command
+within your [Alire](https://alire.ada.dev/) project to use the library:
 
 ### OpenAPI Client
 
@@ -70,39 +64,48 @@ alr with servletada_aws
 alr with servletada_ews
 ```
 
-## Build and installation
+## Using without Alire
+
+If you don't have [Alire](https://alire.ada.dev/) or want to build and install the library
+on a specific place, run a `setup` command to configure the build as well as installation
+directory.
 
 The OpenAPI Ada library provides support for client and server.  The client part has
-less constraints than the server part which needs more components.  For both parts,
-before building this library, you may need to install the following projects:
+less constraints than the server part which needs more components.
 
-* Ada Util      (https://gitlab.com/stcarrez/ada-util)
-* Ada Security  (https://gitlab.com/stcarrez/ada-security)
-* AWS      (https://libre.adacore.com/libre/tools/aws/)
-* XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
-
-If you also need to server part, you must also install the following components:
-
-* Ada EL        (https://gitlab.com/stcarrez/ada-el)
-* Ada Servlet   (https://gitlab.com/stcarrez/ada-servlet)
-
-Then, to build OpenAPI Ada library, configure as follows:
+The `HAVE_ALIRE` configuration allows you to disable the build with [Alire](https://alire.ada.dev/),
+the `HAVE_SERVER` controls whether you want to build and get the support for the server part,
+the `HAVE_AWS` controls the support for AWS, `HAVE_CURL` the support for Curl in the client part
+and `HAVE_EWS` controls the support for EWS as server.
 
 ```
-./configure
+make setup BUILD=debug PREFIX=/build/install HAVE_ALIRE=no HAVE_EWS=no HAVE_AWS=yes \
+    HAVE_SERVER=yes HAVE_CURL=no
+```
+
+Since this build method does not verify that all dependencies are met, make sure that you
+have already built and install the following components and they are available to `gprbuild`
+through `ADA_PROJECT_PATH` if needed:
+
+* [Ada Utility Library](https://gitlab.com/stcarrez/ada-util/)
+
+The server part needs the following components:
+
+* [Ada Servlet](https://gitlab.com/stcarrez/ada-servlet/)
+* [Ada Security Library](https://gitlab.com/stcarrez/ada-security/)
+* [Ada EL Library](https://gitlab.com/stcarrez/ada-el/)
+
+Then build, run the unit tests and install by using:
+
+```
 make
-```
-
-And if you want the server part, configure and build with:
-```
-./configure --enable-server
-make
-```
-
-For the installation, use the following command:
-```
+make test
 make install
 ```
+
+To use the installed libraries, make sure your `ADA_PROJECT_PATH` contains the directory
+where you installed the libraries (configured by the `PREFIX=<path>` option in the setup phase).
+The installed GNAT projects are the same as those used when using [Alire](https://alire.ada.dev/).
 
 The git repository comes with a pre-compiled [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator)
 that will be installed in `/usr/local/share/openapi-ada/openapi-generator-cli.jar`.  To help in launching the
