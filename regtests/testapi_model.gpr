@@ -2,7 +2,7 @@ with "openapi_config";
 with "utilada_sys";
 with "utilada_unit";
 with "openapi";
-with "gnatcoll";
+--  with "gnatcoll";
 
 library project TestAPI_Model is
 
