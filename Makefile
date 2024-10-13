@@ -144,11 +144,20 @@ docs/openapi-book.html: docs/openapi-book.pdf force
 endif
 
 install::
+ifeq ($(HAVE_ALIRE),yes)
 	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
-          $(STATIC_MAKE_ARGS) swagger.gpr
+          $(STATIC_MAKE_ARGS) swagger.gp
+else
+	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+          $(STATIC_MAKE_ARGS) swagger.gp
+endif
 
 uninstall::
+ifeq ($(HAVE_ALIRE),yes)
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
+else
+	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger.gpr
+endif
 
 ifeq ($(HAVE_SERVER),yes)
 ifneq ($(HAVE_ALIRE),yes)
@@ -163,11 +172,20 @@ endif
 $(eval $(call ada_library,openapi_server,server))
 
 install::
+ifeq ($(HAVE_ALIRE),yes)
 	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
           $(STATIC_MAKE_ARGS) server/swagger_server.gpr
+else
+	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
+          $(STATIC_MAKE_ARGS) server/swagger_server.gpr
+endif
 
 uninstall::
+ifeq ($(HAVE_ALIRE),yes)
 	-$(ALR) exec -- $(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
+else
+	-$(GPRINSTALL) --uninstall -q -f --prefix=$(DESTDIR)${prefix} $(MAKE_ARGS) swagger_server.gpr
+endif
 endif
 
 $(eval $(call alire_publish,.,op/openapi,openapi-$(VERSION).toml))
