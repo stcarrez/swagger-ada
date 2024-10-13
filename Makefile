@@ -146,10 +146,10 @@ endif
 install::
 ifeq ($(HAVE_ALIRE),yes)
 	$(ALR) exec -- $(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
-          $(STATIC_MAKE_ARGS) swagger.gp
+          $(STATIC_MAKE_ARGS) swagger.gpr
 else
 	$(GPRINSTALL) -p -f --prefix=$(DESTDIR)${prefix} \
-          $(STATIC_MAKE_ARGS) swagger.gp
+          $(STATIC_MAKE_ARGS) swagger.gpr
 endif
 
 uninstall::
