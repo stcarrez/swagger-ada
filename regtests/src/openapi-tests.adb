@@ -289,6 +289,8 @@ package body OpenAPI.Tests is
       Client : Types.Clients.Client_Type;
       R1     : Types.Models.RackInfo_Type;
       Result : Types.Models.RackInfo_Type;
+      RA     : OpenAPI.Long;
+      RB     : OpenAPI.Long;
    begin
       T.Configure (Client);
 
@@ -297,6 +299,32 @@ package body OpenAPI.Tests is
       R1.V := 10.0;
       Client.Add_Rack (R1, Result);
       T.Assert (Result.Id > 0, "Invalid id after Add_Rack");
+      Util.Tests.Assert_Equals (T, "Rack A", Result.Name, "Invalid name");
+      T.Assert (R1.V = Result.V, "Invalid value");
+      RA := Result.Id;
+
+      R1.Name := To_UString ("Rack B");
+      R1.V := 20.0;
+      Client.Add_Rack (R1, Result);
+      T.Assert (Result.Id > 0, "Invalid id after Add_Rack");
+      Util.Tests.Assert_Equals (T, "Rack B", Result.Name, "Invalid name");
+      T.Assert (R1.V = Result.V, "Invalid value");
+      RB := Result.Id;
+      T.Assert (RA /= RB, "Must have different number for rack id");
+
+      Client.Get_Rack (RA, Result);
+      Util.Tests.Assert_Equals (T, "Rack A", Result.Name, "Invalid name");
+      T.Assert (Result.V = 10.0, "Invalid rack A value");
+
+      Client.Get_Rack (RB, Result);
+      Util.Tests.Assert_Equals (T, "Rack B", Result.Name, "Invalid name");
+      T.Assert (Result.V = 20.0, "Invalid rack B value");
+
+      R1.Name := TO_UString ("Rack B-updated");
+      R1.V := 200.0;
+      Client.Update_Rack (RB, R1, Result);
+      Util.Tests.Assert_Equals (T, "Rack B-updated", Result.Name, "Invalid name");
+
    end Test_Consumes_JSON;
 
    procedure Test_Enums (T : in out Test) is

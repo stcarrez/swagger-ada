@@ -12,12 +12,22 @@
 with OpenAPI.Servers;
 with Types.Models;
 with Types.Skeletons;
+with Ada.Containers.Ordered_Maps;
 
 package Types.Servers is
    pragma Warnings (Off, "*use clause for package*");
    use Types.Models;
-   type Server_Type is limited new Types.Skeletons.Server_Type with
-   null record;
+
+   package Rack_Maps is new
+     Ada.Containers.Ordered_Maps (Key_Type => OpenAPI.Long,
+                                  Element_Type => Types.Models.RackInfo_Type,
+                                  "<" => "<",
+                                  "=" => "=");
+
+   type Server_Type is limited new Types.Skeletons.Server_Type with record
+      Racks   : Rack_Maps.Map;
+      Next_Id : OpenAPI.Long := 1;
+   end record;
 
    --
    overriding procedure Add_Rack

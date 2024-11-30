@@ -18,8 +18,16 @@ package body Enums.Servers is
       Result  :    out Enums.Models.Stat_Type_Vectors.Vector;
       Context : in out OpenAPI.Servers.Context_Type)
    is
+      Item : Enums.Models.Stat_Type;
    begin
-      null;
+      Item.Status := Status;
+      Item.Mode := Enums.Models.OPTIMIZED;
+      for I in 1 .. 5 loop
+         Item.Count := OpenAPI.Long (I);
+         Item.Value.Is_Null := not Item.Value.Is_Null;
+         Item.Value.Value := Item.Value.Value * 2;
+         Result.Append (Item);
+      end loop;
    end Do_Get_Enums;
 
    --  Get an object

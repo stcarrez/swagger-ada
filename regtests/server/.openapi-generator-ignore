@@ -26,5 +26,7 @@ src/testapi-servers.adb
 src/testapi-server.adb
 src/testbinary-servers.ads
 src/testbinary-servers.adb
-src/testtypes-servers.ads
-src/testtypes-servers.adb
+src/types-servers.ads
+src/types-servers.adb
+src/enums-servers.ads
+src/enums-servers.adb

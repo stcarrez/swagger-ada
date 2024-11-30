@@ -9,6 +9,7 @@
 --
 --  Then, you can drop this edit note comment.
 --  ------------ EDIT NOTE ------------
+with Util.Http;
 package body Types.Servers is
 
    --
@@ -19,7 +20,10 @@ package body Types.Servers is
       Context   : in out OpenAPI.Servers.Context_Type)
    is
    begin
-      null;
+      Result := Rack_Info;
+      Result.Id := Server.Next_Id;
+      Server.Next_Id := Server.Next_Id + 1;
+      Server.Racks.Insert (Result.Id, Result);
    end Add_Rack;
 
    --
@@ -29,8 +33,13 @@ package body Types.Servers is
       Result  :    out Types.Models.RackInfo_Type;
       Context : in out OpenAPI.Servers.Context_Type)
    is
+      Pos : Rack_Maps.Cursor := Server.Racks.Find (Name);
    begin
-      null;
+      if not Rack_Maps.Has_Element (Pos) then
+         Context.Set_Status (Util.Http.SC_NOT_FOUND);
+         return;
+      end if;
+      Result := Rack_Maps.Element (Pos);
    end Get_Rack;
 
    --
@@ -41,8 +50,15 @@ package body Types.Servers is
       Result    :    out Types.Models.RackInfo_Type;
       Context   : in out OpenAPI.Servers.Context_Type)
    is
+      Pos : Rack_Maps.Cursor := Server.Racks.Find (Name);
    begin
-      null;
+      if not Rack_Maps.Has_Element (Pos) then
+         Context.Set_Status (Util.Http.SC_NOT_FOUND);
+         return;
+      end if;
+      Result := Rack_Info;
+      Result.Id := Name;
+      Server.Racks.Reference (Pos) := Result;
    end Update_Rack;
 
 end Types.Servers;
