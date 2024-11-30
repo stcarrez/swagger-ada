@@ -1,3 +1,15 @@
+Version 0.9.0   - Under development
+  - Update the openapi generator to version 7.11.0
+    - Fixed incorrect type declarations
+    - Added support for default values
+    - Fixed incorrect extraction of request body parameters for JSON and XML
+    - Added `x-ada-type-name` that can be put on the request body
+      to override a default request parameter name
+    - Fixed default request body parameter name to remove the
+      `_Type` that is added
+    - Updated GNAT project generation
+  - Allow to build and install without Alire
+
 Version 0.8.0   - Sep 2024
   - Cleanup build environment to drop configure
   - Integrate swagger-ui-5.17.14
