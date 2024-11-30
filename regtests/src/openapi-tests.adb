@@ -271,7 +271,7 @@ package body OpenAPI.Tests is
    --  Test API that uses a struct with various numbers.
    procedure Test_Struct_Numbers (T : in out Test) is
       Client : TestAPI.Clients.Client_Type;
-      Result : TestAPI.Models.IntStruct_TYpe;
+      Result : TestAPI.Models.IntStruct_Type;
       Empty  : OpenAPI.Nullable_UString;
    begin
       T.Configure (Client);
@@ -320,7 +320,7 @@ package body OpenAPI.Tests is
       Util.Tests.Assert_Equals (T, "Rack B", Result.Name, "Invalid name");
       T.Assert (Result.V = 20.0, "Invalid rack B value");
 
-      R1.Name := TO_UString ("Rack B-updated");
+      R1.Name := To_UString ("Rack B-updated");
       R1.V := 200.0;
       Client.Update_Rack (RB, R1, Result);
       Util.Tests.Assert_Equals (T, "Rack B-updated", Result.Name, "Invalid name");
