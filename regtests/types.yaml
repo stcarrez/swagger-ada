@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: REST API types validation
+  description: Types to validate
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8082/v1'
+  - url: 'http://localhost:8082/v1'
+paths:
+  /racks:
+    post:
+      tags:
+      - Racks
+      operationId: AddRack
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RackInfo'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RackInfo'
+  /racks/{name}:
+    parameters:
+    - in: path
+      name: name
+      description: Name of rack to return
+      required: true
+      schema:
+        $ref: '#/components/schemas/RackId'
+    get:
+      tags:
+      - Racks
+      operationId: GetRack
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RackInfo'
+    put:
+      tags:
+      - Racks
+      operationId: UpdateRack
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RackInfo'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RackInfo'
+components:
+  schemas:
+    RackInfo:
+      description: Rack information
+      type: object
+      required:
+      - Id
+      - Name
+      properties:
+        Id:
+          $ref: '#/components/schemas/RackId'
+        Name:
+          $ref: '#/components/schemas/Rack'
+        X:
+          $ref: '#/components/schemas/LocationHorizontal'
+        Y:
+          $ref: '#/components/schemas/LocationVertical'
+        V:
+          $ref: '#/components/schemas/Volume'
+    LocationHorizontal:
+      description: Horizontal coordinate in a rack.
+      type: string
+      maxLength: 3
+    LocationVertical:
+      description: Vertical coordinate in a rack.
+      type: string
+      maxLength: 3
+    Rack:
+      description: Name of rack.
+      type: string
+      maxLength: 30
+    RackId:
+      description: Id of rack.
+      type: integer
+      format: int64
+    Volume:
+      description: Volume of a package
+      type: number
+      format: double
+    Weight:
+      description: Weight of a package
+      type: number
+      format: double

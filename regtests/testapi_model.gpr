@@ -12,7 +12,8 @@ library project TestAPI_Model is
    for Library_Name use "testapi";
    for Library_Kind use Library_Type;
    for Library_Version use "lib" & Project'Library_Name & ".so." & Version;
-   for Excluded_Source_Files use ("testapi-client.adb", "testbinary-client.adb");
+   for Excluded_Source_Files use ("testapi-client.adb", "testbinary-client.adb",
+                                  "types-client.adb", "enums-client.adb");
 
    for Source_Dirs use ("model", "client/src/model", "client/src");
    for Object_Dir use "../obj/testapi_model/" & Project'Library_Kind;

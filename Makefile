@@ -71,6 +71,20 @@ generate:
 	$(OPENAPI) generate --generator-name ada-server -i regtests/responses-binary.yaml \
             --additional-properties projectName=TestBinary $(OPENAPI_OPTIONS) \
             --model-package TestBinary -o regtests/server
+	$(OPENAPI) generate --enable-post-process-file --generator-name ada -i regtests/types.yaml \
+            --additional-properties projectName=Types $(OPENAPI_OPTIONS) \
+            --model-package Types -o regtests/client
+	$(OPENAPI) generate --generator-name ada-server -i regtests/types.yaml \
+            --additional-properties projectName=Types $(OPENAPI_OPTIONS) \
+            --global-property=debugOperations,debugModels \
+            --model-package Types -o regtests/server > dbg.log
+	$(OPENAPI) generate --generator-name ada -i regtests/types-enum.yaml \
+            --additional-properties projectName=Enums $(OPENAPI_OPTIONS) \
+            --model-package Enums -o regtests/client
+	$(OPENAPI) generate --generator-name ada-server -i regtests/types-enum.yaml \
+            --additional-properties projectName=Enums $(OPENAPI_OPTIONS) \
+            --global-property=debugOperations,debugModels \
+            --model-package Enums -o regtests/server > enums.log
 
 # Build and run the unit tests
 test:	build-test

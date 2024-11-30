@@ -16,7 +16,7 @@ project TestAPI_Server is
    for Main use ();
    for Source_Dirs use ("server/src", "server/src/server");
    for Object_Dir use "../" & OpenAPI_Config'Exec_Dir & "/obj";
-   for Excluded_Source_Files use ("testapi.ads", "testbinary.ads");
+   for Excluded_Source_Files use ("testapi.ads", "testbinary.ads", "types.ads", "enums.ads");
    for Exec_Dir use "../bin";
    
    for Main use Project'Main & ("testapi_aws.adb");

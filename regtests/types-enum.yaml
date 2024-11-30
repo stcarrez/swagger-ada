@@ -1,0 +1,125 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://localhost:8082/v1'
+  - url: 'http://localhost:8082/v1'
+info:
+  description: API to validate
+  version: 1.0.0
+  title: REST API Validation
+  termsOfService: 'https://github.com/terms/'
+  contact:
+    email: Stephane.Carrez@gmail.com
+  license:
+    name: Apache Licence
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /enums/{status}:
+    get:
+      summary: Get some stat from external struct
+      operationId: do_get_enums
+      parameters:
+        - name: status
+          in: path
+          description: status information
+          required: true
+          schema:
+            $ref: '#/components/schemas/Status'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                description: Request limit per hour.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+        '404':
+          description: Invalid status value
+  /object:
+    get:
+      summary: Get an object
+      description: |
+        Get an object
+      operationId: do_get_object
+      parameters:
+        - name: status
+          in: query
+          description: The image status
+          required: false
+          schema:
+            $ref: '#/components/schemas/Status'
+        - name: owner
+          in: query
+          description: The owner
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                description: Request limit per hour.
+          content:
+            application/json:
+              schema:
+                type: object
+            application/xml:
+              schema:
+                type: object
+        '404':
+          description: Invalid status value
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  schemas:
+    Status:
+      type: string
+      enum:
+        - open
+        - onhold
+        - assigned
+        - closed
+        - rejected
+    Mode:
+      type: string
+      enum:
+        - fast
+        - optimized
+        - accurate
+      x-ada-no-vector: true
+      default: fast
+    Stat:
+      type: object
+      properties:
+        count:
+           type: integer
+           format: int64
+           default: 300
+        value:
+           type: integer
+           format: int64
+           default: 500
+        name:
+           type: string
+           default: plop
+        mode:
+           $ref: '#/components/schemas/Mode'
+        status:
+           $ref: '#/components/schemas/Status'
+      required:
+        - name
+        - count

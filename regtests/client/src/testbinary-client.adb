@@ -11,9 +11,11 @@
 --  ------------ EDIT NOTE ------------
 with TestBinary.Clients;
 with TestBinary.Models;
-with Swagger;
-with Swagger.Credentials.OAuth;
+with OpenAPI;
+with OpenAPI.Credentials.OAuth;
 with Util.Http.Clients.Curl;
+with Util.Log.Loggers;
+with Util.Properties;
 with Ada.Text_IO;
 with Ada.Command_Line;
 with Ada.Calendar.Formatting;
@@ -24,10 +26,12 @@ procedure TestBinary.Client is
 
    procedure Usage;
 
-   Server    : constant Swagger.UString :=
-     Swagger.To_UString ("http://localhost:8080/v2");
-   Arg_Count : constant Natural         := Ada.Command_Line.Argument_Count;
-   Arg       : Positive                 := 1;
+   Server : constant OpenAPI.UString :=
+     OpenAPI.To_UString ("http://localhost:8080/v2");
+   CONFIG_PATH : constant String  := "testbinary.properties";
+   Arg_Count   : constant Natural := Ada.Command_Line.Argument_Count;
+   Arg         : Positive         := 1;
+   Props       : Util.Properties.Manager;
 
    procedure Usage is
    begin
@@ -39,11 +43,13 @@ begin
       Usage;
       return;
    end if;
+   Props.Load_Properties (CONFIG_PATH);
+   Util.Log.Loggers.Initialize (Props);
    Util.Http.Clients.Curl.Register;
    declare
       Command : constant String := Ada.Command_Line.Argument (Arg);
       Item    : constant String := Ada.Command_Line.Argument (Arg + 1);
-      Cred    : aliased Swagger.Credentials.OAuth.OAuth2_Credential_Type;
+      Cred    : aliased OpenAPI.Credentials.OAuth.OAuth2_Credential_Type;
       C       : TestBinary.Clients.Client_Type;
    begin
       C.Set_Server (Server);

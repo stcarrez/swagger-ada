@@ -23,69 +23,9 @@
     "url" : "http://localhost:8082/v1"
   } ],
   "paths" : {
-    "/binary" : {
+    "/enums/{status}" : {
       "get" : {
-        "description" : "Get an image\n",
-        "operationId" : "do_get_image",
-        "parameters" : [ {
-          "description" : "The image status",
-          "explode" : true,
-          "in" : "query",
-          "name" : "status",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/Status"
-          },
-          "style" : "form"
-        }, {
-          "description" : "The owner",
-          "explode" : true,
-          "in" : "query",
-          "name" : "owner",
-          "required" : false,
-          "schema" : {
-            "type" : "string"
-          },
-          "style" : "form"
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "image/png" : {
-                "schema" : {
-                  "format" : "binary",
-                  "type" : "string"
-                }
-              },
-              "image/jpeg" : {
-                "schema" : {
-                  "format" : "binary",
-                  "type" : "string"
-                }
-              }
-            },
-            "description" : "successful operation",
-            "headers" : {
-              "X-RateLimit-Limit" : {
-                "explode" : false,
-                "schema" : {
-                  "description" : "Request limit per hour.",
-                  "type" : "integer"
-                },
-                "style" : "simple"
-              }
-            }
-          },
-          "404" : {
-            "description" : "Invalid status value"
-          }
-        },
-        "summary" : "Get an image"
-      }
-    },
-    "/external/{status}" : {
-      "get" : {
-        "operationId" : "do_get_stats",
+        "operationId" : "do_get_enums",
         "parameters" : [ {
           "description" : "status information",
           "explode" : false,
@@ -201,25 +141,44 @@
         "enum" : [ "open", "onhold", "assigned", "closed", "rejected" ],
         "type" : "string"
       },
+      "Mode" : {
+        "default" : "fast",
+        "enum" : [ "fast", "optimized", "accurate" ],
+        "type" : "string",
+        "x-ada-no-vector" : true
+      },
       "Stat" : {
         "example" : {
+          "mode" : "fast",
           "count" : 0,
-          "name" : "name"
+          "name" : "plop",
+          "value" : 6,
+          "status" : "open"
         },
         "properties" : {
           "count" : {
+            "default" : 300,
             "format" : "int64",
-            "type" : "integer",
-            "x-ada-serialize-op" : "Write_Entity"
+            "type" : "integer"
+          },
+          "value" : {
+            "default" : 500,
+            "format" : "int64",
+            "type" : "integer"
           },
           "name" : {
+            "default" : "plop",
             "type" : "string"
+          },
+          "mode" : {
+            "$ref" : "#/components/schemas/Mode"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/Status"
           }
         },
         "required" : [ "count", "name" ],
-        "type" : "object",
-        "x-ada-type-name" : "External.Stat_Type",
-        "x-ada-vector-type-name" : "External.Stat_Vector"
+        "type" : "object"
       }
     }
   }

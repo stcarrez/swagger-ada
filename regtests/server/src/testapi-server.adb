@@ -8,6 +8,8 @@ with Util.Properties;
 with Util.Properties.Basic;
 with TestAPI.Servers;
 with TestBinary.Servers;
+with Types.Servers;
+with Enums.Servers;
 procedure TestAPI.Server (Server : in out Servlet.Server.Container'Class)is
    use Util.Properties.Basic;
 
@@ -27,6 +29,8 @@ begin
    App.Configure (Props);
    TestAPI.Servers.Server_Impl.Register (App);
    TestBinary.Servers.Server_Impl.Register (App);
+   Types.Servers.Server_Impl.Register (App);
+   Enums.Servers.Server_Impl.Register (App);
 
    Server.Configure (Config);
    Server.Register_Application ("/v1", App'Unchecked_Access);

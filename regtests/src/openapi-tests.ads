@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-tests -- Unit tests for REST clients
---  Copyright (C) 2018, 2022, 2023 Stephane Carrez
+--  Copyright (C) 2018, 2022, 2023, 2024 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --  SPDX-License-Identifier: Apache-2.0
 -----------------------------------------------------------------------
@@ -42,5 +42,10 @@ package OpenAPI.Tests is
 
    --  Test API that uses a struct with various numbers.
    procedure Test_Struct_Numbers (T : in out Test);
+
+   --  Test API that consumes a JSON content ('types.yaml')
+   procedure Test_Consumes_JSON (T : in out Test);
+
+   procedure Test_Enums (T : in out Test);
 
 end OpenAPI.Tests;

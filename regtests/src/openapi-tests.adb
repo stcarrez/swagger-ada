@@ -7,15 +7,23 @@
 
 with Util.Log.Loggers;
 with Util.Test_Caller;
+with Util.Assertions;
 with Ada.Text_IO;
 with TestAPI.Clients;
 with TestAPI.Models;
 with TestBinary.Clients;
 with TestBinary.Models;
+with Types.Clients;
+with Types.Models;
+with Enums.Clients;
+with Enums.Models;
 with External;
 package body OpenAPI.Tests is
 
    Log   : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("OpenAPI.Tests");
+
+   procedure Assert_Equals is
+      new Util.Assertions.Assert_Equals_T (Enums.Models.Status_Type);
 
    package Caller is new Util.Test_Caller (Test, "OpenAPI.Tests");
 
@@ -38,6 +46,10 @@ package body OpenAPI.Tests is
                        Test_External_Data'Access);
       Caller.Add_Test (Suite, "Test integer and floats in application/json response",
                        Test_Struct_Numbers'Access);
+      Caller.Add_Test (Suite, "Test POST/PUT with JSON content",
+                       Test_Consumes_JSON'Access);
+      Caller.Add_Test (Suite, "Test enums",
+                       Test_Enums'Access);
    end Add_Tests;
 
    overriding
@@ -271,5 +283,51 @@ package body OpenAPI.Tests is
       Util.Tests.Assert_Equals (T, 34, Natural (Result.Short_Int_2),
                                 "Invalid Short_Int_2");
    end Test_Struct_Numbers;
+
+   --  Test API that consumes a JSON content ('types.yaml')
+   procedure Test_Consumes_JSON (T : in out Test) is
+      Client : Types.Clients.Client_Type;
+      R1     : Types.Models.RackInfo_Type;
+      Result : Types.Models.RackInfo_Type;
+   begin
+      T.Configure (Client);
+
+      Result.Id := 0;
+      R1.Name := To_UString ("Rack A");
+      R1.V := 10.0;
+      Client.Add_Rack (R1, Result);
+      T.Assert (Result.Id > 0, "Invalid id after Add_Rack");
+   end Test_Consumes_JSON;
+
+   procedure Test_Enums (T : in out Test) is
+      procedure Check (Status : in Enums.Models.Status_Type);
+
+      Client : Enums.Clients.Client_Type;
+      List   : Enums.Models.Stat_Type_Vectors.Vector;
+
+      procedure Check (Status : in Enums.Models.Status_Type) is
+      begin
+         Client.Do_Get_Enums (Status, List);
+         Util.Tests.Assert_Equals (T, 5, Natural (List.Length),
+                                   "Invalid number of items with " & Status'Image);
+         for I in 1 .. 5 loop
+            declare
+               Item : constant Enums.Models.Stat_Type := List.Element (I);
+            begin
+               Util.Tests.Assert_Equals (T, I, Natural (Item.Count),
+                                         "Invalid Count");
+               Assert_Equals (T, Status, Item.Status, "Invalid status");
+            end;
+         end loop;
+      end Check;
+   begin
+      T.Configure (Client);
+
+      Check (Enums.Models.OPEN);
+      Check (Enums.Models.ONHOLD);
+      Check (Enums.Models.ASSIGNED);
+      Check (Enums.Models.ASSIGNED);
+      Check (Enums.Models.CLOSED);
+   end Test_Enums;
 
 end OpenAPI.Tests;

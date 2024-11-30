@@ -1,8 +1,8 @@
-config.gpr
-src/client/testbinary-clients.adb
-src/client/testbinary-clients.ads
-src/model/testbinary-models.adb
-src/model/testbinary-models.ads
-src/testbinary-client.adb
-src/testbinary.ads
-testbinary.gpr
+enums.gpr
+enums_config.gpr
+src/client/enums-clients.adb
+src/client/enums-clients.ads
+src/enums-client.adb
+src/enums.ads
+src/model/enums-models.adb
+src/model/enums-models.ads

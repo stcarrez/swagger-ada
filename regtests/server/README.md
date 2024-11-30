@@ -35,10 +35,10 @@ alr build
 ```
 
 After the build is successful, you will get the server binary
-in `bin/testbinary_aws` or `bin/testbinary_ews` and you can start it as follows:
+in `bin/enums_aws` or `bin/enums_ews` and you can start it as follows:
 
 ```shell
-  ./bin/testbinary_aws
+  ./bin/enums_aws
 ```
 
 ## Structure of the server
@@ -48,25 +48,25 @@ the OpenAPI specification.
 
 Source file | Package | Description
 ------------ | ------------- | -------------
-src/testbinary.ads|TestBinary|The server root package declaration
-src/testbinary-servers.ads|TestBinary.Servers|The server declaration and instantiation
-src/testbinary-servers.adb|TestBinary.Servers|The server implementation (empty stubs)
-src/server/testbinary-skeletons.ads|TestBinary.Skeletons|The server skeleton declaration
-src/server/testbinary-skeletons.adb|TestBinary.Skeletons|The server skeleton implementation
-src/server/testbinary-models.ads|TestBinary.Skeletons|The server model types declaration
-src/server/testbinary-models.adb|TestBinary.Skeletons|The server model types implementation
-src/testbinary-server.adb|TestBinary.Server|The server main procedure
-src/aws/testbinary_aws.adb||The Ada Web Server server main procedure
-src/ews/testbinary_ews.adb||The Embedded Web Server server main procedure
+src/enums.ads|Enums|The server root package declaration
+src/enums-servers.ads|Enums.Servers|The server declaration and instantiation
+src/enums-servers.adb|Enums.Servers|The server implementation (empty stubs)
+src/server/enums-skeletons.ads|Enums.Skeletons|The server skeleton declaration
+src/server/enums-skeletons.adb|Enums.Skeletons|The server skeleton implementation
+src/server/enums-models.ads|Enums.Skeletons|The server model types declaration
+src/server/enums-models.adb|Enums.Skeletons|The server model types implementation
+src/enums-server.adb|Enums.Server|The server main procedure
+src/aws/enums_aws.adb||The Ada Web Server server main procedure
+src/ews/enums_ews.adb||The Embedded Web Server server main procedure
 
 Files generated in **src/server** should not be modified.  The server implementation
-files (**src/testbinary-server.ads** and **src/testbinary-server.adb**) should
+files (**src/enums-server.ads** and **src/enums-server.adb**) should
 be modified to implement the server operations.  You can also customize the server
 main procedure according to your needs.
 
 ## Server model
 
-The server instance is represented by the **TestBinary.Servers.Server_Type** Ada type.
+The server instance is represented by the **Enums.Servers.Server_Type** Ada type.
 The REST API will need an instance of it to make the operation call.  Two server model
 exists:
 
@@ -74,13 +74,13 @@ exists:
 - The shared instance model shares the same instance across all concurrent REST requests.  This instance is protected using an Ada protected object which holds the server instance.
 
 The choice of the server model is made at the compilation time by instantiating either
-the **TestBinary.Skeletons.Skeleton** package or the **TestBinary.Skeletons.Shared_Instance**
-package.  Such instantiation is done in **src/testbinary-server.ads** and the default
+the **Enums.Skeletons.Skeleton** package or the **Enums.Skeletons.Shared_Instance**
+package.  Such instantiation is done in **src/enums-server.ads** and the default
 is to use the **Shared_Instance**.
 
 ## Implementing a server operation
 
-All you have to do is implement the server operation in the **src/testbinary-servers.adb** file.
+All you have to do is implement the server operation in the **src/enums-servers.adb** file.
 The package already contains the operation with its parameters and you only have to replace
 the **null** instruction by real code.
 
@@ -92,15 +92,15 @@ All URIs are relative to *https://localhost:8082/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Do_Get_Image**](DefaultApi.md#Do_Get_Image) | **GET** /binary | Get an image
+[**Do_Get_Enums**](DefaultApi.md#Do_Get_Enums) | **GET** /enums/{status} | Get some stat from external struct
 [**Do_Get_Object**](DefaultApi.md#Do_Get_Object) | **GET** /object | Get an object
-[**Do_Get_Stats**](DefaultApi.md#Do_Get_Stats) | **GET** /external/{status} | Get some stat from external struct
 
 
 ### Models
 
- - [TestBinary.Models.Stat_Type](Stat_Type.md)
- - [TestBinary.Models.Status_Type](Status_Type.md)
+ - [Enums.Models.Mode_Type](Mode_Type.md)
+ - [Enums.Models.Stat_Type](Stat_Type.md)
+ - [Enums.Models.Status_Type](Status_Type.md)
 
 
 ### Authorization
