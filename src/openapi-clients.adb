@@ -241,7 +241,7 @@ package body OpenAPI.Clients is
             Client.Delete (Path, Client.Response);
 
       end case;
-      if Client.Response.Get_Status /= Util.Http.SC_OK then
+      if not Client.Is_Successful then
          Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
@@ -293,7 +293,7 @@ package body OpenAPI.Clients is
 
          end case;
       end;
-      if Client.Response.Get_Status /= Util.Http.SC_OK then
+      if not Client.Is_Successful then
          Client_Type'Class (Client).Error (Client.Response.Get_Status, Client.Response);
          return;
       end if;
@@ -463,6 +463,15 @@ package body OpenAPI.Clients is
    begin
       return Client.Last_Error;
    end Get_Error;
+
+   --  ------------------------------
+   --  Returns true if the code is in [200..299], which means the request
+   --  was successfully received, understood, and accepted.
+   --  ------------------------------
+   function Is_Successful (Client : in Client_Type) return Boolean is
+   begin
+      return Client.Response.Get_Status in 200 .. 299;
+   end Is_Successful;
 
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class) is

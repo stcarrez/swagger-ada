@@ -140,6 +140,10 @@ package OpenAPI.Clients is
    --  Get the last error response object that was received.
    function Get_Error (Client : in Client_Type) return Value_Type;
 
+   --  Returns true if the code is in [200..299], which means the request
+   --  was successfully received, understood, and accepted.
+   function Is_Successful (Client : in Client_Type) return Boolean;
+
    --  Initialize the request body to prepare for the serialization of data using
    --  a supported and configured content type.
    procedure Initialize (Client  : in out Client_Type;
