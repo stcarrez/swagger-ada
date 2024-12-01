@@ -20,7 +20,7 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification)
 specific operations or types.
 
-Version 0.9.0   - Under development
+## Version 0.9.0   - Under development
   - Update the openapi generator to version 7.11.0
     - Fixed incorrect type declarations
     - Added support for default values
@@ -31,6 +31,7 @@ Version 0.9.0   - Under development
       `_Type` that is added
     - Updated GNAT project generation
   - Allow to build and install without Alire
+  - Fix #21: Response 201..2xx are not considered successful
 
 ## Version 0.8.0   - Sep 2024
   - Cleanup build environment to drop configure

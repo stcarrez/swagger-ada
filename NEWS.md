@@ -9,6 +9,7 @@ Version 0.9.0   - Under development
       `_Type` that is added
     - Updated GNAT project generation
   - Allow to build and install without Alire
+  - Fix #21: Response 201..2xx are not considered successful
 
 Version 0.8.0   - Sep 2024
   - Cleanup build environment to drop configure
