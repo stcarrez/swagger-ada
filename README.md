@@ -2,12 +2,13 @@
 
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/openapi.json)](https://alire.ada.dev/crates/openapi)
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/openapi_server.json)](https://alire.ada.dev/crates/openapi_server)
+[![Ada 2012](https://img.shields.io/badge/2012-inside-green?logo=ada&logoColor=white&logoSize=auto)](https://adaic.org/ada-resources/standards/ada12)
 [![Build Status](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/build.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/summary)
 [![Test Status](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/tests.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/xunits)
 [![Coverage](https://img.shields.io/endpoint?url=https://porion.vacs.fr/porion/api/v1/projects/openapi-ada/badges/coverage.json)](https://porion.vacs.fr/porion/projects/view/openapi-ada/summary)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
 [![GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/stcarrez/openapi-ada)
-[![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.7.0.svg)](Commits)
+[![Commits](https://img.shields.io/github/commits-since/stcarrez/swagger-ada/0.8.0.svg)](Commits)
 
 [OpenAPI Generator](https://gitlab.com/OpenAPITools/openapi-generator) is a code generator that supports generation of
 API client libraries, server stubs and documentation automatically
