@@ -4,8 +4,6 @@ enums.properties
 enums_config.gpr
 src/aws/enums_aws.adb
 src/enums-server.adb
-src/enums-servers.adb
-src/enums-servers.ads
 src/enums.ads
 src/ews/enums_ews.adb
 src/model/enums-models.adb

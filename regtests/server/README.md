@@ -98,6 +98,7 @@ Method | HTTP request | Description
 
 ### Models
 
+ - [Enums.Models.Error_Type](Error_Type.md)
  - [Enums.Models.Mode_Type](Mode_Type.md)
  - [Enums.Models.Stat_Type](Stat_Type.md)
  - [Enums.Models.Status_Type](Status_Type.md)

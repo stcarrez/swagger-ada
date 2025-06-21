@@ -15,6 +15,42 @@ package body Enums.Models is
 
    use OpenAPI.Streams;
 
+   procedure Serialize
+     (Into  : in out OpenAPI.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Enums.Models.Error_Type)
+   is
+   begin
+      Into.Start_Entity (Name);
+      if not Value.Message.Is_Null then
+         Into.Write_Entity ("message", Value.Message);
+      end if;
+      if not Value.Error_Type.Is_Null then
+         Into.Write_Entity ("error_type", Value.Error_Type);
+      end if;
+      if not Value.Param.Is_Null then
+         Into.Write_Entity ("param", Value.Param);
+      end if;
+      if not Value.Code.Is_Null then
+         Into.Write_Entity ("code", Value.Code);
+      end if;
+      Into.End_Entity (Name);
+   end Serialize;
+
+   procedure Deserialize
+     (From  : in     OpenAPI.Value_Type;
+      Name  : in     String;
+      Value :    out Enums.Models.Error_Type)
+   is
+      Object : OpenAPI.Value_Type;
+   begin
+      OpenAPI.Streams.Deserialize (From, Name, Object);
+      OpenAPI.Streams.Deserialize (Object, "message", Value.Message);
+      OpenAPI.Streams.Deserialize (Object, "error_type", Value.Error_Type);
+      OpenAPI.Streams.Deserialize (Object, "param", Value.Param);
+      OpenAPI.Streams.Deserialize (Object, "code", Value.Code);
+   end Deserialize;
+
    function To_Mode_Type (Value : in String) return Enums.Models.Mode_Type is
    begin
       if Value = "fast" then

@@ -13,6 +13,22 @@ with Ada.Containers.Vectors;
 package Enums.Models is
    pragma Style_Checks ("-bmrIu");
 
+   type Error_Type is record
+      Message    : OpenAPI.Nullable_UString;
+      Error_Type : OpenAPI.Nullable_UString;
+      Param      : OpenAPI.Nullable_UString;
+      Code       : OpenAPI.Nullable_UString;
+   end record;
+
+   procedure Serialize
+     (Into  : in out OpenAPI.Streams.Output_Stream'Class;
+      Name  : in     String;
+      Value : in     Enums.Models.Error_Type);
+   procedure Deserialize
+     (From  : in     OpenAPI.Value_Type;
+      Name  : in     String;
+      Value :    out Enums.Models.Error_Type);
+
    type Mode_Type is (FAST, OPTIMIZED, ACCURATE);
 
    function To_Mode_Type (Value : in String) return Enums.Models.Mode_Type;

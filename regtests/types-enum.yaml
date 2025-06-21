@@ -44,7 +44,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Stat'
         '404':
-          description: Invalid status value
+          description: 'status not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /object:
     get:
       summary: Get an object
@@ -80,7 +84,11 @@ paths:
               schema:
                 type: object
         '404':
-          description: Invalid status value
+          description: 'object not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -123,3 +131,20 @@ components:
       required:
         - name
         - count
+    Error:
+      type: object
+      description: ""
+      properties:
+        message:
+          type: "string"
+          description: ""
+        error_type:
+          type: "string"
+          description: ""
+        param:
+          type: "string"
+          description: ""
+        code:
+          type: "string"
+          description: ""
+      x-ada-no-vector: true

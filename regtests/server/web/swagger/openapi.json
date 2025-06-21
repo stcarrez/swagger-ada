@@ -70,7 +70,14 @@
             }
           },
           "404" : {
-            "description" : "Invalid status value"
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "successful operation"
           }
         },
         "summary" : "Get some stat from external struct"
@@ -128,7 +135,14 @@
             }
           },
           "404" : {
-            "description" : "Invalid status value"
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "successful operation"
           }
         },
         "summary" : "Get an object"
@@ -179,6 +193,35 @@
         },
         "required" : [ "count", "name" ],
         "type" : "object"
+      },
+      "Error" : {
+        "description" : "",
+        "example" : {
+          "code" : "code",
+          "param" : "param",
+          "error_type" : "error_type",
+          "message" : "message"
+        },
+        "properties" : {
+          "message" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "error_type" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "param" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "code" : {
+            "description" : "",
+            "type" : "string"
+          }
+        },
+        "type" : "object",
+        "x-ada-no-vector" : true
       }
     }
   }
