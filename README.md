@@ -21,7 +21,7 @@ provided by OpenAPI Generator.  The library provides support to serialize the da
 make HTTP requests and support the [OpenAPI Spec](https://gitlab.com/OAI/OpenAPI-Specification)
 specific operations or types.
 
-## Version 0.9.0   - Under development
+## Version 0.9.0   - Nov 2025
   - Update the openapi generator to version 7.11.0
     - Fixed incorrect type declarations
     - Added support for default values

@@ -1,4 +1,4 @@
-Version 0.9.0   - Under development
+Version 0.9.0   - Nov 2025
   - Update the openapi generator to version 7.11.0
     - Fixed incorrect type declarations
     - Added support for default values
