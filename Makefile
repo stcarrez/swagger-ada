@@ -1,5 +1,5 @@
 NAME=openapi
-VERSION=0.8.0
+VERSION=0.9.0
 
 DIST_DIR=openapi-ada-$(VERSION)
 DIST_FILE=openapi-ada-$(VERSION).tar.gz
