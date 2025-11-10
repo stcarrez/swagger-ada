@@ -53,8 +53,8 @@ Example of client generation with OpenAPI file `my-api.yaml` and use of CURL sup
 """
 
 [[depends-on]]
-utilada = "^2.6.0"
-utilada_xml = "^2.6.0"
+utilada = "^2.8.0"
+utilada_xml = "^2.8.0"
 security = "^1.5.0"
 
 [gpr-externals]
