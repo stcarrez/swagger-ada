@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-server -- Rest server support
---  Copyright (C) 2017, 2020, 2022, 2023 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022, 2023, 2026 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --  SPDX-License-Identifier: Apache-2.0
 -----------------------------------------------------------------------
@@ -108,7 +108,7 @@ package body OpenAPI.Servers is
       Param : constant String := Req.Get_Parameter (Name);
    begin
       if Param'Length > 0 then
-         Value.Append ((Is_Null => False, Value => To_UString (Param)));
+         Value.Append (Nullable_UString '(Is_Null => False, Value => To_UString (Param)));
       end if;
    end Get_Query_Parameter;
 

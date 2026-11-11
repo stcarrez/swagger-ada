@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-streams -- Stream operations
---  Copyright (C) 2017, 2020, 2022, 2023 Stephane Carrez
+--  Copyright (C) 2017, 2020, 2022, 2023, 2026 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --  SPDX-License-Identifier: Apache-2.0
 -----------------------------------------------------------------------
@@ -407,7 +407,7 @@ package body OpenAPI.Streams is
          for I in 1 .. Get_Count (List) loop
             Item := Get_Value (List, I);
             Value.Append
-              ((if Util.Beans.Objects.Is_Null (Item) then
+              (Nullable_UString '(if Util.Beans.Objects.Is_Null (Item) then
                   (Is_Null => True, Value => <>)
                 else (Is_Null => False, Value => To_Unbounded_String (Item))));
          end loop;

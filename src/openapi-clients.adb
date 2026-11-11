@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  openapi-clients -- Rest client support
---  Copyright (C) 2017, 2018, 2019, 2020, 2022, 2023 Stephane Carrez
+--  Copyright (C) 2017, 2018, 2019, 2020, 2022, 2023. 2026 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --  SPDX-License-Identifier: Apache-2.0
 -----------------------------------------------------------------------
@@ -475,7 +475,7 @@ package body OpenAPI.Clients is
 
    procedure Initialize (Client  : in out Client_Type;
                          Request : in out Request_Type'Class) is
-      Mimes : constant Mime_List := (1 => OpenAPI.Mime_Json);
+      Mimes : constant Mime_List := [1 => OpenAPI.Mime_Json];
    begin
       Client.Initialize (Request, Mimes);
    end Initialize;
